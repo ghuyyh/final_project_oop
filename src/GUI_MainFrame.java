@@ -14,7 +14,7 @@ public class GUI_MainFrame {
             System.out.println("Could not set native look and feel.");
         }
 
-        System.out.println("entry point");
+        System.out.println("cho dau tien");
 
         JFrame mainScr = new JFrame("Ex Store");
         ImageIcon icon = new ImageIcon(Main.class.getResource("res/icon.png"));
