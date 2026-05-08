@@ -80,19 +80,13 @@ public class GUI_MainFrame {
         getHomePanel().setLayout(new BorderLayout());
         getHomePanel().setBorder(BorderFactory.createTitledBorder("Today Hot Sales"));
 
-        // Cart panel
-        getCartPanel().setLayout(new BorderLayout());
-        JTextPane cartText = new JTextPane();
-        cartText.setText("This is the cart panel.");
-        cartText.setEditable(false);
-        getCartPanel().add(cartText, BorderLayout.CENTER);
-
         // main panel
         mainPanel.add(getHomePanel(), "home");
         mainPanel.add(getCartPanel(), "cart");
         mainPanel.add(getAdminPanel(), "admin");
         mainPanel.add(getLoginPanel(), "login");
-
+mainPanel.setBackground(new Color(238, 238, 238));
+        // main screen setting
         mainScr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainScr.setPreferredSize(new Dimension((int) (0.8 * scrSize.width), (int) (0.8 * scrSize.height)));
         mainScr.add(mainPanel);
@@ -102,6 +96,18 @@ public class GUI_MainFrame {
         mainScr.setVisible(true);
         showHome();
         // mainScr.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
+        // Cart panel
+        getCartPanel().setLayout(new BorderLayout());
+        getCartPanel().setBorder(BorderFactory.createTitledBorder("Cart"));
+
+        // Admin panel
+        getAdminPanel().setLayout(new BorderLayout());
+        getAdminPanel().setBorder(BorderFactory.createTitledBorder("Admin Panel"));
+
+        // Login panel
+        getLoginPanel().setLayout(new BorderLayout());
+        getLoginPanel().setBorder(BorderFactory.createTitledBorder("Account"));
 
     }
 
