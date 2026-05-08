@@ -23,9 +23,9 @@ public class GUI_MainFrame {
 
         // Main screen
 
-        JFrame mainScr = new JFrame("Ex Store");
-        ImageIcon icon = new ImageIcon(Main.class.getResource("res/icon.png"));
-        mainScr.setIconImage(icon.getImage());
+        JFrame mainScr = new JFrame("Store");
+        ImageIcon logo = new ImageIcon(Main.class.getResource("res/logo.png"));
+        mainScr.setIconImage(logo.getImage());
 
         mainScr.setLayout(new BorderLayout());
 
