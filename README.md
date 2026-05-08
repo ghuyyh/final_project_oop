@@ -1,14 +1,42 @@
-Final project for OOP
-Please use java/javac 24 or above
-1. git and git hub
-- Install git : https://git-scm.com/
-- In Vscode sign in to github, then go to Source Control tab (the tree shape). Click "clone repository", choose the "final_project_oop". Then choose the folder to save the project, you must remember this folder, this is where you work with project, next time to code, open this folder in Vscode.
-- Git quick guides: https://github.com/git-guides
-Or GUI: after an edit go to Source Control tab, add the change by click the "+" on the right of the file you want to merge, then click on the "..." button (next to title "Change") then push. If you want to get the recent code change ( of others) click the circle button (next to title "final_project_oop")
-- Before using, you must configure git with this 2 command, remember to replace your email and Name:
+# Final Project for OOP
+
+Please use **Java/Javac 24 or above**.
+
+## 1. Git and GitHub
+
+- Install Git: <https://git-scm.com/>
+- In VS Code, sign in to GitHub.
+- Open the **Source Control** tab (branch/tree icon).
+- Click **Clone Repository**, choose `final_project_oop`, then choose a folder to save the project.
+- Remember that folder, it is your project working place.
+- Next time you code, open this folder in VS Code.
+- Git quick cmd guide: <https://github.com/git-guides>
+
+### Git Configuration
+
+Before You use git, enter command in terminal(replace with your name and email):
+
+```bash
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
+```
 
-2. mermaid graph ( .mmd file)
-This is visualise diagram, to view the graph, install extension "Mermaid" : https://marketplace.visualstudio.com/items?itemName=MermaidChart.vscode-mermaid-chart
-Or use the online mermaid graph editor, past the code here: https://mermaid.live/edit
+### Commit and Push in VS Code (GUI)
+
+1. After editing files, open **Source Control**.
+2. Click **+** next to each file you want to save the change to the server.
+3. Enter a commit message( what you just code or do).
+4. Click the dropdown button "v" near **Commit**, then choose **Commit & Push**.
+5. To get latest changes from teammates, click the sync/refresh (circle icon) near the repository title "final_project_oop" in Source control tab.
+
+
+
+## 2. Mermaid Graph (`.mmd` files)
+
+These files are visualise diagrams for Classes, how app work...
+
+- Install Mermaid extension for VS Code, then open mmd file, rightclick and choose "Preview mermaid diagram":
+	<https://marketplace.visualstudio.com/items?itemName=MermaidChart.vscode-mermaid-chart>
+- Or use the online Mermaid editor, paste Mermaid code here to view diagrams:
+	<https://mermaid.live/edit>
+
