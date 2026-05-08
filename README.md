@@ -14,7 +14,7 @@ Please use **Java/Javac 24 or above**.
 
 ### Git Configuration
 
-Before You use git, enter command in terminal(replace with your name and email):
+Before You use git, enter command in terminal(replace with your github username and github email-> go github settings and find your unique GitHub no-reply address it looks like ID+username@users.noreply.github.com):
 
 ```bash
 git config --global user.name "Your Name"
@@ -27,7 +27,7 @@ git config --global user.email "your.email@example.com"
 ### Commit and Push in VS Code (GUI)
 
 1. After editing files, open **Source Control**.
-2. Click **+** next to each file you want to save the change to the server.
+2. Click "+" next to each file you want to save the change to the server.
 3. Enter a commit message( what you just code or do).
 4. Click the dropdown button "v" near **Commit**, then choose **Commit & Push**.
 5. To get latest changes from teammates, click the sync/refresh (circle icon) near the repository title "final_project_oop" in Source control tab.
