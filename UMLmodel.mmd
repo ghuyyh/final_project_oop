@@ -7,9 +7,9 @@ classDiagram
     Cart "1" *-- "*" CartItem : Composition
     CartItem "*" --> "1" Product : Association
 
-    StoreSystem "1" o-- "*" User : Aggregation
-    StoreSystem "1" o-- "*" Product : Aggregation
-    StoreSystem "1" --> "1" Cart : Manages Guest Cart
+    Core "1" o-- "*" User : Aggregation
+    Core "1" o-- "*" Product : Aggregation
+    Core "1" --> "1" Cart : Manages Guest Cart
     
     %% Base User Class
     class User {
@@ -60,12 +60,12 @@ classDiagram
     }
 
     %% The Main Controller (Singleton)
-    class StoreSystem {
+    class Core {
         -List~User~ usersDatabase
         -List~Product~ inventory
         -User loggedInUser
         -Cart guestCart
-        +getInstance() StoreSystem$
+        +getInstance() Core$
         +authenticate(String user, String pass) User
         +processCheckout() boolean
         +routeUserView() String
@@ -74,11 +74,12 @@ classDiagram
     %% UI Representation (Optional in pure data UML, but helpful)
     class GUI_MainFrame {
         -CardLayout layout
-        -StoreSystem system
-        +showHomeView() void
-        +showCartView() void
-        +showAdminView() void
+        -Core core
+        -JPanel mainPanel
+        +showHome() void
+        +showCart() void
+        +showAdmin() void
         +showLoginPopup() void
     }
     
-    GUI_MainFrame --> StoreSystem : Sends User Events
+    GUI_MainFrame --> Core : Sends User Events
