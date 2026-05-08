@@ -3,7 +3,7 @@ import javax.swing.*;
 
 public class GUI_MainFrame {
     private CardLayout layout = new CardLayout();
-    private Core core = new Core();
+    private Core core = Core.getInstance();
     private JPanel mainPanel = new JPanel(layout);
     private JPanel homePanel = new JPanel();
     private JPanel cartPanel = new JPanel();
@@ -59,7 +59,7 @@ public class GUI_MainFrame {
         rightSide.setOpaque(false);
         // JTextField searchField = new JTextField(10);
         JButton searchBtn = new JButton("Search");
-        JButton cartBtn = new JButton("Cart (0)");
+        JButton cartBtn = new JButton("Cart (" + core.getGuestCart().getItems().size() + ")");
         cartBtn.addActionListener(e -> {
             showCart();
         });
@@ -85,7 +85,7 @@ public class GUI_MainFrame {
         mainPanel.add(getCartPanel(), "cart");
         mainPanel.add(getAdminPanel(), "admin");
         mainPanel.add(getLoginPanel(), "login");
-mainPanel.setBackground(new Color(238, 238, 238));
+        mainPanel.setBackground(new Color(238, 238, 238));
         // main screen setting
         mainScr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainScr.setPreferredSize(new Dimension((int) (0.8 * scrSize.width), (int) (0.8 * scrSize.height)));
@@ -110,7 +110,8 @@ mainPanel.setBackground(new Color(238, 238, 238));
         getLoginPanel().setBorder(BorderFactory.createTitledBorder("Account"));
 
     }
-//testcomit2
+
+    // testcomit2
     // geter
     public CardLayout getLayout() {
         return layout;

@@ -55,7 +55,7 @@ removeItem(Product p) void: Finds a specific product in the list and deletes it 
 calculateTotal() double: Loops through every CartItem in the list, adds up all their subtotals, and returns the final bill.
 clearCart() void: Empties the list. This is called right after a successful checkout.
 
-7. StoreSystem Class (The Controller)
+7. Core Class (The Controller)
 This is the brain of the application. It manages the data and processes the heavy logic. It uses the Singleton pattern so only one brain exists at a time.
 Variables:
 List<User> usersDatabase: A master list of every registered Customer and Admin.
