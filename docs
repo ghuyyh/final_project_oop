@@ -1,0 +1,80 @@
+Here is a detailed breakdown of every class, variable, and method from the UML diagram. This acts as the Data Dictionary for your project, which is perfect to include directly in your written report for those 10 points.
+
+1. User Class (The Abstract Base)
+This class holds the core data that is shared by anyone who logs into the system. Since it is abstract, you never create just a User; you create either a Customer or an Admin.
+Variables:
+String username: The unique login name.
+String password: The password used for authentication. Note: the minus sign means private, enforcing encapsulation.
+Methods:
+getUsername() String: A getter method that returns the username.
+verifyPassword(String pass) boolean: Takes a typed password, compares it to the stored password, and returns true if they match.
+
+2. Customer Class (Inherits from User)
+Represents a standard shopper. It inherits the username and password from User.
+Variables:
+Cart personalCart: If a user is logged in, their selected items are stored in this dedicated cart object.
+Methods:
+getCart() Cart: Returns the customer's cart so the GUI can display it.
+checkout() boolean: Triggers the final purchase process, communicating with the StoreSystem to deduct stock.
+
+3. Admin Class (Inherits from User)
+Represents a staff member managing the store. It has special privileges to alter the system's data.
+Methods:
+updateStock(Product p, int newStock) void: Allows the admin to manually change how many items are left in the warehouse.
+updatePrice(Product p, double newPrice) void: Allows the admin to change a product's price.
+addNewProduct(Product p) void: Takes a brand new Product object and injects it into the main store inventory.
+
+4. Product Class
+Represents a single item for sale in the store, for example a Xiaomi 14 or a Poco Pad.
+Variables:
+String id: A unique database code like P-101 to prevent mixing up similar items.
+String name: The display name shown to the user.
+double price: The cost per unit.
+int stockQuantity: How many of this item exist in the store right now.
+Methods:
+reduceStock(int amount) boolean: Called when an item is bought. If someone buys 2, it subtracts 2 from stockQuantity. Returns false if there isn't enough stock to fulfill the order.
+getPrice() double: A getter to retrieve the current price.
+getDetails() String: Returns a cleanly formatted string, for example Xiaomi 14 - $800, for the GUI lists.
+
+5. CartItem Class
+Represents a single row in the shopping cart. It does not store the product details directly; it just points to a product and tracks how many the user wants.
+Variables:
+Product product: A reference to the actual Product object being purchased.
+int quantity: How many of this specific product the user selected.
+Methods:
+getSubtotal() double: Multiplies the Product's price by the quantity, for example 2 phones x $800 = $1600.
+increaseQty(int amount) void: If a user clicks Add to Cart on an item they already have, this method just updates the number instead of creating a duplicate row.
+
+6. Cart Class
+Acts as a container that holds multiple CartItem objects.
+Variables:
+List<CartItem> items: An ArrayList storing all the different products the user intends to buy.
+Methods:
+addItem(Product p, int qty) void: Creates a new CartItem and adds it to the list.
+removeItem(Product p) void: Finds a specific product in the list and deletes it entirely.
+calculateTotal() double: Loops through every CartItem in the list, adds up all their subtotals, and returns the final bill.
+clearCart() void: Empties the list. This is called right after a successful checkout.
+
+7. StoreSystem Class (The Controller)
+This is the brain of the application. It manages the data and processes the heavy logic. It uses the Singleton pattern so only one brain exists at a time.
+Variables:
+List<User> usersDatabase: A master list of every registered Customer and Admin.
+List<Product> inventory: The master list of every product currently for sale.
+User loggedInUser: Tracks who is currently using the app. If no one has logged in yet, this variable is null.
+Cart guestCart: A temporary cart that holds items for users who are just browsing the home page without logging in.
+Methods:
+getInstance() StoreSystem: The method the GUI calls to get access to the brain.
+authenticate(String user, String pass) User: Scans the usersDatabase. If it finds a match, it sets loggedInUser and returns that user object.
+processCheckout() boolean: Looks at the active cart, calls reduceStock() on all the relevant products, and processes the payment.
+routeUserView() String: Checks if loggedInUser is an Admin or Customer and tells the GUI which screen to show next.
+
+8. GUI_MainFrame Class
+This represents the visual window the user interacts with. It only handles button clicks and displaying data; it passes all the real work to the StoreSystem.
+Variables:
+CardLayout layout: The Java tool that allows you to swap the center panels Home, Cart, and Admin without reloading the whole window.
+StoreSystem system: A reference variable so the GUI can talk to the brain.
+Methods:
+showHomeView() void: Tells the CardLayout to flip to the Home Page panel.
+showCartView() void: Tells the CardLayout to flip to the Cart panel.
+showAdminView() void: Tells the CardLayout to flip to the Admin dashboard.
+showLoginPopup() void: Opens the small dialog box asking for a username and password.

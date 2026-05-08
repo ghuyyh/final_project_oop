@@ -1,0 +1,62 @@
+graph TD
+    %% GUI Elements Layer
+    subgraph GUI ["GUI Layer (Swing Screens)"]
+        TopBar["Top Navigation Bar (Fixed)<br/>- Left: Categories (Phones, Tablets, IoT)<br/>- Right: Account Button, Cart Button"]
+        Home["Home Page (Landing View)<br/>- Banners<br/>- Product Grids<br/>- JButton: Add to Cart"]
+        CartView["Cart View<br/>- List of selected items<br/>- JButton: Checkout"]
+        LoginPopup["Login / Register Dialog<br/>- JTextFields<br/>- Authenticate"]
+        AdminPanel["Admin Dashboard<br/>- Inventory List<br/>- Add/Edit/Delete Products"]
+    end
+
+    %% Controller Layer
+    subgraph Controller ["Controller (The Brain)"]
+        System["StoreSystem class<br/>- activeCart (Temporary Object)<br/>- loggedInUser (Null initially)<br/>+ addToSessionCart()<br/>+ requireAuthForCheckout()<br/>+ authenticate()"]
+    end
+
+    %% Data Models Layer
+    subgraph Models ["Data Models (OOP Classes)"]
+        User["User class<br/>- username<br/>- password"]
+        Customer["Customer class"]
+        Admin["Admin class"]
+        
+        Cart["Cart class<br/>- List of CartItems<br/>+ calculateTotal()"]
+        CartItem["CartItem class<br/>- quantity"]
+        Product["Product class<br/>- id, name (e.g. Xiaomi 14)<br/>- price, stock"]
+    end
+
+    %% --- Connections & Events ---
+
+    %% Inheritance & Composition
+    Customer -.->|"Inherits"| User
+    Admin -.->|"Inherits"| User
+    Cart -->|"Contains"| CartItem
+    CartItem -->|"References"| Product
+    System -->|"Manages 1"| Cart
+    System -->|"Manages"| User
+    System -->|"Loads"| Product
+
+    %% App Workflow & User Events
+    TopBar ==>|"Click 'Home / Category'"| Home
+    Home ==>|"Event: Click 'Add'"| System
+    System ==>|"Adds to"| Cart
+    
+    TopBar ==>|"Click 'Cart' Icon"| CartView
+    CartView ==>|"Event: Click 'Checkout'"| System
+    
+    %% Authentication Logic
+    System -.->|"If loggedInUser == null"| LoginPopup
+    TopBar ==>|"Click 'Account' Icon"| LoginPopup
+    LoginPopup ==>|"Authenticates"| System
+    
+    %% Role-Based Routing (The Admin Addition)
+    System -.->|"Assigns User to"| Customer
+    System -.->|"Assigns User to"| Admin
+    System ==>|"If Admin: Switch View to"| AdminPanel
+    System ==>|"If Customer: Return to"| Home
+    
+    %% Admin Tasks
+    AdminPanel ==>|"Event: Save Changes"| System
+    System ==>|"Updates Inventory"| Product
+
+    %% Final Checkout
+    System ==>|"If Authenticated Customer: Process Order"| Product

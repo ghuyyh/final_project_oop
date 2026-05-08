@@ -1,0 +1,84 @@
+classDiagram
+    %% Relationships & Connectors
+    User <|-- Customer : Inheritance
+    User <|-- Admin : Inheritance
+    
+    Customer "1" *-- "1" Cart : Composition
+    Cart "1" *-- "*" CartItem : Composition
+    CartItem "*" --> "1" Product : Association
+
+    StoreSystem "1" o-- "*" User : Aggregation
+    StoreSystem "1" o-- "*" Product : Aggregation
+    StoreSystem "1" --> "1" Cart : Manages Guest Cart
+    
+    %% Base User Class
+    class User {
+        <<Abstract>>
+        -String username
+        -String password
+        +getUsername() String
+        +verifyPassword(String pass) boolean
+    }
+
+    %% Child Classes
+    class Customer {
+        -Cart personalCart
+        +getCart() Cart
+        +checkout() boolean
+    }
+
+    class Admin {
+        +updateStock(Product p, int newStock) void
+        +updatePrice(Product p, double newPrice) void
+        +addNewProduct(Product p) void
+    }
+
+    %% Product & Cart Classes
+    class Product {
+        -String id
+        -String name
+        -double price
+        -int stockQuantity
+        +reduceStock(int amount) boolean
+        +getPrice() double
+        +getDetails() String
+    }
+
+    class Cart {
+        -List~CartItem~ items
+        +addItem(Product p, int qty) void
+        +removeItem(Product p) void
+        +calculateTotal() double
+        +clearCart() void
+    }
+
+    class CartItem {
+        -Product product
+        -int quantity
+        +getSubtotal() double
+        +increaseQty(int amount) void
+    }
+
+    %% The Main Controller (Singleton)
+    class StoreSystem {
+        -List~User~ usersDatabase
+        -List~Product~ inventory
+        -User loggedInUser
+        -Cart guestCart
+        +getInstance() StoreSystem$
+        +authenticate(String user, String pass) User
+        +processCheckout() boolean
+        +routeUserView() String
+    }
+
+    %% UI Representation (Optional in pure data UML, but helpful)
+    class GUI_MainFrame {
+        -CardLayout layout
+        -StoreSystem system
+        +showHomeView() void
+        +showCartView() void
+        +showAdminView() void
+        +showLoginPopup() void
+    }
+    
+    GUI_MainFrame --> StoreSystem : Sends User Events
