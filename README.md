@@ -9,7 +9,7 @@ Please use **Java/Javac 24 or above**.
 - Open the **Source Control** tab (branch/tree icon).
 - Click **Clone Repository**, choose `final_project_oop`, then choose a folder to save the project.
 - Remember that folder, it is your project working place.
-- Next time you code, open this folder in VS Code.
+- Next time you code, open the folder "final_project_oop" in this folder in VS Code.
 - Git quick cmd guide: <https://github.com/git-guides>
 
 ### Git Configuration
