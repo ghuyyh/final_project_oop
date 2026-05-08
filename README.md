@@ -18,8 +18,11 @@ Before You use git, enter command in terminal(replace with your name and email):
 
 ```bash
 git config --global user.name "Your Name"
+```
+```bash
 git config --global user.email "your.email@example.com"
 ```
+
 
 ### Commit and Push in VS Code (GUI)
 
