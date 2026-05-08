@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 806005a (change directory)
 public abstract class User {
     private String username;
     private String password;
