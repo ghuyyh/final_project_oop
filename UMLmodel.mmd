@@ -75,11 +75,15 @@ classDiagram
     class GUI_MainFrame {
         -CardLayout layout
         -Core core
-        -JPanel mainPanel
+        -JPanel homePanel
+        -JPanel cartPanel
+        -JPanel adminPanel
+        -JPanel loginPanel
+        +GUI_MainFrame(Core core)
         +showHome() void
         +showCart() void
         +showAdmin() void
-        +showLoginPopup() void
+        +showLogin() void
     }
     
     GUI_MainFrame --> Core : Sends User Events

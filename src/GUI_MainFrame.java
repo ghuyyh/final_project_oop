@@ -4,7 +4,10 @@ import javax.swing.*;
 public class GUI_MainFrame {
     private CardLayout layout = new CardLayout();
     private Core core = new Core();
-    private JPanel mainPanel = new JPanel(layout);
+    private JPanel homePanel = new JPanel(layout);
+    private JPanel cartPanel = new JPanel();
+    private JPanel adminPanel = new JPanel();
+    private JPanel loginPanel = new JPanel();
 
     public GUI_MainFrame() {
         // Get the screen size
@@ -49,7 +52,7 @@ public class GUI_MainFrame {
         category.add(homeBtn);
         category.add(categorySelect);
         homeBtn.addActionListener(e -> {
-            getLayout().show(getMainPanel(), "home");
+            getLayout().show(getHomPanel(), "home");
         });
 
         // Right side: search, cart and account
@@ -71,33 +74,45 @@ public class GUI_MainFrame {
 
         mainScr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainScr.setPreferredSize(new Dimension((int) (0.8 * scrSize.width), (int) (0.8 * scrSize.height)));
-        mainScr.add(getMainPanel());
+        mainScr.add(getHomPanel());
         mainScr.pack();
         mainScr.setLocationRelativeTo(null);
         mainScr.setMinimumSize(new Dimension((int) (0.8 * scrSize.width), (int) (0.8 * scrSize.height)));
         mainScr.setVisible(true);
         // mainScr.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
+
+    //geter
     public CardLayout getLayout() {
         return layout;
     }
-    public JPanel getMainPanel() {
-        return mainPanel;
+    public JPanel getHomPanel() {
+        return homePanel;
     }
     public Core getCore() {
         return core;
     }
+    public JPanel getCartPanel() {
+        return cartPanel;
+    }
+    public JPanel getAdminPanel() {
+        return adminPanel;
+    }
+    public JPanel getLoginPanel() {
+        return loginPanel;
+    }
+
 
     public void showHome() {
-        getLayout().show(getMainPanel(), "home");
+        getLayout().show(getHomPanel(), "home");
     }
-
     public void showCart() {
-        getLayout().show(getMainPanel(), "cart");
+        getLayout().show(getCartPanel(), "cart");
     }
-
     public void showAdmin() {
-        getLayout().show(getMainPanel(), "admin");
-
+        getLayout().show(getAdminPanel(), "admin");
+    }
+    public void showLogin() {
+        getLayout().show(getLoginPanel(), "login");
     }
 }
