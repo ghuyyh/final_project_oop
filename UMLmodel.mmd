@@ -65,6 +65,7 @@ classDiagram
         -List~Product~ inventory
         -User loggedInUser
         -Cart guestCart
+        -List~Product~ hotProducts
         +getInstance() Core$
         +authenticate(String user, String pass) User
         +processCheckout() boolean
@@ -76,15 +77,33 @@ classDiagram
         -CardLayout layout
         -Core core
         -Jpanel mainPanel
-        -JPanel homePanel
-        -JPanel cartPanel
-        -JPanel adminPanel
-        -JPanel loginPanel
+        -HomeView homePanel
+        -CartView cartPanel
+        -AdminView adminPanel
+        -LoginView loginPanel
         +GUI_MainFrame(Core core)
         +showHome() void
         +showCart() void
         +showAdmin() void
         +showLogin() void
+    }
+    
+    class HomeView{
+        -List~Product~ hotProducts
+        +display() void
+    }
+    class CartView{
+        -Cart cart
+        -Core core
+        +display() void
+    }
+    class AdminView{
+        -Core core
+        +display() void
+    }
+    class LoginView{
+        -Core core
+        +display() void
     }
     
     GUI_MainFrame --> Core : Sends User Events
