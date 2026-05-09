@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+
 public class AdminView {
     private JPanel adminPanel = new JPanel();
-   private JTextField idField = new JTextField(15);
+    private JTextField idField = new JTextField(15);
     private JTextField nameField = new JTextField(15);
     private JTextField priceField = new JTextField(15);
     private JTextField stockField = new JTextField(15);
@@ -24,12 +25,14 @@ public class AdminView {
         formPanel.add(addProductButton);
         adminPanel.add(formPanel, BorderLayout.CENTER);
     }
+
     private void processAddProduct() {
-        try{
+        try {
             String id = idField.getText().trim();
             String name = nameField.getText().trim();
             if (id.isEmpty() || name.isEmpty()) {
-                JOptionPane.showMessageDialog(adminPanel, "Product ID and Name cannot be empty.", "Input Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(adminPanel, "Product ID and Name cannot be empty.", "Input Error",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
             double price = Double.parseDouble(priceField.getText().trim());
@@ -43,7 +46,8 @@ public class AdminView {
             priceField.setText("");
             stockField.setText("");
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(adminPanel, "Price and Stock must be valid numbers.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(adminPanel, "Price and Stock must be valid numbers.", "Input Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
