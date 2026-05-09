@@ -6,7 +6,7 @@ public class HomeView {
     private Core core = Core.getInstance();
 
     public HomeView() {
-        System.out.println("So luong san pham hot: " + core.getHotProducts().size());
+        //System.out.println("check: " + core.getHotProducts().size());
 
         homePanel.setLayout(new BorderLayout());
         homePanel.setBorder(BorderFactory.createTitledBorder("Today Hot Sales"));
