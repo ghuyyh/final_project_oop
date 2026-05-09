@@ -5,10 +5,10 @@ public class GUI_MainFrame {
     private CardLayout layout = new CardLayout();
     private Core core = Core.getInstance();
     private JPanel mainPanel = new JPanel(layout);
-    private JPanel homePanel = new JPanel();
-    private JPanel cartPanel = new JPanel();
-    private JPanel adminPanel = new JPanel();
-    private JPanel loginPanel = new JPanel();
+    private HomeView homePanel = new HomeView();
+    private CartView cartPanel = new CartView();
+    private AdminView adminPanel = new AdminView();
+    private LoginView loginPanel = new LoginView();
 
     public GUI_MainFrame() {
         // Get the screen size
@@ -77,14 +77,21 @@ public class GUI_MainFrame {
         mainScr.add(bar, BorderLayout.NORTH);
 
         // home panel
-        getHomePanel().setLayout(new BorderLayout());
-        getHomePanel().setBorder(BorderFactory.createTitledBorder("Today Hot Sales"));
+        // getHomePanel().setLayout(new BorderLayout());
+        // getHomePanel().setBorder(BorderFactory.createTitledBorder("Today Hot Sales"));
 
         // main panel
-        mainPanel.add(getHomePanel(), "home");
-        mainPanel.add(getCartPanel(), "cart");
-        mainPanel.add(getAdminPanel(), "admin");
-        mainPanel.add(getLoginPanel(), "login");
+        
+        mainPanel.add("home", getHomePanel());
+        mainPanel.add( "cart", getCartPanel());
+        mainPanel.add( "admin", getAdminPanel());
+
+        // Wrap loginPanel so it respects preferred size
+        JPanel loginWrapper = new JPanel();
+        loginWrapper.setLayout(new FlowLayout(FlowLayout.CENTER));
+        loginWrapper.add(loginPanel.getLoginPanel());
+        mainPanel.add("login", loginWrapper);
+
         mainPanel.setBackground(new Color(238, 238, 238));
         // main screen setting
         mainScr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -98,27 +105,24 @@ public class GUI_MainFrame {
         // mainScr.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // Cart panel
-        getCartPanel().setLayout(new BorderLayout());
-        getCartPanel().setBorder(BorderFactory.createTitledBorder("Cart"));
+        // getCartPanel().setLayout(new BorderLayout());
+        // getCartPanel().setBorder(BorderFactory.createTitledBorder("Cart"));
 
         // Admin panel
-        getAdminPanel().setLayout(new BorderLayout());
-        getAdminPanel().setBorder(BorderFactory.createTitledBorder("Admin Panel"));
+        // getAdminPanel().setLayout(new BorderLayout());
+        // getAdminPanel().setBorder(BorderFactory.createTitledBorder("Admin Panel"));
 
         // Login panel
-        getLoginPanel().setLayout(new BorderLayout());
-        getLoginPanel().setBorder(BorderFactory.createTitledBorder("Account"));
 
     }
 
-    // testcomit2
     // geter
     public CardLayout getLayout() {
         return layout;
     }
 
     public JPanel getHomePanel() {
-        return homePanel;
+        return homePanel.getHomePanel();
     }
 
     public Core getCore() {
@@ -126,15 +130,11 @@ public class GUI_MainFrame {
     }
 
     public JPanel getCartPanel() {
-        return cartPanel;
+        return cartPanel.getCartPanel();
     }
 
     public JPanel getAdminPanel() {
-        return adminPanel;
-    }
-
-    public JPanel getLoginPanel() {
-        return loginPanel;
+        return adminPanel.getAdminPanel();
     }
 
     public void showHome() {
