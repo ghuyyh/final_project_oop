@@ -15,12 +15,12 @@ public class GUI_MainFrame {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension scrSize = toolkit.getScreenSize();
 
-        // // flat look, donot remove
-        // try {
-        //     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        // } catch (Exception e) {
-        //     System.out.println("fail set flat look");
-        // }
+        // flat look, donot remove
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            System.out.println("fail set flat look");
+        }
 
         // check
         System.out.println("entry point");
@@ -102,7 +102,7 @@ public class GUI_MainFrame {
         mainScr.setMinimumSize(new Dimension((int) (0.8 * scrSize.width), (int) (0.8 * scrSize.height)));
         mainScr.setVisible(true);
         showHome();
-        mainScr.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //mainScr.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
     }
 
