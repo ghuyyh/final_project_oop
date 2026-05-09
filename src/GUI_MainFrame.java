@@ -104,17 +104,6 @@ public class GUI_MainFrame {
         showHome();
         mainScr.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        // Cart panel
-        getCartPanel().setLayout(new BorderLayout());
-        getCartPanel().setBorder(BorderFactory.createTitledBorder("Cart"));
-
-        // Admin panel
-        getAdminPanel().setLayout(new BorderLayout());
-
-        getAdminPanel().setBorder(BorderFactory.createTitledBorder("Admin Panel"));
-
-        // Login panel
-
     }
 
     // geter
