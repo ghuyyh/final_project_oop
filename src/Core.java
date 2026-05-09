@@ -94,5 +94,14 @@ public class Core {
     public void setHotProducts(List<Product> hotProducts) {
         this.hotProducts = hotProducts;
     }
+    public boolean registerCustomer(String username, String password) {
+        for (User user : usersDatabase) {
+            if (user.getUsername().equals(username)) {
+                return false;  
+            }
+        }
+        usersDatabase.add(new Customer(username, password));
+        return true;  
+    }
 
 }
