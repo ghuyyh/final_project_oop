@@ -22,12 +22,7 @@ public class CartView {
         JButton refreshBtn = new JButton( "Refresh Cart" );
         JButton checkoutBtn = new JButton( "Checkout" );
 
-        refreshBtn.addActionListener(e ->  {
-            targetCart.removeItem(item.getProduct());
-            refreshCart();
-            this.mainFrame.updateCartButton();
-        }
-        );
+       refreshBtn.addActionListener(e -> refreshCart());
 
         checkoutBtn.addActionListener(e -> {
             User user = core.getLoggedInUser();
@@ -85,7 +80,8 @@ public class CartView {
                     JButton removeBtn = new JButton("Remove");
                     removeBtn.addActionListener(e -> {
                         targetCart.removeItem(item.getProduct());
-                        refreshCart();
+                        refreshCart(); 
+                        this.mainFrame.updateCartButton();
                     });
                     singleItemPanel.add(itemLabel, BorderLayout.CENTER);
                     singleItemPanel.add(removeBtn, BorderLayout.EAST);
