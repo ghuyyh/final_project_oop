@@ -6,6 +6,8 @@ public class Core {
     private List<Product> inventory;
     private User loggedInUser;
     private Cart guestCart;
+    private List<Product> hotProducts;
+
 
     // Singleton instance
     private static Core instance;
@@ -15,6 +17,7 @@ public class Core {
         usersDatabase = new ArrayList<>();
         inventory = new ArrayList<>();
         loggedInUser = null;
+        hotProducts = new ArrayList<>();
     }
 
     public static Core getInstance() {
@@ -71,4 +74,13 @@ public class Core {
             return "guest";
         }
     }
+
+    public List<Product> getHotProducts() {
+        return hotProducts;
+    }
+
+    public void setHotProducts(List<Product> hotProducts) {
+        this.hotProducts = hotProducts;
+    }
+
 }
