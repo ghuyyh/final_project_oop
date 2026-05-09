@@ -3,6 +3,7 @@ import java.awt.*;
 
 public class AdminView {
     private JPanel adminPanel = new JPanel();
+    private Core core = Core.getInstance();
     private JTextField idField = new JTextField(15);
     private JTextField nameField = new JTextField(15);
     private JTextField priceField = new JTextField(15);
@@ -21,6 +22,7 @@ public class AdminView {
         formPanel.add(new JLabel("Stock Quantity:"));
         formPanel.add(stockField);
         JButton addProductButton = new JButton("Add New Product");
+        addProductButton.addActionListener(e -> processAddProduct());
         formPanel.add(new JLabel(""));
         formPanel.add(addProductButton);
         adminPanel.add(formPanel, BorderLayout.CENTER);
@@ -38,8 +40,8 @@ public class AdminView {
             double price = Double.parseDouble(priceField.getText().trim());
             int stock = Integer.parseInt(stockField.getText().trim());
             Product newProduct = new Product(id, name, price, stock);
-            core.getInventory().addProduct(newProduct);
-            core.getHotProducts().addProduct(newProduct);
+            core.getInventory().add(newProduct);
+            core.getHotProducts().add(newProduct);
             JOptionPane.showMessageDialog(adminPanel, "Successfully added:" + name);
             idField.setText("");
             nameField.setText("");
