@@ -3,18 +3,22 @@ import javax.swing.*;
 
 public class HomeView {
     private JPanel homePanel = new JPanel();
+    private JPanel hotProductsPanel = new JPanel();
     private Core core = Core.getInstance();
 
     public HomeView() {
-        //System.out.println("check: " + core.getHotProducts().size());
 
         homePanel.setLayout(new BorderLayout());
         homePanel.setBorder(BorderFactory.createTitledBorder("Today Hot Sales"));
-        JPanel hotProductsPanel = new JPanel();
         hotProductsPanel.setLayout(new GridLayout(0,1,5,5));
 
         //scroll pane for hot products
         JScrollPane scrollPane = new JScrollPane(hotProductsPanel);
+        homePanel.add(scrollPane, BorderLayout.CENTER);
+        refreshHome();
+    }
+    public void refreshHome() {
+        hotProductsPanel.removeAll();
         for (Product product : core.getHotProducts()) {
             JPanel productPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             productPanel.add(new JLabel(product.getName() + " - $" + String.format("%.2f", product.getPrice())));
@@ -39,7 +43,8 @@ public class HomeView {
             productPanel.add(addToCartBtn);
             hotProductsPanel.add(productPanel);
         }
-        homePanel.add(scrollPane, BorderLayout.CENTER);
+        hotProductsPanel.revalidate();
+        hotProductsPanel.repaint();
     }
     public JPanel getHomePanel() {
         return homePanel;
