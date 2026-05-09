@@ -65,7 +65,13 @@ public class GUI_MainFrame {
         });
         JButton accountBtn = new JButton("Account");
         accountBtn.addActionListener(e -> {
+            User currentUser = core.getLoggedInUser();
+            if( currentUser instanceof Admin) {
+                showAdmin();
+            }
+            else {
             showLogin();
+            }
         });
         // rightSide.add(searchField);
         rightSide.add(searchBtn);
@@ -77,8 +83,8 @@ public class GUI_MainFrame {
         mainScr.add(bar, BorderLayout.NORTH);
 
         // home panel
-        getHomePanel().setLayout(new BorderLayout());
-        getHomePanel().setBorder(BorderFactory.createTitledBorder("Today Hot Sales"));
+        //getHomePanel().setLayout(new BorderLayout());
+        //getHomePanel().setBorder(BorderFactory.createTitledBorder("Today Hot Sales"));
 
         // main panel
         
