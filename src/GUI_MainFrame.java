@@ -102,7 +102,7 @@ public class GUI_MainFrame {
         mainScr.setMinimumSize(new Dimension((int) (0.8 * scrSize.width), (int) (0.8 * scrSize.height)));
         mainScr.setVisible(true);
         showHome();
-        mainScr.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        //mainScr.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
     }
 
