@@ -15,12 +15,12 @@ public class GUI_MainFrame {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension scrSize = toolkit.getScreenSize();
 
-        // flat look, donot remove
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            System.out.println("fail set flat look");
-        }
+        // // flat look, donot remove
+        // try {
+        //     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        // } catch (Exception e) {
+        //     System.out.println("fail set flat look");
+        // }
 
         // check
         System.out.println("entry point");
