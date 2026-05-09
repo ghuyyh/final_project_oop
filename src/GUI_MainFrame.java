@@ -8,7 +8,7 @@ public class GUI_MainFrame {
     private HomeView homePanel = new HomeView();
     private CartView cartPanel = new CartView();
     private AdminView adminPanel = new AdminView();
-    private LoginView loginPanel = new LoginView();
+    private LoginView loginPanel = new LoginView(this);
 
     public GUI_MainFrame() {
         // Get the screen size
@@ -77,8 +77,8 @@ public class GUI_MainFrame {
         mainScr.add(bar, BorderLayout.NORTH);
 
         // home panel
-        // getHomePanel().setLayout(new BorderLayout());
-        // getHomePanel().setBorder(BorderFactory.createTitledBorder("Today Hot Sales"));
+        getHomePanel().setLayout(new BorderLayout());
+        getHomePanel().setBorder(BorderFactory.createTitledBorder("Today Hot Sales"));
 
         // main panel
         
@@ -102,15 +102,16 @@ public class GUI_MainFrame {
         mainScr.setMinimumSize(new Dimension((int) (0.8 * scrSize.width), (int) (0.8 * scrSize.height)));
         mainScr.setVisible(true);
         showHome();
-        // mainScr.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        mainScr.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         // Cart panel
-        // getCartPanel().setLayout(new BorderLayout());
-        // getCartPanel().setBorder(BorderFactory.createTitledBorder("Cart"));
+        getCartPanel().setLayout(new BorderLayout());
+        getCartPanel().setBorder(BorderFactory.createTitledBorder("Cart"));
 
         // Admin panel
-        // getAdminPanel().setLayout(new BorderLayout());
-        // getAdminPanel().setBorder(BorderFactory.createTitledBorder("Admin Panel"));
+        getAdminPanel().setLayout(new BorderLayout());
+
+        getAdminPanel().setBorder(BorderFactory.createTitledBorder("Admin Panel"));
 
         // Login panel
 
@@ -122,20 +123,20 @@ public class GUI_MainFrame {
     }
 
     public JPanel getHomePanel() {
-        return homePanel.getHomePanel();
-    }
+       return homePanel.getHomePanel();
+  }
 
     public Core getCore() {
         return core;
     }
 
-    public JPanel getCartPanel() {
+  public JPanel getCartPanel() {
         return cartPanel.getCartPanel();
     }
 
-    public JPanel getAdminPanel() {
-        return adminPanel.getAdminPanel();
-    }
+  public JPanel getAdminPanel() {
+   return adminPanel.getAdminPanel();
+   }
 
     public void showHome() {
         getLayout().show(mainPanel, "home");

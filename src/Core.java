@@ -18,6 +18,9 @@ public class Core {
         inventory = new ArrayList<>();
         loggedInUser = null;
         hotProducts = new ArrayList<>();
+
+        usersDatabase.add(new Admin("iamadmin", "admin123"));
+        usersDatabase.add(new Customer("iamcustomer", "customer123"));
     }
 
     public static Core getInstance() {
