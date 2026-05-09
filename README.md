@@ -10,7 +10,7 @@ Please use **Java/Javac 24 or above**.
 - Click **Clone Repository**, choose `final_project_oop`, then choose a folder to save the project.
 - Remember that folder, it is your project working place.
 - Next time you code, open the folder "final_project_oop" in this folder in VS Code.
-- Git quick cmd guide: <https://github.com/git-guides>
+- Git quick cmd guide: <https://github.com/git-guides>, or use GUI tutorial below
 
 ### Git Configuration
 
@@ -30,7 +30,7 @@ git config --global user.email "your.email@example.com"
 2. Click "+" next to each file you want to save the change to the server.
 3. Enter a commit message( what you just code or do).
 4. Click the dropdown button "v" near **Commit**, then choose **Commit & Push**.
-5. To get latest changes from teammates, click the sync/refresh (circle icon) near the repository title "final_project_oop" in Source control tab.
+5. To get latest changes from teammates, click the three dot "..." near the repository title "final_project_oop" in Source control tab then pull.
 
 
 
