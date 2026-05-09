@@ -128,7 +128,9 @@ public class GUI_MainFrame {
    }
 
     public void showHome() {
+        homePanel.refreshHome();
         getLayout().show(mainPanel, "home");
+
     }
 
     public void showCart() {
