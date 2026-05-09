@@ -5,11 +5,12 @@ public class GUI_MainFrame {
     private CardLayout layout = new CardLayout();
     private Core core = Core.getInstance();
     private JPanel mainPanel = new JPanel(layout);
-    private HomeView homePanel = new HomeView();
+    private HomeView homePanel = new HomeView(this);
     private CartView cartPanel = new CartView();
     private AdminView adminPanel = new AdminView();
     private LoginView loginPanel = new LoginView(this);
     private JButton accountBtn = new JButton("Account");
+    private JButton cartBtn = new JButton("Cart(0)");
 
     public GUI_MainFrame() {
         // Get the screen size
@@ -60,7 +61,7 @@ public class GUI_MainFrame {
         rightSide.setOpaque(false);
         // JTextField searchField = new JTextField(10);
         JButton searchBtn = new JButton("Search");
-        JButton cartBtn = new JButton("Cart (" + core.getGuestCart().getItems().size() + ")");
+        cartBtn = new JButton("Cart (" + core.getGuestCart().getItems().size() + ")");
         cartBtn.addActionListener(e -> {
             showCart();
         });
@@ -157,6 +158,7 @@ public class GUI_MainFrame {
     }
 
     public void showCart() {
+        cartPanel.refreshCart();
         getLayout().show(mainPanel, "cart");
     }
 
@@ -175,4 +177,16 @@ public class GUI_MainFrame {
             accountBtn.setText("Account");
         }
     }
+        public void updateCartButton() {
+            User currentUser = core.getLoggedInUser();
+            int count = 0;
+            if (currentUser instanceof Customer) {
+                count = ((Customer) currentUser).getPersonalCart().getItems().size();
+            } else if (currentUser == null) {
+                count = core.getGuestCart().getItems().size();
+            }
+            cartBtn.setText("Cart (" + count + ")");
+        }
 }
+        
+
