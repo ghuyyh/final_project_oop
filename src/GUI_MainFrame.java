@@ -6,7 +6,7 @@ public class GUI_MainFrame {
     private Core core = Core.getInstance();
     private JPanel mainPanel = new JPanel(layout);
     private HomeView homePanel = new HomeView(this);
-    private CartView cartPanel = new CartView();
+    private CartView cartPanel = new CartView(this);
     private AdminView adminPanel = new AdminView();
     private LoginView loginPanel = new LoginView(this);
     private JButton accountBtn = new JButton("Account");

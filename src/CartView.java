@@ -6,9 +6,11 @@ public class CartView {
     private Core core = Core.getInstance();
     private JPanel itemPanel = new JPanel();
     private JLabel totalLabel = new JLabel("Total: $0.00");
+    private GUI_MainFrame mainFrame;
     
 
-    public CartView() {
+    public CartView(GUI_MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
         getCartPanel().setLayout(new BorderLayout());
         getCartPanel().setBorder(BorderFactory.createTitledBorder(" ShoppingCart"));
         
@@ -20,7 +22,13 @@ public class CartView {
         JButton refreshBtn = new JButton( "Refresh Cart" );
         JButton checkoutBtn = new JButton( "Checkout" );
 
-        refreshBtn.addActionListener(e -> refreshCart());
+        refreshBtn.addActionListener(e ->  {
+            targetCart.removeItem(item.getProduct());
+            refreshCart();
+            this.mainFrame.updateCartButton();
+        }
+        );
+
         checkoutBtn.addActionListener(e -> {
             User user = core.getLoggedInUser();
             if (user == null) {
@@ -36,6 +44,7 @@ public class CartView {
                     customer.checkout();
                     JOptionPane.showMessageDialog(cartPanel, "Checkout successful! Thank you for your purchase.");
                     refreshCart();
+                    mainFrame.updateCartButton();
                 }
             }
         });
