@@ -21,7 +21,16 @@ public class Core {
 
         usersDatabase.add(new Admin("iamadmin", "admin123"));
         usersDatabase.add(new Customer("iamcustomer", "customer123"));
+
+        inventory.add(new Product("P01", "Xiaomi 13", 14000000.0, 10));
+        inventory.add(new Product("P02", "iPhone 15 Pro Max", 35000000.0, 5));
+        inventory.add(new Product("P03", "Samsung Galaxy S23 Ultra", 30000000.0, 8));
+        inventory.add(new Product("P04", "OnePlus 11", 20000000.0, 12));
+        inventory.add(new Product("P05", "Google Pixel 8 Pro", 25000000.0, 7)); 
+        hotProducts.addAll( inventory);
+    
     }
+
 
     public static Core getInstance() {
         if (instance == null) {
