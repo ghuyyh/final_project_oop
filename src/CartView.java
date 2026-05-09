@@ -65,9 +65,25 @@ public class CartView {
                 itemPanel.add(new JLabel("Your cart is empty."));
                 totalLabel.setText("Total: $0.00");
             } else {
-                 itemPanel.add(new JLabel("Items in your cart:" + targetCart.getItems().size()));
-                    
-                totalLabel.setText("Total Item: " + targetCart.getItems().size() );
+                for (CartItem item : targetCart.getItems()) {
+                    JPanel singleItemPanel = new JPanel(new BorderLayout());
+                    singleItemPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+                    singleItemPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 80));
+
+                    String itemInfo = String.format("<html><b>%s</b><br/>Price: $%.2f<br/>Quantity: %d</html>",
+                            item.getProduct().getName(), item.getProduct().getPrice(), item.getQuantity());
+                    JLabel itemLabel = new JLabel(itemInfo);
+                    JButton removeBtn = new JButton("Remove");
+                    removeBtn.addActionListener(e -> {
+                        targetCart.removeItem(item.getProduct());
+                        refreshCart();
+                    });
+                    singleItemPanel.add(itemLabel, BorderLayout.CENTER);
+                    singleItemPanel.add(removeBtn, BorderLayout.EAST);
+                    itemPanel.add(singleItemPanel);
+                    itemPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+                }
+                totalLabel.setText( String.format("Total: $%.2f", targetCart.calculateTotal()) );
             }
         }
         itemPanel.revalidate();
