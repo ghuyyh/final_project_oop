@@ -43,6 +43,7 @@ public class LoginView {
                 usernameField.setText("");
                 passwordField.setText("");
                 JOptionPane.showMessageDialog(null, "Logged out successful.");
+                this.mainFrame.updateAccountButton();  
                 this.mainFrame.showHome();
             }
             else{
@@ -53,6 +54,7 @@ public class LoginView {
                 JOptionPane.showMessageDialog(null, "Login successful! Welcome, " + user.getUsername() + "!");
                 getLoginBtn().setText("Logout");
                 Core.getInstance().setLoggedInUser(user);
+                this.mainFrame.updateAccountButton();  
                 if (user instanceof Admin) {
                     Core.getInstance().setGuestCart( new Cart() );
                     this.mainFrame.showAdmin();

@@ -9,6 +9,7 @@ public class GUI_MainFrame {
     private CartView cartPanel = new CartView();
     private AdminView adminPanel = new AdminView();
     private LoginView loginPanel = new LoginView(this);
+    private JButton accountBtn = new JButton("Account");
 
     public GUI_MainFrame() {
         // Get the screen size
@@ -63,15 +64,30 @@ public class GUI_MainFrame {
         cartBtn.addActionListener(e -> {
             showCart();
         });
-        JButton accountBtn = new JButton("Account");
+        // Test
         accountBtn.addActionListener(e -> {
             User currentUser = core.getLoggedInUser();
-            if( currentUser instanceof Admin) {
-                showAdmin();
+            if (currentUser != null) {
+                int choice = JOptionPane
+                        .showConfirmDialog(
+                                mainPanel, "Logged in as: " + currentUser.getUsername()  
+                                          + "\nDo you want to log out?",
+                                "Account Info", JOptionPane.YES_NO_OPTION);
+                if (choice == JOptionPane.YES_OPTION) {
+                    core.setLoggedInUser(null);
+                    updateAccountButton();
+                    JOptionPane.showMessageDialog(mainPanel, "Logged out successfully.");
+                    showHome();
+                } else if (choice == JOptionPane.NO_OPTION) {
+                    if (currentUser instanceof Admin) {
+                        showAdmin();
+
+                    }
+                }
+            } else {
+                showLogin();
             }
-            else {
-            showLogin();
-            }
+
         });
         // rightSide.add(searchField);
         rightSide.add(searchBtn);
@@ -83,14 +99,15 @@ public class GUI_MainFrame {
         mainScr.add(bar, BorderLayout.NORTH);
 
         // home panel
-        //getHomePanel().setLayout(new BorderLayout());
-        //getHomePanel().setBorder(BorderFactory.createTitledBorder("Today Hot Sales"));
+        // getHomePanel().setLayout(new BorderLayout());
+        // getHomePanel().setBorder(BorderFactory.createTitledBorder("Today Hot
+        // Sales"));
 
         // main panel
-        
+
         mainPanel.add("home", getHomePanel());
-        mainPanel.add( "cart", getCartPanel());
-        mainPanel.add( "admin", getAdminPanel());
+        mainPanel.add("cart", getCartPanel());
+        mainPanel.add("admin", getAdminPanel());
 
         // Wrap loginPanel so it respects preferred size
         JPanel loginWrapper = new JPanel();
@@ -108,7 +125,7 @@ public class GUI_MainFrame {
         mainScr.setMinimumSize(new Dimension((int) (0.8 * scrSize.width), (int) (0.8 * scrSize.height)));
         mainScr.setVisible(true);
         showHome();
-        //mainScr.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        // mainScr.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
     }
 
@@ -118,20 +135,20 @@ public class GUI_MainFrame {
     }
 
     public JPanel getHomePanel() {
-       return homePanel.getHomePanel();
-  }
+        return homePanel.getHomePanel();
+    }
 
     public Core getCore() {
         return core;
     }
 
-  public JPanel getCartPanel() {
+    public JPanel getCartPanel() {
         return cartPanel.getCartPanel();
     }
 
-  public JPanel getAdminPanel() {
-   return adminPanel.getAdminPanel();
-   }
+    public JPanel getAdminPanel() {
+        return adminPanel.getAdminPanel();
+    }
 
     public void showHome() {
         homePanel.refreshHome();
@@ -149,5 +166,13 @@ public class GUI_MainFrame {
 
     public void showLogin() {
         getLayout().show(mainPanel, "login");
+    }
+    public void updateAccountButton() {
+        User currentUser = core.getLoggedInUser();
+        if (currentUser != null) {
+            accountBtn.setText("Logout");
+        } else {
+            accountBtn.setText("Account");
+        }
     }
 }
