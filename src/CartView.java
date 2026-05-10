@@ -24,7 +24,7 @@ public class CartView {
         refreshBtn.addActionListener(e -> refreshCart());
 
         checkoutBtn.addActionListener(e -> {
-            User user = core.getLoggedInUser();
+            User user = getCore().getLoggedInUser();
             if (user == null) {
                 JOptionPane.showMessageDialog(cartPanel, "Please login as a Customer to checkout.");
             } else if (user instanceof Admin) {
@@ -89,8 +89,10 @@ public class CartView {
                 });
                 singleItemPanel.add(itemLabel, BorderLayout.CENTER);
                 singleItemPanel.add(removeBtn, BorderLayout.EAST);
+                singleItemPanel.setBackground(new Color(230, 230, 230));
                 itemPanel.add(singleItemPanel);
-                itemPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+                // itemPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+                itemPanel.add(Box.createVerticalStrut(10));
             }
             totalLabel.setText(String.format("Total: $%.2f", targetCart.calculateTotal()));
         }
@@ -98,6 +100,7 @@ public class CartView {
     public Core getCore() {
         return core;
     }
+
 
     public JPanel getCartPanel() {
         return cartPanel;
