@@ -5,11 +5,12 @@ public class GUI_MainFrame {
     private CardLayout layout = new CardLayout();
     private Core core = Core.getInstance();
     private JPanel mainPanel = new JPanel(layout);
-    private HomeView homePanel = new HomeView();
+    private HomeView homePanel = new HomeView(this);
     private CartView cartPanel = new CartView(this);
     private AdminView adminPanel = new AdminView(this);
     private LoginView loginPanel = new LoginView(this);
     private CustomerView customerPanel = new CustomerView(this);
+    private JButton cartBtn;
 
     public GUI_MainFrame() {
         // Get the screen size
@@ -61,8 +62,7 @@ public class GUI_MainFrame {
         // JTextField searchField = new JTextField(10);
         JButton searchBtn = new JButton("Search");
         JButton accountBtn = new JButton("Account");
-        JButton cartBtn = new JButton("Cart(0)");
-        cartBtn = new JButton("Cart (" + core.getGuestCart().getItems().size() + ")");
+        cartBtn = new JButton("Cart (0)");
         cartBtn.addActionListener(e -> {
             showCart();
         });
@@ -127,6 +127,10 @@ public class GUI_MainFrame {
         return cartPanel.getCartPanel();
     }
 
+    public void refreshCart() {
+        cartPanel.refreshCart();
+    }
+
     public JPanel getLoginPanel() {
         return loginPanel.getLoginPanel();
     }
@@ -146,7 +150,6 @@ public class GUI_MainFrame {
     }
 
     public void showCart() {
-        cartPanel.refreshCart();
         getLayout().show(mainPanel, "cart");
     }
 
@@ -160,5 +163,17 @@ public class GUI_MainFrame {
 
     public void showCustomer() {
         getLayout().show(mainPanel, "customer");
+    }
+
+    public JButton getCartBtn() {
+        return cartBtn;
+    }
+
+    public void updateCartButton(JButton button) {
+        if (getCartBtn() != null) {
+            cartBtn.setText("Cart (" + (Core.getInstance().getLoggedInUser() instanceof Customer
+                    ? ((Customer) getCore().getLoggedInUser()).getPersonalCart().getItems().size()
+                    : Core.getInstance().getGuestCart().getItems().size()) + ")");
+        }
     }
 }

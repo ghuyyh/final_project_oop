@@ -5,10 +5,11 @@ public class HomeView {
     private JPanel homePanel = new JPanel();
     private JPanel hotProductsPanel = new JPanel();
     private Core core = Core.getInstance();
+    GUI_MainFrame mainFrame;
     
 
-    public HomeView() {
-        
+    public HomeView(GUI_MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
 
         getHomePanel().setLayout(new BorderLayout());
         getHomePanel().setBorder(BorderFactory.createTitledBorder("Today Hot Sales"));
@@ -39,7 +40,9 @@ public class HomeView {
                         targetCart = core.getGuestCart();
                     }
                     targetCart.addItem(product, 1);
-                    JOptionPane.showMessageDialog(null," Added" + product.getName() + " to cart!");
+                    getMainFrame().refreshCart();
+                    getMainFrame().updateCartButton(null);
+                    JOptionPane.showMessageDialog(null,"Added " + product.getName() + " to cart!");
                     
                 }
             });
@@ -51,5 +54,8 @@ public class HomeView {
     }
     public JPanel getHomePanel() {
         return homePanel;
+    }
+    public GUI_MainFrame getMainFrame() {
+        return mainFrame;
     }
 }
