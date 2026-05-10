@@ -1,5 +1,7 @@
+import java.util.*;
 public  class Customer extends User {
     private Cart personalCart;
+    private List<CartItem> orderHistory = new ArrayList<>();
     public Customer(String username, String password) {
         super(username, password);
         this.personalCart = new Cart();
@@ -14,7 +16,13 @@ public  class Customer extends User {
             return false;
         }
         System.out.println("Successfully checked out for customer: " + getUsername());
+        
+        // Add items to order history
+        orderHistory.addAll(personalCart.getItems());
         personalCart.clearCart();
         return true;
+    }
+    public List<CartItem> getOrderHistory() {
+        return orderHistory;
     }
 }

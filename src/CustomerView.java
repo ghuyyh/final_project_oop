@@ -3,7 +3,10 @@ import java.awt.*;
 
 public class CustomerView {
     private JPanel customerPanel = new JPanel();
-    GUI_MainFrame mainFrame;
+    private Core core = Core.getInstance();
+
+    private GUI_MainFrame mainFrame;
+    private JPanel historyPanel = new JPanel();
 
     public CustomerView(GUI_MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -19,10 +22,46 @@ public class CustomerView {
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.add(logoutBtn);
         customerPanel.add(bottomPanel, BorderLayout.SOUTH);
+        historyPanel.setLayout(new BoxLayout(historyPanel, BoxLayout.Y_AXIS));
+
+        refreshHistory();
+        JScrollPane scrollPane = new JScrollPane(historyPanel);
+        customerPanel.add(scrollPane, BorderLayout.CENTER);
+    }
+
+    public void refreshHistory() {
+        historyPanel.removeAll();
+        User user = getCore().getLoggedInUser();
+        if (!(user instanceof Customer)) {
+            historyPanel.add(new JLabel("Please log in to view order history."));
+        } else {
+            Customer customer = (Customer) user;
+            if (customer.getOrderHistory().isEmpty()) {
+                historyPanel.add(new JLabel("No order history yet."));
+            } else {
+
+                for (CartItem item : customer.getOrderHistory()) {
+                    String itemInfo = String.format("<html><b>%s</b><br/>Price: $%.2f<br/>Quantity: %d</html>",
+                            item.getProduct().getName(), item.getProduct().getPrice(), item.getQuantity());
+                    historyPanel.add(new JLabel(itemInfo));
+                }
+            }
+        }
+
+        historyPanel.revalidate();
+        historyPanel.repaint();
     }
 
     public JPanel getCustomerPanel() {
         return customerPanel;
+    }
+
+    public Core getCore() {
+        return core;
+    }
+
+    public JPanel getHistoryPanel() {
+        return historyPanel;
     }
 
     public GUI_MainFrame getMainFrame() {

@@ -162,6 +162,7 @@ public class GUI_MainFrame {
     }
 
     public void showCustomer() {
+        customerPanel.refreshHistory();
         getLayout().show(mainPanel, "customer");
     }
 
