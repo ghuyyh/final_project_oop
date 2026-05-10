@@ -19,8 +19,8 @@ public class Core {
         loggedInUser = null;
         hotProducts = new ArrayList<>();
 
-        usersDatabase.add(new Admin("iamadmin", "admin123"));
-        usersDatabase.add(new Customer("iamcustomer", "customer123"));
+        usersDatabase.add(new Admin("admin", "admin123"));
+        usersDatabase.add(new Customer("customer", "customer123"));
 
         inventory.add(new Product("P01", "Xiaomi 13", 14000000.0, 10));
         inventory.add(new Product("P02", "iPhone 15 Pro Max", 35000000.0, 5));
