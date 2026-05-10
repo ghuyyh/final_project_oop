@@ -8,8 +8,10 @@ public class AdminView {
     private JTextField nameField = new JTextField(15);
     private JTextField priceField = new JTextField(15);
     private JTextField stockField = new JTextField(15);
+    private GUI_MainFrame mainFrame;
 
-    public AdminView() {
+    public AdminView(GUI_MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
         adminPanel.setLayout(new BorderLayout());
         adminPanel.setBorder(BorderFactory.createTitledBorder("Admin Panel - Add Manage Products"));
         JPanel formPanel = new JPanel(new GridLayout(5, 2, 10, 10));
@@ -26,6 +28,16 @@ public class AdminView {
         formPanel.add(new JLabel(""));
         formPanel.add(addProductButton);
         adminPanel.add(formPanel, BorderLayout.CENTER);
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton logoutBtn = new JButton("Logout");
+        logoutBtn.addActionListener(e -> {
+            Core.getInstance().setLoggedInUser(null);
+            JOptionPane.showMessageDialog(adminPanel, "Logged out successful.");
+            getMainFrame().showHome();
+        });
+        bottomPanel.add(logoutBtn);
+        adminPanel.add(bottomPanel, BorderLayout.SOUTH);
+
     }
 
     private void processAddProduct() {
@@ -51,6 +63,10 @@ public class AdminView {
             JOptionPane.showMessageDialog(adminPanel, "Price and Stock must be valid numbers.", "Input Error",
                     JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public GUI_MainFrame getMainFrame() {
+        return mainFrame;
     }
 
     public JPanel getAdminPanel() {

@@ -1,3 +1,4 @@
+//example of a simple login screen using Java Swing
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

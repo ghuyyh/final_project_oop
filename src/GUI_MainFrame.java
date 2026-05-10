@@ -5,12 +5,11 @@ public class GUI_MainFrame {
     private CardLayout layout = new CardLayout();
     private Core core = Core.getInstance();
     private JPanel mainPanel = new JPanel(layout);
-    private HomeView homePanel = new HomeView(this);
+    private HomeView homePanel = new HomeView();
     private CartView cartPanel = new CartView(this);
-    private AdminView adminPanel = new AdminView();
+    private AdminView adminPanel = new AdminView(this);
     private LoginView loginPanel = new LoginView(this);
-    private JButton accountBtn = new JButton("Account");
-    private JButton cartBtn = new JButton("Cart(0)");
+    private CustomerView customerPanel = new CustomerView(this);
 
     public GUI_MainFrame() {
         // Get the screen size
@@ -61,34 +60,21 @@ public class GUI_MainFrame {
         rightSide.setOpaque(false);
         // JTextField searchField = new JTextField(10);
         JButton searchBtn = new JButton("Search");
+        JButton accountBtn = new JButton("Account");
+        JButton cartBtn = new JButton("Cart(0)");
         cartBtn = new JButton("Cart (" + core.getGuestCart().getItems().size() + ")");
         cartBtn.addActionListener(e -> {
             showCart();
         });
-        // Test
+
         accountBtn.addActionListener(e -> {
-            User currentUser = core.getLoggedInUser();
-            if (currentUser != null) {
-                int choice = JOptionPane
-                        .showConfirmDialog(
-                                mainPanel, "Logged in as: " + currentUser.getUsername()  
-                                          + "\nDo you want to log out?",
-                                "Account Info", JOptionPane.YES_NO_OPTION);
-                if (choice == JOptionPane.YES_OPTION) {
-                    core.setLoggedInUser(null);
-                    updateAccountButton();
-                    JOptionPane.showMessageDialog(mainPanel, "Logged out successfully.");
-                    showHome();
-                } else if (choice == JOptionPane.NO_OPTION) {
-                    if (currentUser instanceof Admin) {
-                        showAdmin();
-
-                    }
-                }
-            } else {
+            if (Core.getInstance().getLoggedInUser() == null) {
                 showLogin();
+            } else if (Core.getInstance().getLoggedInUser() instanceof Admin) {
+                showAdmin();
+            } else {
+                showCustomer();
             }
-
         });
         // rightSide.add(searchField);
         rightSide.add(searchBtn);
@@ -99,24 +85,19 @@ public class GUI_MainFrame {
         bar.add(rightSide, BorderLayout.EAST);
         mainScr.add(bar, BorderLayout.NORTH);
 
-        // home panel
-        // getHomePanel().setLayout(new BorderLayout());
-        // getHomePanel().setBorder(BorderFactory.createTitledBorder("Today Hot
-        // Sales"));
-
         // main panel
-
         mainPanel.add("home", getHomePanel());
         mainPanel.add("cart", getCartPanel());
         mainPanel.add("admin", getAdminPanel());
+        mainPanel.add("customer", getCustomerPanel());
+        mainPanel.setBackground(new Color(238, 238, 238));
 
         // Wrap loginPanel so it respects preferred size
         JPanel loginWrapper = new JPanel();
         loginWrapper.setLayout(new FlowLayout(FlowLayout.CENTER));
-        loginWrapper.add(loginPanel.getLoginPanel());
+        loginWrapper.add(getLoginPanel());
         mainPanel.add("login", loginWrapper);
 
-        mainPanel.setBackground(new Color(238, 238, 238));
         // main screen setting
         mainScr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainScr.setPreferredSize(new Dimension((int) (0.8 * scrSize.width), (int) (0.8 * scrSize.height)));
@@ -126,7 +107,6 @@ public class GUI_MainFrame {
         mainScr.setMinimumSize(new Dimension((int) (0.8 * scrSize.width), (int) (0.8 * scrSize.height)));
         mainScr.setVisible(true);
         showHome();
-        // mainScr.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
     }
 
@@ -147,8 +127,16 @@ public class GUI_MainFrame {
         return cartPanel.getCartPanel();
     }
 
+    public JPanel getLoginPanel() {
+        return loginPanel.getLoginPanel();
+    }
+
     public JPanel getAdminPanel() {
         return adminPanel.getAdminPanel();
+    }
+
+    public JPanel getCustomerPanel() {
+        return customerPanel.getCustomerPanel();
     }
 
     public void showHome() {
@@ -169,24 +157,8 @@ public class GUI_MainFrame {
     public void showLogin() {
         getLayout().show(mainPanel, "login");
     }
-    public void updateAccountButton() {
-        User currentUser = core.getLoggedInUser();
-        if (currentUser != null) {
-            accountBtn.setText("Logout");
-        } else {
-            accountBtn.setText("Account");
-        }
-    }
-        public void updateCartButton() {
-            User currentUser = core.getLoggedInUser();
-            int count = 0;
-            if (currentUser instanceof Customer) {
-                count = ((Customer) currentUser).getPersonalCart().getItems().size();
-            } else if (currentUser == null) {
-                count = core.getGuestCart().getItems().size();
-            }
-            cartBtn.setText("Cart (" + count + ")");
-        }
-}
-        
 
+    public void showCustomer() {
+        getLayout().show(mainPanel, "customer");
+    }
+}
