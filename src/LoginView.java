@@ -56,6 +56,13 @@ public class LoginView {
                             Core.getInstance().setGuestCart(new Cart());
                             this.mainFrame.showAdmin();
                         } else {
+                            Customer customer = (Customer) user;
+                            Cart guestCart = Core.getInstance().getGuestCart();
+                            for (CartItem item : guestCart.getItems()) {
+                                customer.getPersonalCart().addItem(item.getProduct(), item.getQuantity());
+                            }
+                            guestCart.clearCart();
+                            this.mainFrame.updateCartButton(null);
                             this.mainFrame.showHome();
                         }
                     } else {
