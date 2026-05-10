@@ -5,18 +5,18 @@ public class HomeView {
     private JPanel homePanel = new JPanel();
     private JPanel hotProductsPanel = new JPanel();
     private Core core = Core.getInstance();
-    private GUI_MainFrame mainFrame;
+    
 
-    public HomeView(GUI_MainFrame mainFrame) {
-        this.mainFrame = mainFrame;
+    public HomeView() {
+        
 
-        homePanel.setLayout(new BorderLayout());
-        homePanel.setBorder(BorderFactory.createTitledBorder("Today Hot Sales"));
+        getHomePanel().setLayout(new BorderLayout());
+        getHomePanel().setBorder(BorderFactory.createTitledBorder("Today Hot Sales"));
         hotProductsPanel.setLayout(new GridLayout(0,1,5,5));
 
         //scroll pane for hot products
         JScrollPane scrollPane = new JScrollPane(hotProductsPanel);
-        homePanel.add(scrollPane, BorderLayout.CENTER);
+        getHomePanel().add(scrollPane, BorderLayout.CENTER);
         refreshHome();
     }
     public void refreshHome() {
@@ -40,8 +40,7 @@ public class HomeView {
                     }
                     targetCart.addItem(product, 1);
                     JOptionPane.showMessageDialog(null," Added" + product.getName() + " to cart!");
-                    this.mainFrame.updateAccountButton();
-                    this.mainFrame.updateCartButton();
+                    
                 }
             });
             productPanel.add(addToCartBtn);
