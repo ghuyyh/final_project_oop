@@ -81,6 +81,7 @@ classDiagram
         -CartView cartPanel
         -AdminView adminPanel
         -LoginView loginPanel
+        -CustomerView customerPanel
         +GUI_MainFrame(Core core)
         +showHome() void
         +showCart() void
@@ -99,6 +100,7 @@ classDiagram
     }
     class AdminView{
         -Core core
+        GUI_MainFrame mainFrame
         +display() void
     }
     class LoginView{
@@ -106,4 +108,9 @@ classDiagram
         +display() void
     }
     
+    class CustomerView{
+        -Core core
+        -GUI_MainFrame mainFrame
+        +display() void
+    }
     GUI_MainFrame --> Core : Sends User Events
