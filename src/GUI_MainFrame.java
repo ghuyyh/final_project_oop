@@ -1,4 +1,6 @@
 import java.awt.*;
+
+import javax.print.attribute.standard.MediaSize.Other;
 import javax.swing.*;
 
 public class GUI_MainFrame {
@@ -45,9 +47,22 @@ public class GUI_MainFrame {
         JButton homeBtn = new JButton("Home");
         JButton categorySelect = new JButton("Categories");
         JPopupMenu categoryMenu = new JPopupMenu();
-        categoryMenu.add(new JMenuItem("Phones"));
-        categoryMenu.add(new JMenuItem("Smart Home"));
-        categoryMenu.add(new JMenuItem("Other"));
+
+        JMenuItem phonesItem = new JMenuItem("Phones");
+        JMenuItem smartHomeItem = new JMenuItem("Smart Home");
+        JMenuItem otherItem = new JMenuItem("Other");
+        
+        categoryMenu.add(phonesItem);
+        categoryMenu.add(smartHomeItem);
+        categoryMenu.add(otherItem);
+
+        phonesItem.addActionListener(e ->  filterAndShow(Phone.class));
+           
+        smartHomeItem.addActionListener(e -> filterAndShow(SmartHome.class));
+
+        otherItem.addActionListener(e -> filterAndShow(Other.class));
+
+        
         categorySelect.addActionListener(e -> {
             categoryMenu.show(categorySelect, 0, 35);
         });
@@ -113,6 +128,18 @@ public class GUI_MainFrame {
         mainScr.setVisible(true);
         showHome();
 
+    }
+    private void filterAndShow(Class<?> categoryClass) {
+        java.util.List<Product> filteredList = new java.util.ArrayList<>();
+        for (Product p : core.getInventory()) {
+            if (categoryClass.isInstance(p)) {
+                filteredList.add(p); // Thêm vào danh sách nếu là Phone, SmartHome hoặc Other
+            }
+        }
+        // Yêu cầu HomeView chỉ vẽ danh sách đã được lọc này
+        homePanel.displayProducts(filteredList); 
+        // Chuyển màn hình về Home để xem
+        getLayout().show(mainPanel, "home"); 
     }
 
     // geter
