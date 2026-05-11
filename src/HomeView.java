@@ -22,10 +22,10 @@ public class HomeView {
     }
     public void refreshHome() {
         hotProductsPanel.removeAll();
-        for (Product product : core.getHotProducts()) {
+        for (Product product : getCore().getHotProducts()) {
             JPanel productPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             try{
-                java.net.URL imgURL = getClass().getResource("/res/" + product.getImageFileName());
+                java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getImageFileName());
                 if(imgURL != null){
                     ImageIcon icon = new ImageIcon(imgURL);
                     Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
@@ -40,7 +40,7 @@ public class HomeView {
             JButton addToCartBtn = new JButton("Add to Cart");
 
             addToCartBtn.addActionListener(e -> { 
-                User loggedInUser = core.getLoggedInUser();
+                User loggedInUser = getCore().getLoggedInUser();
                 if(loggedInUser instanceof Admin){
                     JOptionPane.showMessageDialog(null, "Admins cannot add products to cart. Please log in as a customer.");
                 }
@@ -49,7 +49,7 @@ public class HomeView {
                     if (loggedInUser instanceof Customer) {
                         targetCart = ((Customer) loggedInUser).getPersonalCart();
                     } else {
-                        targetCart = core.getGuestCart();
+                        targetCart = getCore().getGuestCart();
                     }
                     targetCart.addItem(product, 1);
                     getMainFrame().refreshCart();
@@ -69,5 +69,8 @@ public class HomeView {
     }
     public GUI_MainFrame getMainFrame() {
         return mainFrame;
+    }
+    public Core getCore() {
+        return core;
     }
 }
