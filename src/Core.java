@@ -21,11 +21,11 @@ public class Core {
         usersDatabase.add(new Admin("admin", "admin123"));
         usersDatabase.add(new Customer("customer", "customer123"));
 
-        inventory.add(new Product("P01", "Xiaomi 13", 1400.0, 10));
-        inventory.add(new Product("P02", "iPhone 15 Pro Max", 1000.0, 5));
-        inventory.add(new Product("P03", "Samsung Galaxy S23 Ultra", 800.0, 8));
-        inventory.add(new Product("P04", "OnePlus 11", 230.0, 12));
-        inventory.add(new Product("P05", "Google Pixel 8 Pro", 888.0, 7));
+        inventory.add(new Product("P01", "Xiaomi 13", 1400.0, 10, "xiaomi13.png"));
+        inventory.add(new Product("P02", "iPhone 15 Pro Max", 1000.0, 5, "iphone15promax.png"));
+        inventory.add(new Product("P03", "Samsung Galaxy S23 Ultra", 800.0, 8, "samsunggalaxys23ultra.png"));
+        inventory.add(new Product("P04", "OnePlus 11", 230.0, 12, "oneplus11.png"));
+        inventory.add(new Product("P05", "Google Pixel 8 Pro", 888.0, 7, "googlepixel8pro.png"));
         hotProducts.addAll(inventory);
 
     }
