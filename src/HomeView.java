@@ -24,6 +24,18 @@ public class HomeView {
         hotProductsPanel.removeAll();
         for (Product product : core.getHotProducts()) {
             JPanel productPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            try{
+                java.net.URL imgURL = getClass().getResource("/res/" + product.getImageFileName());
+                if(imgURL != null){
+                    ImageIcon icon = new ImageIcon(imgURL);
+                    Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                    JLabel imgLabel = new JLabel(new ImageIcon(img));
+                    productPanel.add(imgLabel);
+                }
+            } catch (Exception e) {
+                System.out.println("Error loading image for product: " + product.getName());
+            }
+
             productPanel.add(new JLabel(product.getName() + " - $" + String.format("%.2f", product.getPrice())));
             JButton addToCartBtn = new JButton("Add to Cart");
 
