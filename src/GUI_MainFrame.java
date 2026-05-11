@@ -10,6 +10,7 @@ public class GUI_MainFrame {
     private AdminView adminPanel = new AdminView(this);
     private LoginView loginPanel = new LoginView(this);
     private CustomerView customerPanel = new CustomerView(this);
+    private SearchView searchPanel = new SearchView(this);
     private JButton cartBtn;
 
     public GUI_MainFrame() {
@@ -66,6 +67,9 @@ public class GUI_MainFrame {
         cartBtn.addActionListener(e -> {
             showCart();
         });
+        searchBtn.addActionListener(e -> {
+            showSearch();
+        });
 
         accountBtn.addActionListener(e -> {
             if (Core.getInstance().getLoggedInUser() == null) {
@@ -90,6 +94,7 @@ public class GUI_MainFrame {
         mainPanel.add("cart", getCartPanel());
         mainPanel.add("admin", getAdminPanel());
         mainPanel.add("customer", getCustomerPanel());
+        mainPanel.add("search", getSearchPanel());
         mainPanel.setBackground(new Color(238, 238, 238));
 
         // Wrap loginPanel so it respects preferred size
@@ -125,6 +130,10 @@ public class GUI_MainFrame {
 
     public JPanel getCartPanel() {
         return cartPanel.getCartPanel();
+    }
+
+    public JPanel getSearchPanel() {
+        return searchPanel.getSearchPanel();
     }
 
     public void refreshCart() {
@@ -164,6 +173,9 @@ public class GUI_MainFrame {
     public void showCustomer() {
         customerPanel.refreshHistory();
         getLayout().show(mainPanel, "customer");
+    }
+    public void showSearch(){
+        getLayout().show(mainPanel, "search");
     }
 
     public JButton getCartBtn() {

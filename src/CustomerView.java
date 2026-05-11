@@ -32,14 +32,11 @@ public class CustomerView {
     public void refreshHistory() {
         historyPanel.removeAll();
         User user = getCore().getLoggedInUser();
-        if (!(user instanceof Customer)) {
-            historyPanel.add(new JLabel("Please log in to view order history."));
-        } else {
+        if (user != null) {
             Customer customer = (Customer) user;
             if (customer.getOrderHistory().isEmpty()) {
                 historyPanel.add(new JLabel("No order history yet."));
             } else {
-
                 for (CartItem item : customer.getOrderHistory()) {
                     String itemInfo = String.format("<html><b>%s</b><br/>Price: $%.2f<br/>Quantity: %d</html>",
                             item.getProduct().getName(), item.getProduct().getPrice(), item.getQuantity());
