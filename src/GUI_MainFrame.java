@@ -133,12 +133,12 @@ public class GUI_MainFrame {
         java.util.List<Product> filteredList = new java.util.ArrayList<>();
         for (Product p : core.getInventory()) {
             if (categoryClass.isInstance(p)) {
-                filteredList.add(p); // Thêm vào danh sách nếu là Phone, SmartHome hoặc Other
+                filteredList.add(p);  
             }
         }
-        // Yêu cầu HomeView chỉ vẽ danh sách đã được lọc này
-        homePanel.displayProducts(filteredList); 
-        // Chuyển màn hình về Home để xem
+
+         homePanel.displayProducts(filteredList); 
+         
         getLayout().show(mainPanel, "home"); 
     }
 
