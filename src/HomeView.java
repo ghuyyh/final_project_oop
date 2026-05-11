@@ -18,11 +18,11 @@ public class HomeView {
         //scroll pane for hot products
         JScrollPane scrollPane = new JScrollPane(hotProductsPanel);
         getHomePanel().add(scrollPane, BorderLayout.CENTER);
-        refreshHome();
+        refreshHome();  
     }
-    public void refreshHome() {
+    public void displayProducts(java.util.List<Product> products) {
         hotProductsPanel.removeAll();
-        for (Product product : getCore().getHotProducts()) {
+        for (Product product : products) {
             JPanel productPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             try{
                 java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getImageFileName());
@@ -63,6 +63,9 @@ public class HomeView {
         }
         hotProductsPanel.revalidate();
         hotProductsPanel.repaint();
+    }
+    public void refreshHome() {
+        displayProducts(getCore().getInventory());
     }
     public JPanel getHomePanel() {
         return homePanel;
