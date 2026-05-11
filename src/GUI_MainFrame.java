@@ -47,7 +47,7 @@ public class GUI_MainFrame {
         JPopupMenu categoryMenu = new JPopupMenu();
         categoryMenu.add(new JMenuItem("Phones"));
         categoryMenu.add(new JMenuItem("Smart Home"));
-        categoryMenu.add(new JMenuItem("Others"));
+        categoryMenu.add(new JMenuItem("Other"));
         categorySelect.addActionListener(e -> {
             categoryMenu.show(categorySelect, 0, 35);
         });
