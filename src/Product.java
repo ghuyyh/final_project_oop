@@ -6,17 +6,20 @@ public class Product {
     private String name;
     private double price;
     private int stockQuantity;
-    public Product(String id, String name, double price, int stockQuantity) {
+    private String imageFileName;
+    private Map<String, String> specs;
+
+    public Product(String id, String name, double price, int stockQuantity, String imageFileName, Map<String, String> specs) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.imageFileName = imageFileName;
         this.stockQuantity = stockQuantity;
+        this.imageFileName = imageFileName;
         this.specs = specs;
     }
 
     public Product(String id, String name, double price, int stockQuantity){
-        this(id, name, price, stockQuantity, generateDefaultSpecs(name));
+        this(id, name, price, stockQuantity, "", generateDefaultSpecs(name));
     }
 
     private static Map<String, String> generateDefaultSpecs(String name){
