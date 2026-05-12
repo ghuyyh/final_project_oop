@@ -37,8 +37,12 @@ public class HomeView {
             }
 
             productPanel.add(new JLabel(product.getName() + " - $" + String.format("%.2f", product.getPrice())));
-            JButton addToCartBtn = new JButton("Add to Cart");
 
+            JButton detailBtn = new JButton("View Details");
+            detailBtn.addActionListener(e -> new ProductView(product, mainFrame).show());
+            productPanel.add(detailBtn);
+
+            JButton addToCartBtn = new JButton("Add to Cart");
             addToCartBtn.addActionListener(e -> { 
                 User loggedInUser = getCore().getLoggedInUser();
                 if(loggedInUser instanceof Admin){
