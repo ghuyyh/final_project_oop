@@ -395,10 +395,7 @@ public class ProductView {
     }
 
     private String formatPrice(double price) {
-        if (price >= 1_000_000) {
-            return String.format("%,.0f \u20ab", price);
-        }
-        return String.format("$%.2f", price);
+        return String.format("$%,.2f", price);
     }
 
     private JButton makeIconButton(String text) {
