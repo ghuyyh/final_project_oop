@@ -20,16 +20,16 @@ public class CartView {
 
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton refreshBtn = new JButton("Refresh Cart");
-        JButton checkoutBtn = new JButton("Checkout");
+        JButton checkoutBtn = new JButton("Buy Now");
 
         refreshBtn.addActionListener(e -> refreshCart());
 
         checkoutBtn.addActionListener(e -> {
             User user = getCore().getLoggedInUser();
             if (user == null) {
-                JOptionPane.showMessageDialog(cartPanel, "Please login as a Customer to checkout.");
+                JOptionPane.showMessageDialog(cartPanel, "Please login as a Customer to buy.");
             } else if (user instanceof Admin) {
-                JOptionPane.showMessageDialog(cartPanel, "Admins cannot checkout. Please login as a Customer.");
+                JOptionPane.showMessageDialog(cartPanel, "Admins cannot buy. Please login as a Customer.");
             } else if (user instanceof Customer) {
                 Customer customer = (Customer) user;
                 if (customer.getPersonalCart().getItems().isEmpty()) {
