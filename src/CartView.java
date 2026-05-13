@@ -80,11 +80,9 @@ public class CartView {
                 singleItemPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
                 singleItemPanel.setBackground(new Color(230, 230, 230));
 
-                // --- Thumbnail image (left) ---
                 JLabel imgLabel = buildThumbnail(item.getProduct());
                 singleItemPanel.add(imgLabel, BorderLayout.WEST);
 
-                // --- Product info (center) ---
                 String itemInfo = String.format(
                         "<html><b>%s</b><br/>Price: $%.2f &nbsp;&nbsp; Quantity: %d</html>",
                         item.getProduct().getName(),
@@ -93,7 +91,6 @@ public class CartView {
                 JLabel itemLabel = new JLabel(itemInfo);
                 singleItemPanel.add(itemLabel, BorderLayout.CENTER);
 
-                // --- Buttons (right) ---
                 JPanel btnPanel = new JPanel(new GridLayout(2, 1, 4, 4));
                 btnPanel.setOpaque(false);
 
@@ -121,12 +118,7 @@ public class CartView {
         }
     }
 
-    /**
-     * Tạo thumbnail 60x60 cho sản phẩm.
-     * Thử load ảnh thật từ res/, nếu không có thì dùng placeholder màu.
-     */
     private JLabel buildThumbnail(Product product) {
-        // Thử load ảnh thật
         try {
             java.net.URL imgURL = getClass().getResource("/res/" + product.getImageFileName());
             if (imgURL != null) {
@@ -138,7 +130,6 @@ public class CartView {
             }
         } catch (Exception ignored) {}
 
-        // Fallback: vẽ placeholder màu gradient giống ProductView
         BufferedImage img = new BufferedImage(60, 60, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = img.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -147,7 +138,6 @@ public class CartView {
         Color c2 = Color.getHSBColor(((hash + 120) % 360) / 360f, 0.60f, 0.30f);
         g.setPaint(new GradientPaint(0, 0, c1, 60, 60, c2));
         g.fillRoundRect(0, 0, 60, 60, 12, 12);
-        // chữ viết tắt tên sản phẩm
         g.setColor(new Color(255, 255, 255, 200));
         g.setFont(new Font("Segoe UI", Font.BOLD, 10));
         String abbr = product.getName().length() >= 2
