@@ -2,32 +2,54 @@ classDiagram
     %% Relationships & Connectors
     User <|-- Customer : Inheritance
     User <|-- Admin : Inheritance
-    
-    Customer "1" *-- "1" Cart : Composition
-    Cart "1" *-- "*" CartItem : Composition
-    CartItem "*" --> "1" Product : Association
 
-    Core "1" o-- "*" User : Aggregation
-    Core "1" o-- "*" Product : Aggregation
-    Core "1" --> "1" Cart : Manages Guest Cart
-    
+    Customer "1" *-- "1" Cart : personalCart
+    Cart "1" *-- "*" CartItem : items
+    CartItem "*" --> "1" Product : product
+
+    Core "1" o-- "*" User : usersDatabase
+    Core "1" o-- "*" Product : inventory
+    Core "1" o-- "*" Product : hotProducts
+    Core "1" --> "1" Cart : guestCart
+
+    GUI_MainFrame "1" *-- "1" HomeView
+    GUI_MainFrame "1" *-- "1" CartView
+    GUI_MainFrame "1" *-- "1" AdminView
+    GUI_MainFrame "1" *-- "1" LoginView
+    GUI_MainFrame "1" *-- "1" CustomerView
+
+    HomeView --> Core
+    CartView --> Core
+    AdminView --> Core
+    LoginView --> Core
+    CustomerView --> Core
+
+    HomeView --> GUI_MainFrame
+    CartView --> GUI_MainFrame
+    AdminView --> GUI_MainFrame
+    LoginView --> GUI_MainFrame
+    CustomerView --> GUI_MainFrame
+
+    Main --> GUI_MainFrame
+
     %% Base User Class
     class User {
         <<Abstract>>
         -String username
         -String password
-        +getUsername() String
-        +verifyPassword(String pass) boolean
+        +User(String username, String password)
+        +verifyPassword(String password) boolean
     }
 
     %% Child Classes
     class Customer {
         -Cart personalCart
-        +getCart() Cart
+        +Customer(String username, String password)
         +checkout() boolean
     }
 
     class Admin {
+        +Admin(String username, String password)
         +updateStock(Product p, int newStock) void
         +updatePrice(Product p, double newPrice) void
         +addNewProduct(Product p) void
@@ -39,15 +61,15 @@ classDiagram
         -String name
         -double price
         -int stockQuantity
+        +Product(String id, String name, double price, int stockQuantity)
         +reduceStock(int amount) boolean
-        +getPrice() double
-        +getDetails() String
     }
 
     class Cart {
         -List~CartItem~ items
-        +addItem(Product p, int qty) void
-        +removeItem(Product p) void
+        +Cart()
+        +addItem(Product product, int quantity) void
+        +removeItem(Product product) void
         +calculateTotal() double
         +clearCart() void
     }
@@ -55,55 +77,96 @@ classDiagram
     class CartItem {
         -Product product
         -int quantity
-        +getSubtotal() double
-        +increaseQty(int amount) void
+        +CartItem(Product product, int quantity)
+        +increaseQuantity(int amount) void
     }
 
     %% The Main Controller (Singleton)
     class Core {
+        -Core instance$
         -List~User~ usersDatabase
         -List~Product~ inventory
         -User loggedInUser
         -Cart guestCart
         -List~Product~ hotProducts
-        +getInstance() Core$
-        +authenticate(String user, String pass) User
+        +authenticate(String username, String password) User
         +processCheckout() boolean
         +routeUserView() String
+        +registerCustomer(String username, String password) boolean
     }
 
-    %% UI Representation (Optional in pure data UML, but helpful)
+    %% UI Representation
     class GUI_MainFrame {
         -CardLayout layout
         -Core core
-        -Jpanel mainPanel
+        -JPanel mainPanel
         -HomeView homePanel
         -CartView cartPanel
         -AdminView adminPanel
         -LoginView loginPanel
-        +GUI_MainFrame(Core core)
+        -CustomerView customerPanel
+        -JButton cartBtn
+        +GUI_MainFrame()
+        +refreshCart() void
         +showHome() void
         +showCart() void
         +showAdmin() void
         +showLogin() void
+        +showCustomer() void
+        +updateCartButton(JButton button) void
     }
-    
-    class HomeView{
-        -List~Product~ hotProducts
-        +display() void
-    }
-    class CartView{
-        -Cart cart
+
+    class HomeView {
+        -JPanel homePanel
+        -JPanel hotProductsPanel
         -Core core
-        +display() void
+        -GUI_MainFrame mainFrame
+        +HomeView(GUI_MainFrame mainFrame)
+        +refreshHome() void
     }
-    class AdminView{
+
+    class CartView {
+        -JPanel cartPanel
         -Core core
-        +display() void
+        -JPanel itemPanel
+        -JLabel totalLabel
+        -GUI_MainFrame mainFrame
+        +CartView(GUI_MainFrame mainFrame)
+        +refreshCart() void
+        -displayCartItems(Cart targetCart) void
     }
-    class LoginView{
+
+    class AdminView {
+        -JPanel adminPanel
         -Core core
-        +display() void
+        -JTextField idField
+        -JTextField nameField
+        -JTextField priceField
+        -JTextField stockField
+        -GUI_MainFrame mainFrame
+        +AdminView(GUI_MainFrame mainFrame)
+        -processAddProduct() void
     }
-    
-    GUI_MainFrame --> Core : Sends User Events
+
+    class LoginView {
+        -JPanel loginPanel
+        -JTextField usernameField
+        -JPasswordField passwordField
+        -JButton loginBtn
+        -JButton regBtn
+        -GUI_MainFrame mainFrame
+        +LoginView(GUI_MainFrame mainFrame)
+    }
+
+    class CustomerView {
+        -JPanel customerPanel
+        -Core core  
+        -GUI_MainFrame mainFrame
+        -JPanel historyPanel
+        +CustomerView(GUI_MainFrame mainFrame)
+    }
+
+    class Main {
+        +main(String[] args) void$
+    }
+
