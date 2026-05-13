@@ -8,24 +8,24 @@ import java.util.Map;
 
 public class ProductView {
 
-    private static final Color BG             = new Color(18, 18, 24);
-    private static final Color SURFACE        = new Color(28, 28, 38);
-    private static final Color CARD           = new Color(38, 38, 52);
-    private static final Color ACCENT         = new Color(99, 179, 237);
-    private static final Color ACCENT2        = new Color(236, 72, 153);
-    private static final Color TEXT_PRIMARY   = new Color(240, 240, 248);
-    private static final Color TEXT_SECONDARY = new Color(150, 150, 175);
-    private static final Color STOCK_OK       = new Color(72, 199, 142);
-    private static final Color STOCK_LOW      = new Color(255, 180, 60);
-    private static final Color STOCK_NONE     = new Color(236, 72, 72);
-    private static final Color SEPARATOR      = new Color(55, 55, 75);
+    private static final Color BG = new Color(230, 230, 230);
+    private static final Color SURFACE = new Color(255, 255, 255);
+    private static final Color CARD = new Color(210, 210, 210);
+    private static final Color ACCENT = new Color(77, 77, 77);
+    private static final Color ACCENT2 = new Color(50, 50, 50);
+    private static final Color TEXT_PRIMARY = new Color(50, 50, 50);
+    private static final Color TEXT_SECONDARY = new Color(100, 100, 100);
+    private static final Color STOCK_OK = new Color(72, 199, 142);
+    private static final Color STOCK_LOW = new Color(255, 180, 60);
+    private static final Color STOCK_NONE = new Color(236, 72, 72);
+    private static final Color SEPARATOR = new Color(230, 230, 230);
 
-    private static final Font FONT_TITLE  = new Font("Segoe UI", Font.BOLD, 22);
-    private static final Font FONT_PRICE  = new Font("Segoe UI", Font.BOLD, 20);
-    private static final Font FONT_LABEL  = new Font("Segoe UI", Font.BOLD, 12);
-    private static final Font FONT_VALUE  = new Font("Segoe UI", Font.PLAIN, 12);
-    private static final Font FONT_STOCK  = new Font("Segoe UI", Font.BOLD, 13);
-    private static final Font FONT_BTN    = new Font("Segoe UI", Font.BOLD, 13);
+    private static final Font FONT_TITLE = new Font("Segoe UI", Font.BOLD, 22);
+    private static final Font FONT_PRICE = new Font("Segoe UI", Font.BOLD, 20);
+    private static final Font FONT_LABEL = new Font("Segoe UI", Font.BOLD, 12);
+    private static final Font FONT_VALUE = new Font("Segoe UI", Font.PLAIN, 12);
+    private static final Font FONT_STOCK = new Font("Segoe UI", Font.BOLD, 13);
+    private static final Font FONT_BTN = new Font("Segoe UI", Font.BOLD, 13);
     private static final Font FONT_HEADER = new Font("Segoe UI", Font.BOLD, 13);
 
     private final Product product;
@@ -33,7 +33,7 @@ public class ProductView {
     private JDialog dialog;
 
     public ProductView(Product product, GUI_MainFrame mainFrame) {
-        this.product   = product;
+        this.product = product;
         this.mainFrame = mainFrame;
     }
 
@@ -59,16 +59,16 @@ public class ProductView {
         body.setBorder(new EmptyBorder(16, 0, 0, 0));
 
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.fill    = GridBagConstraints.BOTH;
-        gbc.insets  = new Insets(0, 0, 0, 16);
-        gbc.gridx   = 0;
-        gbc.gridy   = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(0, 0, 0, 16);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
         gbc.weightx = 0.42;
         gbc.weighty = 1.0;
         body.add(buildImageCard(), gbc);
 
-        gbc.gridx   = 1;
-        gbc.insets  = new Insets(0, 0, 0, 0);
+        gbc.gridx = 1;
+        gbc.insets = new Insets(0, 0, 0, 0);
         gbc.weightx = 0.58;
         body.add(buildInfoCard(), gbc);
 
@@ -85,7 +85,7 @@ public class ProductView {
         p.setBackground(BG);
         p.setBorder(new EmptyBorder(0, 0, 12, 0));
 
-        JLabel breadcrumb = new JLabel("🏠  Home  ›  Product Details");
+        JLabel breadcrumb = new JLabel(" Home  >  Product Details > " + product.getName());
         breadcrumb.setFont(new Font("Segoe UI", Font.PLAIN, 11));
         breadcrumb.setForeground(TEXT_SECONDARY);
 
@@ -93,7 +93,7 @@ public class ProductView {
         closeBtn.addActionListener(e -> dialog.dispose());
 
         p.add(breadcrumb, BorderLayout.WEST);
-        p.add(closeBtn,   BorderLayout.EAST);
+        p.add(closeBtn, BorderLayout.EAST);
         return p;
     }
 
@@ -103,21 +103,25 @@ public class ProductView {
         card.setBorder(new EmptyBorder(16, 16, 16, 16));
 
         BufferedImage img = generateProductImage(product);
-        JLabel imgLabel   = new JLabel(new ImageIcon(img), SwingConstants.CENTER);
+        JLabel imgLabel = new JLabel(new ImageIcon(img), SwingConstants.CENTER);
         imgLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         imgLabel.setToolTipText("Click to view larger image");
 
         imgLabel.addMouseListener(new MouseAdapter() {
-            @Override public void mouseEntered(MouseEvent e) {
+            @Override
+            public void mouseEntered(MouseEvent e) {
                 card.setBorder(BorderFactory.createCompoundBorder(
-                    new LineBorder(ACCENT, 2, true),
-                    new EmptyBorder(14, 14, 14, 14)
-                ));
+                        new LineBorder(ACCENT, 2, true),
+                        new EmptyBorder(14, 14, 14, 14)));
             }
-            @Override public void mouseExited(MouseEvent e) {
+
+            @Override
+            public void mouseExited(MouseEvent e) {
                 card.setBorder(new EmptyBorder(16, 16, 16, 16));
             }
-            @Override public void mouseClicked(MouseEvent e) {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
                 showZoomDialog(img);
             }
         });
@@ -128,7 +132,7 @@ public class ProductView {
         hint.setBorder(new EmptyBorder(8, 0, 0, 0));
 
         card.add(imgLabel, BorderLayout.CENTER);
-        card.add(hint,     BorderLayout.SOUTH);
+        card.add(hint, BorderLayout.SOUTH);
         return card;
     }
 
@@ -172,8 +176,8 @@ public class ProductView {
         top.add(specTitle);
         top.add(Box.createVerticalStrut(10));
 
-        card.add(top,               BorderLayout.NORTH);
-        card.add(buildSpecTable(),  BorderLayout.CENTER);
+        card.add(top, BorderLayout.NORTH);
+        card.add(buildSpecTable(), BorderLayout.CENTER);
         card.add(buildCartButton(), BorderLayout.SOUTH);
         return card;
     }
@@ -187,13 +191,13 @@ public class ProductView {
         String text;
         Color color;
         if (stock == 0) {
-            text  = "✗  Out of Stock";
+            text = "Out of Stock";
             color = STOCK_NONE;
         } else if (stock <= 3) {
-            text  = "⚠  Low Stock  (" + stock + " left)";
+            text = "Low Stock  (" + stock + " left)";
             color = STOCK_LOW;
         } else {
-            text  = "✓  In Stock  (" + stock + " available)";
+            text = "In Stock  (" + stock + " available)";
             color = STOCK_OK;
         }
 
@@ -201,9 +205,8 @@ public class ProductView {
         badge.setFont(FONT_STOCK);
         badge.setForeground(color);
         badge.setBorder(BorderFactory.createCompoundBorder(
-            new LineBorder(color, 1, true),
-            new EmptyBorder(4, 10, 4, 10)
-        ));
+                new LineBorder(color, 1, true),
+                new EmptyBorder(4, 10, 4, 10)));
         p.add(badge);
         return p;
     }
@@ -216,22 +219,22 @@ public class ProductView {
         table.setBorder(new EmptyBorder(6, 6, 6, 6));
 
         GridBagConstraints lc = new GridBagConstraints();
-        lc.anchor  = GridBagConstraints.NORTHWEST;
-        lc.fill    = GridBagConstraints.HORIZONTAL;
-        lc.insets  = new Insets(5, 8, 5, 12);
+        lc.anchor = GridBagConstraints.NORTHWEST;
+        lc.fill = GridBagConstraints.HORIZONTAL;
+        lc.insets = new Insets(5, 8, 5, 12);
         lc.weightx = 0.35;
 
         GridBagConstraints vc = new GridBagConstraints();
-        vc.anchor    = GridBagConstraints.NORTHWEST;
-        vc.fill      = GridBagConstraints.HORIZONTAL;
-        vc.insets    = new Insets(5, 0, 5, 8);
-        vc.weightx   = 0.65;
+        vc.anchor = GridBagConstraints.NORTHWEST;
+        vc.fill = GridBagConstraints.HORIZONTAL;
+        vc.insets = new Insets(5, 0, 5, 8);
+        vc.weightx = 0.65;
         vc.gridwidth = GridBagConstraints.REMAINDER;
 
         int row = 0;
         boolean even = false;
         for (Map.Entry<String, String> entry : specs.entrySet()) {
-            Color rowBg = even ? new Color(33, 33, 46) : SURFACE;
+            Color rowBg = even ? new Color(230, 230, 230) : SURFACE;
 
             JLabel keyLbl = new JLabel(entry.getKey());
             keyLbl.setFont(FONT_LABEL);
@@ -255,10 +258,10 @@ public class ProductView {
         }
 
         GridBagConstraints fc = new GridBagConstraints();
-        fc.gridy     = row;
-        fc.weighty   = 1.0;
+        fc.gridy = row;
+        fc.weighty = 1.0;
         fc.gridwidth = GridBagConstraints.REMAINDER;
-        fc.fill      = GridBagConstraints.VERTICAL;
+        fc.fill = GridBagConstraints.VERTICAL;
         table.add(Box.createVerticalGlue(), fc);
 
         JScrollPane scroll = new JScrollPane(table);
@@ -274,7 +277,7 @@ public class ProductView {
         p.setOpaque(false);
         p.setBorder(new EmptyBorder(14, 0, 0, 0));
 
-        JButton btn = new JButton("🛒  Add to Cart");
+        JButton btn = new JButton("Add to Cart");
         btn.setFont(FONT_BTN);
         btn.setForeground(Color.WHITE);
         btn.setBackground(ACCENT);
@@ -290,11 +293,16 @@ public class ProductView {
         }
 
         btn.addMouseListener(new MouseAdapter() {
-            @Override public void mouseEntered(MouseEvent e) {
-                if (btn.isEnabled()) btn.setBackground(ACCENT.brighter());
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (btn.isEnabled())
+                    btn.setBackground(ACCENT.brighter());
             }
-            @Override public void mouseExited(MouseEvent e) {
-                if (btn.isEnabled()) btn.setBackground(ACCENT);
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (btn.isEnabled())
+                    btn.setBackground(ACCENT);
             }
         });
 
@@ -303,18 +311,19 @@ public class ProductView {
             User user = core.getLoggedInUser();
             if (user instanceof Admin) {
                 JOptionPane.showMessageDialog(dialog,
-                    "Admins cannot add products to the cart.",
-                    "Notice", JOptionPane.WARNING_MESSAGE);
+                        "Admins cannot add products to the cart.",
+                        "Notice", JOptionPane.WARNING_MESSAGE);
                 return;
             }
             Cart cart = (user instanceof Customer)
-                ? ((Customer) user).getPersonalCart()
-                : core.getGuestCart();
+                    ? ((Customer) user).getPersonalCart()
+                    : core.getGuestCart();
             cart.addItem(product, 1);
-            if (mainFrame != null) mainFrame.updateCartButton();
+            if (mainFrame != null)
+                mainFrame.updateCartButton();
             JOptionPane.showMessageDialog(dialog,
-                "\u201c" + product.getName() + "\u201d added to cart!",
-                "Success", JOptionPane.INFORMATION_MESSAGE);
+                    "\u201c" + product.getName() + "\u201d added to cart!",
+                    "Success", JOptionPane.INFORMATION_MESSAGE);
         });
 
         p.add(btn, BorderLayout.CENTER);
@@ -325,7 +334,7 @@ public class ProductView {
         JDialog zoom = new JDialog(dialog, product.getName(), true);
         zoom.setBackground(BG);
 
-        int w = img.getWidth()  * 2;
+        int w = img.getWidth() * 2;
         int h = img.getHeight() * 2;
         Image scaled = img.getScaledInstance(w, h, Image.SCALE_SMOOTH);
 
@@ -343,11 +352,14 @@ public class ProductView {
 
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(BG);
-        panel.add(lbl,  BorderLayout.CENTER);
+        panel.add(lbl, BorderLayout.CENTER);
         panel.add(hint, BorderLayout.SOUTH);
 
         MouseAdapter closeOnClick = new MouseAdapter() {
-            @Override public void mouseClicked(MouseEvent e) { zoom.dispose(); }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                zoom.dispose();
+            }
         };
         panel.addMouseListener(closeOnClick);
         lbl.addMouseListener(closeOnClick);
@@ -373,20 +385,20 @@ public class ProductView {
         g.fillRoundRect(0, 0, W, H, 20, 20);
 
         g.setColor(new Color(255, 255, 255, 60));
-        g.fillRoundRect(W/2 - 35, H/2 - 55, 70, 110, 12, 12);
+        g.fillRoundRect(W / 2 - 35, H / 2 - 55, 70, 110, 12, 12);
         g.setColor(new Color(255, 255, 255, 140));
         g.setStroke(new BasicStroke(2.5f));
-        g.drawRoundRect(W/2 - 35, H/2 - 55, 70, 110, 12, 12);
+        g.drawRoundRect(W / 2 - 35, H / 2 - 55, 70, 110, 12, 12);
         g.setColor(new Color(0, 0, 0, 80));
-        g.fillRoundRect(W/2 - 28, H/2 - 46, 56, 88, 6, 6);
+        g.fillRoundRect(W / 2 - 28, H / 2 - 46, 56, 88, 6, 6);
         g.setColor(new Color(255, 255, 255, 120));
-        g.fillOval(W/2 - 6, H/2 - 48, 12, 12);
-        g.fillRoundRect(W/2 - 8, H/2 + 51, 16, 7, 4, 4);
+        g.fillOval(W / 2 - 6, H / 2 - 48, 12, 12);
+        g.fillRoundRect(W / 2 - 8, H / 2 + 51, 16, 7, 4, 4);
 
         g.setColor(new Color(255, 255, 255, 220));
         g.setFont(new Font("Segoe UI", Font.BOLD, 11));
         FontMetrics fm = g.getFontMetrics();
-        String label   = p.getName().length() > 18 ? p.getName().substring(0, 16) + "\u2026" : p.getName();
+        String label = p.getName().length() > 18 ? p.getName().substring(0, 16) + "\u2026" : p.getName();
         g.drawString(label, (W - fm.stringWidth(label)) / 2, H - 14);
 
         g.dispose();
@@ -407,8 +419,15 @@ public class ProductView {
         btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btn.setPreferredSize(new Dimension(32, 28));
         btn.addMouseListener(new MouseAdapter() {
-            @Override public void mouseEntered(MouseEvent e) { btn.setForeground(TEXT_PRIMARY); }
-            @Override public void mouseExited(MouseEvent e)  { btn.setForeground(TEXT_SECONDARY); }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btn.setForeground(TEXT_PRIMARY);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btn.setForeground(TEXT_SECONDARY);
+            }
         });
         return btn;
     }
@@ -416,12 +435,15 @@ public class ProductView {
     static class RoundPanel extends JPanel {
         private final int arc;
         private final Color bg;
+
         RoundPanel(int arc, Color bg) {
             this.arc = arc;
-            this.bg  = bg;
+            this.bg = bg;
             setOpaque(false);
         }
-        @Override protected void paintComponent(Graphics g) {
+
+        @Override
+        protected void paintComponent(Graphics g) {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2.setColor(bg);
