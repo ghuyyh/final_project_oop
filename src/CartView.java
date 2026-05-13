@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class CartView {
     private JPanel cartPanel = new JPanel();
@@ -74,33 +75,96 @@ public class CartView {
             totalLabel.setText("Total: $0.00");
         } else {
             for (CartItem item : targetCart.getItems()) {
-                JPanel singleItemPanel = new JPanel(new BorderLayout());
+                JPanel singleItemPanel = new JPanel(new BorderLayout(10, 0));
                 singleItemPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                singleItemPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 80));
+                singleItemPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
+                singleItemPanel.setBackground(new Color(230, 230, 230));
 
-                String itemInfo = String.format("<html><b>%s</b><br/>Price: $%.2f<br/>Quantity: %d</html>",
-                        item.getProduct().getName(), item.getProduct().getPrice(), item.getQuantity());
+                // --- Thumbnail image (left) ---
+                JLabel imgLabel = buildThumbnail(item.getProduct());
+                singleItemPanel.add(imgLabel, BorderLayout.WEST);
+
+                // --- Product info (center) ---
+                String itemInfo = String.format(
+                        "<html><b>%s</b><br/>Price: $%.2f &nbsp;&nbsp; Quantity: %d</html>",
+                        item.getProduct().getName(),
+                        item.getProduct().getPrice(),
+                        item.getQuantity());
                 JLabel itemLabel = new JLabel(itemInfo);
+                singleItemPanel.add(itemLabel, BorderLayout.CENTER);
+
+                // --- Buttons (right) ---
+                JPanel btnPanel = new JPanel(new GridLayout(2, 1, 4, 4));
+                btnPanel.setOpaque(false);
+
+                JButton detailBtn = new JButton("View Details");
+                detailBtn.setFont(new Font("SansSerif", Font.PLAIN, 11));
+                detailBtn.addActionListener(e ->
+                        new ProductView(item.getProduct(), getMainFrame()).show());
+
                 JButton removeBtn = new JButton("Remove");
+                removeBtn.setFont(new Font("SansSerif", Font.PLAIN, 11));
                 removeBtn.addActionListener(e -> {
                     targetCart.removeItem(item.getProduct());
                     refreshCart();
                     getMainFrame().updateCartButton();
                 });
-                singleItemPanel.add(itemLabel, BorderLayout.CENTER);
-                singleItemPanel.add(removeBtn, BorderLayout.EAST);
-                singleItemPanel.setBackground(new Color(230, 230, 230));
+
+                btnPanel.add(detailBtn);
+                btnPanel.add(removeBtn);
+                singleItemPanel.add(btnPanel, BorderLayout.EAST);
+
                 itemPanel.add(singleItemPanel);
-                // itemPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
-                itemPanel.add(Box.createVerticalStrut(10));
+                itemPanel.add(Box.createVerticalStrut(6));
             }
             totalLabel.setText(String.format("Total: $%.2f", targetCart.calculateTotal()));
         }
     }
+
+    /**
+     * Tạo thumbnail 60x60 cho sản phẩm.
+     * Thử load ảnh thật từ res/, nếu không có thì dùng placeholder màu.
+     */
+    private JLabel buildThumbnail(Product product) {
+        // Thử load ảnh thật
+        try {
+            java.net.URL imgURL = getClass().getResource("/res/" + product.getImageFileName());
+            if (imgURL != null) {
+                ImageIcon icon = new ImageIcon(imgURL);
+                Image scaled = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                JLabel lbl = new JLabel(new ImageIcon(scaled));
+                lbl.setPreferredSize(new Dimension(60, 60));
+                return lbl;
+            }
+        } catch (Exception ignored) {}
+
+        // Fallback: vẽ placeholder màu gradient giống ProductView
+        BufferedImage img = new BufferedImage(60, 60, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g = img.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        int hash = Math.abs(product.getName().hashCode());
+        Color c1 = Color.getHSBColor((hash % 360) / 360f, 0.55f, 0.45f);
+        Color c2 = Color.getHSBColor(((hash + 120) % 360) / 360f, 0.60f, 0.30f);
+        g.setPaint(new GradientPaint(0, 0, c1, 60, 60, c2));
+        g.fillRoundRect(0, 0, 60, 60, 12, 12);
+        // chữ viết tắt tên sản phẩm
+        g.setColor(new Color(255, 255, 255, 200));
+        g.setFont(new Font("Segoe UI", Font.BOLD, 10));
+        String abbr = product.getName().length() >= 2
+                ? product.getName().substring(0, 2).toUpperCase()
+                : product.getName().toUpperCase();
+        FontMetrics fm = g.getFontMetrics();
+        g.drawString(abbr, (60 - fm.stringWidth(abbr)) / 2, 35);
+        g.dispose();
+
+        JLabel lbl = new JLabel(new ImageIcon(img));
+        lbl.setPreferredSize(new Dimension(60, 60));
+        return lbl;
+    }
+
     public Core getCore() {
         return core;
     }
-
 
     public JPanel getCartPanel() {
         return cartPanel;
