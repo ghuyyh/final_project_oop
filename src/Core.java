@@ -57,7 +57,7 @@ public class Core {
                 return user;
             }
         }
-        return null; // Authentication failed
+        return null; 
     }
 
     public boolean processCheckout() {

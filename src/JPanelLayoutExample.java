@@ -30,14 +30,12 @@ public class JPanelLayoutExample {
             borderPanel.add(new JButton("West"), BorderLayout.WEST);
             borderPanel.add(new JButton("Center"), BorderLayout.CENTER);
 
-            // Panel with GridLayout
             JPanel gridPanel = new JPanel(new GridLayout(2, 2, 5, 5));
             gridPanel.setBorder(BorderFactory.createTitledBorder("GridLayout"));
             for (int i = 1; i <= 4; i++) {
                 gridPanel.add(new JButton("B" + i));
             }
 
-            // Main container with BoxLayout (vertical)
             JPanel mainPanel = new JPanel();
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
             mainPanel.add(flowPanel);

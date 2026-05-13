@@ -17,7 +17,6 @@ public  class Customer extends User {
         }
         System.out.println("Successfully checked out for customer: " + getUsername());
         
-        // Add items to order history
         orderHistory.addAll(personalCart.getItems());
         personalCart.clearCart();
         return true;
