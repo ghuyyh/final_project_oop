@@ -38,23 +38,22 @@ public class CustomerView {
                 historyPanel.add(new JLabel("No order history yet."));
             } else {
     for (PurchaseOrder order : customer.getOrderHistory()) {
-                
-                String headerText = "--- ORDER DATE: " + order.getFormattedDate() +  " | TOTAL MONEY: $" + order.getTotalAmount() + " ---";
-                JLabel lblHeader = new JLabel(headerText);
-                lblHeader.setFont(new Font("Arial", Font.BOLD, 12)); 
-                historyPanel.add(lblHeader);
+            String headerText = "--- ORDER DATE: " + order.getFormattedDate() + " | TOTAL MONEY: $" + order.getTotalAmount() + " ---";
+            JLabel lblHeader = new JLabel(headerText);
+            lblHeader.setFont(new Font("Arial", Font.BOLD, 12));
+            historyPanel.add(lblHeader);
+
     for (CartItem item : order.getItems()) {
-                String productName = item.getProduct().getName();
-                int qty = item.getQuantity();
-                double price = item.getProduct().getPrice();
-                String itemText = "    • " + productName + " (SL: " + qty + ") - COST: $" + price;
-                historyPanel.add(new JLabel(itemText));
-            }
-                historyPanel.add(new JLabel(" ")); 
-            }
-        }
+            String productName = item.getProduct().getName();
+            int qty = item.getQuantity();
+            double price = item.getProduct().getPrice();   
+            String itemText = "    • " + productName + " (Qty: " + qty + ") - Price: $" + price;
+            historyPanel.add(new JLabel(itemText));
     }
-    
+            historyPanel.add(new JLabel(" "));
+            } 
+        } 
+    } 
     historyPanel.revalidate();
     historyPanel.repaint();
 }
