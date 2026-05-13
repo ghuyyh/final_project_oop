@@ -115,7 +115,7 @@ public class DataManager {
                 double price = Double.parseDouble(parts[2]);
                 int stock = Integer.parseInt(parts[3]);
                 String image = parts[4];
-                Product p = new Product(id, name, price, stock, image);
+                Product p = new Product(id, name, price, stock, image, new java.util.LinkedHashMap<>());
                 inv.add(p);
                 hot.add(p);
             }

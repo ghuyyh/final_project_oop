@@ -2,7 +2,7 @@ public class Other extends Product {
     private String category;
 
     public Other(String id, String name, double price, int stock, String imageFileName, String category) {
-        super(id, name, price, stock, imageFileName);
+        super(id, name, price, stock, imageFileName, new java.util.LinkedHashMap<>());
         this.category = category;
     }
 

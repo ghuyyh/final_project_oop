@@ -61,7 +61,7 @@ public class AdminView {
             }
             double price = Double.parseDouble(priceField.getText().trim());
             int stock = Integer.parseInt(stockField.getText().trim());
-            Product newProduct = new Product(id, name, price, stock, imageFileName);
+            Product newProduct = new Product(id, name, price, stock, imageFileName, new java.util.LinkedHashMap<>());
             core.getInventory().add(newProduct);
             core.getHotProducts().add(newProduct);
             JOptionPane.showMessageDialog(adminPanel, "Successfully added:" + name);

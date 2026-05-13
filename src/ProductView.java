@@ -5,7 +5,6 @@ import java.awt.event.*;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.Map;
-import java.util.LinkedHashMap;
 
 public class ProductView {
 

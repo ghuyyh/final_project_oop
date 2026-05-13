@@ -2,7 +2,7 @@ public class SmartHome extends Product {
     private String type;
 
     public SmartHome(String id, String name, double price, int stock, String imageFileName, String type) {
-        super(id, name, price, stock, imageFileName);
+        super(id, name, price, stock, imageFileName, new java.util.LinkedHashMap<>());
         this.type = type;
     }
 
