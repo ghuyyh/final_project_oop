@@ -57,12 +57,7 @@ public  class Customer extends User {
     PurchaseOrder newOrder = new PurchaseOrder(personalCart.getItems(), LocalDateTime.now());
         this.orderHistory.add(newOrder);
         System.out.println("Successfully checked out for customer: " + getUsername());
-        
-        orderHistory.addAll(personalCart.getItems());
         personalCart.clearCart();
         return true;
-    }
-    public List<CartItem> getOrderHistory() {
-        return orderHistory;
     }
 }

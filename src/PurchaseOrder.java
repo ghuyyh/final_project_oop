@@ -23,5 +23,6 @@ public class PurchaseOrder {
         return orderTime.format(formatter);
     }
 
-    public double getTotalAmount() { return totalAmount; }
+    public double getTotalAmount() { 
+        return totalAmount; }
 }
