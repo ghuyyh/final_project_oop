@@ -59,7 +59,8 @@ public  class Customer extends User {
             System.out.println("Cart is empty. Cannot proceed to checkout.");
             return false;
         }
-    PurchaseOrder newOrder = new PurchaseOrder(personalCart.getItems(), LocalDateTime.now());
+    List<CartItem> itemsToPurchase = new ArrayList<>(personalCart.getItems());
+        PurchaseOrder newOrder = new PurchaseOrder(itemsToPurchase, LocalDateTime.now());
         this.orderHistory.add(newOrder);
         System.out.println("Successfully checked out for customer: " + getUsername());
         personalCart.clearCart();
