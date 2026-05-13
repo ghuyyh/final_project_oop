@@ -1,5 +1,4 @@
 import java.awt.*;
-
 import javax.print.attribute.standard.MediaSize.Other;
 import javax.swing.*;
 
