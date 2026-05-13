@@ -67,13 +67,6 @@ public class ProductView{
         dialog.add(centerPanel, BorderLayout.CENTER);
         JButton addToCartBtn = new JButton("Add to Cart");
 
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.add(addToCartBtn);
-        dialog.add(bottomPanel, BorderLayout.SOUTH);
-        dialog.pack();
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
-
         addToCartBtn.addActionListener(e -> {
             User user = Core.getInstance().getLoggedInUser();
             if (user instanceof Admin) {
@@ -85,8 +78,15 @@ public class ProductView{
                 : Core.getInstance().getGuestCart();
             cart.addItem(product, 1);
             mainFrame.updateCartButton();
+            mainFrame.refreshCart();
             JOptionPane.showMessageDialog(dialog, "Added \"" + product.getName() + "\" to cart!");
         });
 
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(addToCartBtn);
+        dialog.add(bottomPanel, BorderLayout.SOUTH);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
     }   
 }
