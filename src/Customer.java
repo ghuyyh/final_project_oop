@@ -9,7 +9,6 @@ public  class Customer extends User {
     private String address;
     private String paymentMethod;
     private List<PurchaseOrder> orderHistory;
-
     public Customer(String username, String password, String fullName, int age, String address, String paymentMethod){
         super(username, password);
         this.personalCart = new Cart();
@@ -19,6 +18,12 @@ public  class Customer extends User {
         this.paymentMethod = paymentMethod;
         this.orderHistory = new ArrayList<>();
     }
+    public Customer(String username, String password) {
+    super(username, password); 
+    this.personalCart = new Cart();
+    this.orderHistory = new ArrayList<>();
+  
+}
     public String getFullName(){
         return fullName;
     }
