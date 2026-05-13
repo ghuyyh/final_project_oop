@@ -118,7 +118,7 @@ public class GUI_MainFrame {
     }
     private void filterAndShow(Class<?> categoryClass) {
         java.util.List<Product> filteredList = new java.util.ArrayList<>();
-        for (Product p : core.getInventory()) {
+        for (Product p : getCore().getInventory()) {
             if (categoryClass.isInstance(p)) {
                 filteredList.add(p);  
             }
