@@ -311,7 +311,7 @@ public class ProductView {
                 ? ((Customer) user).getPersonalCart()
                 : core.getGuestCart();
             cart.addItem(product, 1);
-            if (mainFrame != null) mainFrame.updateCartButton(btn);
+            if (mainFrame != null) mainFrame.updateCartButton();
             JOptionPane.showMessageDialog(dialog,
                 "\u201c" + product.getName() + "\u201d added to cart!",
                 "Success", JOptionPane.INFORMATION_MESSAGE);

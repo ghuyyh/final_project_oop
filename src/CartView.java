@@ -38,7 +38,7 @@ public class CartView {
                     customer.checkout();
                     JOptionPane.showMessageDialog(cartPanel, "Checkout successful! Thank you for your purchase.");
                     refreshCart();
-                    getMainFrame().updateCartButton(null);
+                    getMainFrame().updateCartButton();
                 }
             }
         });
@@ -85,7 +85,7 @@ public class CartView {
                 removeBtn.addActionListener(e -> {
                     targetCart.removeItem(item.getProduct());
                     refreshCart();
-                    getMainFrame().updateCartButton(null);
+                    getMainFrame().updateCartButton();
                 });
                 singleItemPanel.add(itemLabel, BorderLayout.CENTER);
                 singleItemPanel.add(removeBtn, BorderLayout.EAST);

@@ -57,7 +57,7 @@ public class HomeView {
                     }
                     targetCart.addItem(product, 1);
                     getMainFrame().refreshCart();
-                    getMainFrame().updateCartButton(null);
+                    getMainFrame().updateCartButton();
                     JOptionPane.showMessageDialog(null,"Added " + product.getName() + " to cart!");
                     
                 }

@@ -62,7 +62,7 @@ public class LoginView {
                                 customer.getPersonalCart().addItem(item.getProduct(), item.getQuantity());
                             }
                             guestCart.clearCart();
-                            this.mainFrame.updateCartButton(null);
+                            this.mainFrame.updateCartButton();
                             this.mainFrame.showHome();
                         }
                     } else {

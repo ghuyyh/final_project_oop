@@ -122,7 +122,7 @@ public class SearchView {
                     : core.getGuestCart();
             cart.addItem(product, 1);
             mainFrame.refreshCart();
-            mainFrame.updateCartButton(null);
+            mainFrame.updateCartButton();
             JOptionPane.showMessageDialog(searchPanel, "Added \"" + product.getName() + "\" to cart!");
         });
         row.add(addBtn, BorderLayout.EAST);

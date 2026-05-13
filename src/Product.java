@@ -22,7 +22,7 @@ public class Product {
         this(id, name, price, stockQuantity, "", generateDefaultSpecs(name));
     }
 
-    private static Map<String, String> generateDefaultSpecs(String name){
+    public static Map<String, String> generateDefaultSpecs(String name){
         Map<String, String> specs = new LinkedHashMap<>();
         String nameLower = name.toLowerCase();
 

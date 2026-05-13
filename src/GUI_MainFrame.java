@@ -209,7 +209,7 @@ public class GUI_MainFrame {
         return cartBtn;
     }
 
-    public void updateCartButton(JButton button) {
+    public void updateCartButton() {
         if (getCartBtn() != null) {
             cartBtn.setText("Cart (" + (Core.getInstance().getLoggedInUser() instanceof Customer
                     ? ((Customer) getCore().getLoggedInUser()).getPersonalCart().getItems().size()
