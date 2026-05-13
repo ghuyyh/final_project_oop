@@ -38,20 +38,26 @@ public class CustomerView {
                 historyPanel.add(new JLabel("No order history yet."));
             } else {
     for (PurchaseOrder order : customer.getOrderHistory()) {
-        String orderHeader = String.format("<html><div style='background-color: #eeeeee; width: 300px; padding: 5px; margin-top: 10px;'>" + "📅 <b>Ngày mua:</b> %s <br/>" + "💰 <b>Tổng đơn:</b> $%.2f" + "</div></html>", order.getFormattedDate(), order.getTotalAmount());
-        this.historyPanel.add(new JLabel(orderHeader));
-
-    for (CartItem item : order.getItems()) { 
-        String itemInfo = String.format("<html>&nbsp;&nbsp;&nbsp;&nbsp;• %s | SL: %d | Giá: $%.2f</html>", item.getProduct().getName(), item.getQuantity(), item.getProduct().getPrice());
-        this.historyPanel.add(new JLabel(itemInfo));
+                
+                String headerText = "--- ORDER DATE: " + order.getFormattedDate() +  " | TOTAL MONEY: $" + order.getTotalAmount() + " ---";
+                JLabel lblHeader = new JLabel(headerText);
+                lblHeader.setFont(new Font("Arial", Font.BOLD, 12)); 
+                historyPanel.add(lblHeader);
+    for (CartItem item : order.getItems()) {
+                String productName = item.getProduct().getName();
+                int qty = item.getQuantity();
+                double price = item.getProduct().getPrice();
+                String itemText = "    • " + productName + " (SL: " + qty + ") - COST: $" + price;
+                historyPanel.add(new JLabel(itemText));
+            }
+                historyPanel.add(new JLabel(" ")); 
+            }
+        }
     }
-    historyPanel.add(new JLabel("<html><hr style='border: 0.5px solid #ccc;'/></html>"));
-  }
+    
+    historyPanel.revalidate();
+    historyPanel.repaint();
 }
-}
-        historyPanel.revalidate();
-        historyPanel.repaint();
-    }
     public JPanel getCustomerPanel() {
         return customerPanel;
     }
