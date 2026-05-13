@@ -52,6 +52,7 @@ public class CustomerView {
     }
             historyPanel.add(new JLabel(" "));
             } 
+        
         } 
     } 
     historyPanel.revalidate();
