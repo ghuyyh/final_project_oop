@@ -40,24 +40,22 @@ public class CustomerView {
     for (PurchaseOrder order : customer.getOrderHistory()) {
             String headerText = "--- ORDER DATE: " + order.getFormattedDate() + " | TOTAL MONEY: $" + order.getTotalAmount() + " ---";
             JLabel lblHeader = new JLabel(headerText);
-            lblHeader.setFont(new Font("Arial", Font.BOLD, 12));
             historyPanel.add(lblHeader);
 
     for (CartItem item : order.getItems()) {
             String productName = item.getProduct().getName();
             int qty = item.getQuantity();
             double price = item.getProduct().getPrice();   
-            String itemText = "    • " + productName + " (Qty: " + qty + ") - Price: $" + price;
-            historyPanel.add(new JLabel(itemText));
+            JLabel itemLabel = new JLabel("Product: " + productName + " | Quantity: " + qty + " | Price: $" + price);
+            historyPanel.add(itemLabel);
+           } 
+            historyPanel.add(new JLabel());
+        }
     }
-            historyPanel.add(new JLabel(" "));
-            } 
-        
-        } 
-    } 
-    historyPanel.revalidate();
-    historyPanel.repaint();
 }
+        historyPanel.revalidate();
+        historyPanel.repaint();
+    }
     public JPanel getCustomerPanel() {
         return customerPanel;
     }

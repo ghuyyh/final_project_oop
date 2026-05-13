@@ -1,13 +1,13 @@
 import javax.swing.*;
-import javax.swing.border.*;
-import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.RoundRectangle2D;
-import java.awt.image.BufferedImage;
+import java.awt.*;
 import java.util.Map;
 
-public class ProductView {
+public class ProductView{
+    private Product product;
+    private GUI_MainFrame mainFrame;
 
+<<<<<<< HEAD
     private static final Color BG = new Color(230, 230, 230);
     private static final Color SURFACE = new Color(255, 255, 255);
     private static final Color CARD = new Color(210, 210, 210);
@@ -33,31 +33,37 @@ public class ProductView {
     private JDialog dialog;
 
     public ProductView(Product product, GUI_MainFrame mainFrame) {
+=======
+    public ProductView(Product product, GUI_MainFrame mainFrame){
+>>>>>>> c41def5330d7d668439cd1a264ff70a842788de3
         this.product = product;
         this.mainFrame = mainFrame;
     }
 
-    public void show() {
-        Frame parent = mainFrame != null
-                ? (Frame) SwingUtilities.getWindowAncestor(mainFrame.getHomePanel())
-                : null;
+    public void show(){
+        JDialog dialog = new JDialog();
+        dialog.setTitle("Product Details");
+        dialog.setModal(true);
+        dialog.setLayout(new BorderLayout(10,10));
+        dialog.setMinimumSize(new Dimension(850, 500)); 
 
-        dialog = new JDialog(parent, "Product Details", true);
-        dialog.setUndecorated(false);
-        dialog.setBackground(BG);
-        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        dialog.setPreferredSize(new Dimension(780, 560));
+        ImageIcon icon = new ImageIcon(getClass().getResource("/res/product_images/" + product.getImageFileName()));
+        System.out.println(icon.getIconWidth());
 
-        JPanel root = new JPanel(new BorderLayout());
-        root.setBackground(BG);
-        root.setBorder(new EmptyBorder(20, 20, 20, 20));
+        Image smallImg = icon.getImage().getScaledInstance(
+                200,
+                200,
+                Image.SCALE_SMOOTH
+        );
 
-        root.add(buildHeader(), BorderLayout.NORTH);
+        JLabel imageLabel = new JLabel(new ImageIcon(smallImg));
+        imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        JPanel body = new JPanel(new GridBagLayout());
-        body.setBackground(BG);
-        body.setBorder(new EmptyBorder(16, 0, 0, 0));
+        imageLabel.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
 
+<<<<<<< HEAD
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.BOTH;
         gbc.insets = new Insets(0, 0, 0, 16);
@@ -199,8 +205,21 @@ public class ProductView {
         } else {
             text = "In Stock  (" + stock + " available)";
             color = STOCK_OK;
+=======
+            JDialog zoomDialog = new JDialog(dialog);
+            zoomDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            zoomDialog.setSize(800, 800);
+            Image bigImg = icon.getImage().getScaledInstance(750, 750,Image.SCALE_SMOOTH);
+            JLabel bigLabel = new JLabel(new ImageIcon(bigImg));
+            bigLabel.setHorizontalAlignment((SwingConstants.CENTER));
+            zoomDialog.add(bigLabel);
+            zoomDialog.setLocationRelativeTo(null);
+            zoomDialog.setVisible(true);
+>>>>>>> c41def5330d7d668439cd1a264ff70a842788de3
         }
+    });
 
+<<<<<<< HEAD
         JLabel badge = new JLabel(text);
         badge.setFont(FONT_STOCK);
         badge.setForeground(color);
@@ -210,10 +229,18 @@ public class ProductView {
         p.add(badge);
         return p;
     }
+=======
+        JPanel infoPanel = new JPanel(new GridLayout(0, 1, 5,5));
+        infoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+>>>>>>> c41def5330d7d668439cd1a264ff70a842788de3
 
-    private JScrollPane buildSpecTable() {
-        Map<String, String> specs = product.getSpecs();
+        infoPanel.add(new JLabel("Name: " + product.getName()));
+        infoPanel.add(new JLabel("Price: $" + String.format("%,.2f", product.getPrice())));
+        infoPanel.add(new JLabel("Stock: " + product.getStockQuantity()));
+        infoPanel.add(new JLabel("─────────────────────────────"));
+        infoPanel.add(new JLabel("Specification: "));
 
+<<<<<<< HEAD
         JPanel table = new JPanel(new GridBagLayout());
         table.setBackground(SURFACE);
         table.setBorder(new EmptyBorder(6, 6, 6, 6));
@@ -255,8 +282,20 @@ public class ProductView {
 
             row++;
             even = !even;
+=======
+        for(Map.Entry<String, String> entry : product.getSpecs().entrySet()){
+           infoPanel.add(new JLabel("  " + entry.getKey() + ": " + entry.getValue()));
+>>>>>>> c41def5330d7d668439cd1a264ff70a842788de3
         }
+ 
+        JScrollPane scrollPane = new JScrollPane(infoPanel);
+        JPanel centerPanel = new JPanel(new GridLayout(1, 2, 10, 10));
+        centerPanel.add(imageLabel);
+        centerPanel.add(scrollPane);
+        dialog.add(centerPanel, BorderLayout.CENTER);
+        JButton addToCartBtn = new JButton("Add to Cart");
 
+<<<<<<< HEAD
         GridBagConstraints fc = new GridBagConstraints();
         fc.gridy = row;
         fc.weighty = 1.0;
@@ -452,4 +491,28 @@ public class ProductView {
             super.paintComponent(g);
         }
     }
+=======
+        addToCartBtn.addActionListener(e -> {
+            User user = Core.getInstance().getLoggedInUser();
+            if (user instanceof Admin) {
+                JOptionPane.showMessageDialog(dialog, "Admins cannot add products to cart.");
+                return;
+            }
+            Cart cart = (user instanceof Customer)
+                ? ((Customer) user).getPersonalCart()
+                : Core.getInstance().getGuestCart();
+            cart.addItem(product, 1);
+            mainFrame.updateCartButton();
+            mainFrame.refreshCart();
+            JOptionPane.showMessageDialog(dialog, "Added \"" + product.getName() + "\" to cart!");
+        });
+
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(addToCartBtn);
+        dialog.add(bottomPanel, BorderLayout.SOUTH);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }   
+>>>>>>> c41def5330d7d668439cd1a264ff70a842788de3
 }
