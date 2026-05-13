@@ -1,5 +1,4 @@
 import java.awt.*;
-
 import javax.print.attribute.standard.MediaSize.Other;
 import javax.swing.*;
 
@@ -16,32 +15,26 @@ public class GUI_MainFrame {
     private JButton cartBtn;
 
     public GUI_MainFrame() {
-        // Get the screen size
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension scrSize = toolkit.getScreenSize();
 
-        // flat look, donot remove
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             System.out.println("fail set flat look");
         }
 
-        // check
         System.out.println("entry point");
 
-        // Main screen
         JFrame mainScr = new JFrame("Store");
         ImageIcon logo = new ImageIcon(Main.class.getResource("res/logo.png"));
         mainScr.setIconImage(logo.getImage());
         mainScr.setLayout(new BorderLayout());
 
-        // top bar
         JPanel bar = new JPanel(new BorderLayout());
         bar.setBackground(new Color(255, 255, 255));
         bar.setPreferredSize(new Dimension(scrSize.width, 35));
 
-        // Left Side category and home
         JPanel category = new JPanel(new FlowLayout(FlowLayout.LEFT));
         category.setOpaque(false);
         JButton homeBtn = new JButton("Home");
@@ -72,10 +65,8 @@ public class GUI_MainFrame {
             showHome();
         });
 
-        // Right side: search, cart and account
         JPanel rightSide = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         rightSide.setOpaque(false);
-        // JTextField searchField = new JTextField(10);
         JButton searchBtn = new JButton("Search");
         JButton accountBtn = new JButton("Account");
         cartBtn = new JButton("Cart (0)");
@@ -95,7 +86,6 @@ public class GUI_MainFrame {
                 showCustomer();
             }
         });
-        // rightSide.add(searchField);
         rightSide.add(searchBtn);
         rightSide.add(cartBtn);
         rightSide.add(accountBtn);
@@ -104,7 +94,6 @@ public class GUI_MainFrame {
         bar.add(rightSide, BorderLayout.EAST);
         mainScr.add(bar, BorderLayout.NORTH);
 
-        // main panel
         mainPanel.add("home", getHomePanel());
         mainPanel.add("cart", getCartPanel());
         mainPanel.add("admin", getAdminPanel());
@@ -112,13 +101,11 @@ public class GUI_MainFrame {
         mainPanel.add("search", getSearchPanel());
         mainPanel.setBackground(new Color(238, 238, 238));
 
-        // Wrap loginPanel so it respects preferred size
         JPanel loginWrapper = new JPanel();
         loginWrapper.setLayout(new FlowLayout(FlowLayout.CENTER));
         loginWrapper.add(getLoginPanel());
         mainPanel.add("login", loginWrapper);
 
-        // main screen setting
         mainScr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainScr.setPreferredSize(new Dimension((int) (0.8 * scrSize.width), (int) (0.8 * scrSize.height)));
         mainScr.add(mainPanel);
@@ -142,7 +129,6 @@ public class GUI_MainFrame {
         getLayout().show(mainPanel, "home"); 
     }
 
-    // geter
     public CardLayout getLayout() {
         return layout;
     }
