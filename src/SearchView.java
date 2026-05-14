@@ -89,7 +89,6 @@ public class SearchView {
         row.setMaximumSize(new Dimension(Integer.MAX_VALUE, 90));
         row.setBackground(Color.WHITE);
 
-        // Image
         try {
             java.net.URL imgURL = getClass().getResource("/res/" + product.getImageFileName());
             if (imgURL != null) {
