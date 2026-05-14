@@ -21,7 +21,6 @@ public class JPanelLayoutExample {
             flowPanel.add(new JButton("Button 2"));
             flowPanel.add(new JButton("Button 3"));
 
-            // Panel with BorderLayout
             JPanel borderPanel = new JPanel(new BorderLayout());
             borderPanel.setBorder(BorderFactory.createTitledBorder("BorderLayout"));
             borderPanel.add(new JButton("North"), BorderLayout.NORTH);
