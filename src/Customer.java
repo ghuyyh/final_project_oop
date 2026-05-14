@@ -1,12 +1,56 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.time.LocalDateTime;
+
 public  class Customer extends User {
     private Cart personalCart;
-    private List<CartItem> orderHistory = new ArrayList<>();
-    public Customer(String username, String password) {
+    private String fullName;
+    private int age;
+    private String address;
+    private String paymentMethod;
+    private List<PurchaseOrder> orderHistory;
+    public Customer(String username, String password, String fullName, int age, String address, String paymentMethod){
         super(username, password);
         this.personalCart = new Cart();
+        this.fullName = fullName;
+        this.age = age;
+        this.address = address;
+        this.paymentMethod = paymentMethod;
+        this.orderHistory = new ArrayList<>();
     }
-
+    public Customer(String username, String password) {
+    super(username, password); 
+    this.personalCart = new Cart();
+    this.orderHistory = new ArrayList<>();
+  
+}
+    public String getFullName(){
+        return fullName;
+    }
+    public void setFullName(String fullName){
+        this.fullName = fullName;
+    }
+    public int getAge(){
+        return age;
+    }
+    public void setAge(int age){
+        this.age = age;
+    }
+    public String getAddress(){
+        return address;
+    }
+    public void setAddress(String address){
+        this.address = address;
+    }
+    public String getPaymentMethod(){
+        return paymentMethod;
+    }
+    public void setPaymentMethod(String paymentMethod){
+        this.paymentMethod = paymentMethod;
+    }
+    public List<PurchaseOrder> getOrderHistory(){
+        return orderHistory;
+    }
     public Cart getPersonalCart() {
         return personalCart;
     }
@@ -15,13 +59,11 @@ public  class Customer extends User {
             System.out.println("Cart is empty. Cannot proceed to checkout.");
             return false;
         }
+    List<CartItem> itemsToPurchase = new ArrayList<>(personalCart.getItems());
+        PurchaseOrder newOrder = new PurchaseOrder(itemsToPurchase, LocalDateTime.now());
+        this.orderHistory.add(newOrder);
         System.out.println("Successfully checked out for customer: " + getUsername());
-        
-        orderHistory.addAll(personalCart.getItems());
         personalCart.clearCart();
         return true;
-    }
-    public List<CartItem> getOrderHistory() {
-        return orderHistory;
     }
 }

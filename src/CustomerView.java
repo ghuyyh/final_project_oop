@@ -37,18 +37,25 @@ public class CustomerView {
             if (customer.getOrderHistory().isEmpty()) {
                 historyPanel.add(new JLabel("No order history yet."));
             } else {
-                for (CartItem item : customer.getOrderHistory()) {
-                    String itemInfo = String.format("<html><b>%s</b><br/>Price: $%.2f<br/>Quantity: %d</html>",
-                            item.getProduct().getName(), item.getProduct().getPrice(), item.getQuantity());
-                    historyPanel.add(new JLabel(itemInfo));
-                }
-            }
-        }
+    for (PurchaseOrder order : customer.getOrderHistory()) {
+            String headerText = "--- ORDER DATE: " + order.getFormattedDate() + " | TOTAL MONEY: $" + order.getTotalAmount() + " ---";
+            JLabel lblHeader = new JLabel(headerText);
+            historyPanel.add(lblHeader);
 
+    for (CartItem item : order.getItems()) {
+            String productName = item.getProduct().getName();
+            int qty = item.getQuantity();
+            double price = item.getProduct().getPrice();   
+            JLabel itemLabel = new JLabel("Product: " + productName + " | Quantity: " + qty + " | Price: $" + price);
+            historyPanel.add(itemLabel);
+           } 
+            historyPanel.add(new JLabel());
+        }
+    }
+}
         historyPanel.revalidate();
         historyPanel.repaint();
     }
-
     public JPanel getCustomerPanel() {
         return customerPanel;
     }
