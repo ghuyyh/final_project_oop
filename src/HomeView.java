@@ -28,7 +28,7 @@ public class HomeView {
                 java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getImageFileName());
                 if(imgURL != null){
                     ImageIcon icon = new ImageIcon(imgURL);
-                    Image img = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                    Image img = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
                     JLabel imgLabel = new JLabel(new ImageIcon(img));
                     productPanel.add(imgLabel);
                 }
