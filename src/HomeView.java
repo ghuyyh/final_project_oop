@@ -29,7 +29,7 @@ public class HomeView {
                 java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getImageFileName());
                 if (imgURL != null) {
                     ImageIcon icon = new ImageIcon(imgURL);
-                    Image rounded = makeRoundedImage(icon.getImage(), 200, 200, 16);
+                    Image rounded = makeRoundedImage(icon.getImage(), 100, 100, 16);
                     JLabel imgLabel = new JLabel(new ImageIcon(rounded));
                     productPanel.add(imgLabel);
                 }
