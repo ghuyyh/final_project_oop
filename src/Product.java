@@ -90,7 +90,7 @@ public class Product {
             specs.put("Connectivity", "5G, Wi-Fi 7, Bluetooth 5.3, UWB");
             specs.put("Water Resistance", "IP68");
             specs.put("Dimensions", "162.6 x 76.5 x 8.8 mm - 213 g");
-        } else if (nameLower.contains("google nset hub")) {
+        } else if (nameLower.contains("google nest hub")) {
             specs.put("Display", "7\"LCD touchscreen, 1024×600 ");
             specs.put("Process", "Amlogic S905D, Quad-core ARM Cortex-A55");
             specs.put("RAM", "2 GB DDR3");
