@@ -63,6 +63,7 @@ public class CustomerView {
             dialog.setVisible(true);
             refreshProfile();
         });
+        profilePanel.add(editProfile);
     }
         profilePanel.revalidate();
         profilePanel.repaint();
