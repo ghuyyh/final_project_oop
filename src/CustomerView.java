@@ -42,61 +42,82 @@ public class CustomerView {
     }
 
     public void refreshProfile() {
-    profilePanel.removeAll();
+    profilePanel.removeAll();    
     profilePanel.setLayout(new GridBagLayout());
     profilePanel.setBorder(BorderFactory.createTitledBorder("Customer Profile"));
+    JPanel contentPanel = new JPanel(new GridBagLayout()) {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            try {
+                ImageIcon icon = new ImageIcon("background.png"); 
+                Image img = icon.getImage();
+                g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+            } catch (Exception e) {
+            }
+        }
+    };
+
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.insets = new Insets(10, 10, 10, 10); 
+    gbc.gridx = 0;
+
     Customer customer = (Customer) core.getLoggedInUser();
 
     if (customer == null) {
-        profilePanel.add(new JLabel("No customer profile found."));
+        contentPanel.add(new JLabel("No customer profile found."));
     } else {
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); 
-        gbc.gridx = 0;
-
         JLabel welcomeLbl = new JLabel("*** Welcome, " + customer.getUsername() + " ***", SwingConstants.CENTER);
-        welcomeLbl.setFont(new Font("Segoe UI", Font.BOLD, 24)); 
-        gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.NONE; 
-        gbc.anchor = GridBagConstraints.CENTER; 
-        profilePanel.add(welcomeLbl, gbc);
-        gbc.anchor = GridBagConstraints.WEST; 
+        welcomeLbl.setFont(new Font("Segoe UI", Font.BOLD, 24));
         
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.CENTER;
+        contentPanel.add(welcomeLbl, gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+    
         gbc.gridy = 1;
-        profilePanel.add(new JLabel("👤 Full Name: " + (customer.getFullName() == null || customer.getFullName().trim().isEmpty() ? "(Not updated)" : customer.getFullName())), gbc);
+        contentPanel.add(new JLabel("👤 Full Name: " + (customer.getFullName() == null || customer.getFullName().trim().isEmpty() ? "(Not updated)" : customer.getFullName())), gbc);
         
         gbc.gridy = 2;
-        profilePanel.add(new JLabel("🎂 Age: " + (customer.getAge() > 0 ? customer.getAge() : "(Not updated)")), gbc);
+        contentPanel.add(new JLabel("🎂 Age: " + (customer.getAge() > 0 ? customer.getAge() : "(Not updated)")), gbc);
         
         gbc.gridy = 3;
-        profilePanel.add(new JLabel("🏠 Address: " + (customer.getAddress() == null || customer.getAddress().trim().isEmpty() ? "(Not updated)" : customer.getAddress())), gbc);
+        contentPanel.add(new JLabel("🏠 Address: " + (customer.getAddress() == null || customer.getAddress().trim().isEmpty() ? "(Not updated)" : customer.getAddress())), gbc);
         
         String payment = (customer.getPaymentMethod() == null || customer.getPaymentMethod().trim().isEmpty() ? "(Not updated)" : customer.getPaymentMethod());
         if (customer.getCardNumber() != null && !customer.getCardNumber().trim().isEmpty()) {
             payment += " [" + customer.getCardNumber() + "]";
         }
         gbc.gridy = 4;
-        profilePanel.add(new JLabel("💳 Payment: " + payment), gbc);
+        contentPanel.add(new JLabel("💳 Payment: " + payment), gbc);
         
         gbc.gridy = 5;
-        profilePanel.add(new JLabel("🛒 Cart: " + customer.getPersonalCart().getItems().size() + " item(s)"), gbc);
-
+        contentPanel.add(new JLabel("🛒 Cart: " + customer.getPersonalCart().getItems().size() + " item(s)"), gbc);
+        
         gbc.gridy = 6;
-        profilePanel.add(new JLabel("📦 Orders: " + customer.getOrderHistory().size() + " order(s)"), gbc);
+        contentPanel.add(new JLabel("📦 Orders: " + customer.getOrderHistory().size() + " order(s)"), gbc);
 
-        JButton editProfile = new JButton("✏️ Edit Profile");
+        JButton editProfile = new JButton(" Edit Profile");
         editProfile.setFont(new Font("Segoe UI", Font.BOLD, 13));
         editProfile.addActionListener(e -> {
             ShowEditProfile dialog = new ShowEditProfile(getMainFrame().getFrame(), customer);
             dialog.setVisible(true);
-            refreshProfile(); 
+            refreshProfile();
         });
         
         gbc.gridy = 7;
         gbc.anchor = GridBagConstraints.CENTER; 
-        profilePanel.add(editProfile, gbc);
+        contentPanel.add(editProfile, gbc);
     }
 
+    GridBagConstraints mainGbc = new GridBagConstraints();
+    mainGbc.gridx = 0;
+    mainGbc.gridy = 0;
+    mainGbc.weightx = 1.0;
+    mainGbc.weighty = 1.0;
+    mainGbc.fill = GridBagConstraints.BOTH; 
+    profilePanel.add(contentPanel, mainGbc);
     profilePanel.revalidate();
     profilePanel.repaint();
 }
