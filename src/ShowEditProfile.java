@@ -40,7 +40,6 @@ public class ShowEditProfile extends JDialog {
         gbc.gridy = 2;
         add(new JLabel("Age:"), gbc);
 
-        // Kiểm tra nếu tuổi hợp lệ thì hiện số, nếu không thì để trống
         ageField = new JTextField(customer.getAge() > 0 ? String.valueOf(customer.getAge()) : "", 20);
         gbc.gridx = 1;
         add(ageField, gbc);
