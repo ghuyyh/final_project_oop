@@ -3,6 +3,7 @@ import java.util.List;
 import java.time.LocalDateTime;
 
 public  class Customer extends User {
+    private String username;
     private Cart personalCart;
     private String fullName;
     private int age;
@@ -11,6 +12,7 @@ public  class Customer extends User {
     private List<PurchaseOrder> orderHistory;
     public Customer(String username, String password, String fullName, int age, String address, String paymentMethod){
         super(username, password);
+        this.username = username;
         this.personalCart = new Cart();
         this.fullName = fullName;
         this.age = age;
@@ -20,10 +22,17 @@ public  class Customer extends User {
     }
     public Customer(String username, String password) {
     super(username, password); 
+    this.username = username;
     this.personalCart = new Cart();
     this.orderHistory = new ArrayList<>();
   
 }
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
     public String getFullName(){
         return fullName;
     }
