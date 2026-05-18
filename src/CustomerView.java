@@ -55,6 +55,10 @@ public class CustomerView {
             profilePanel.add(new JLabel("Payment: " + valueOrNA(customer.getPaymentMethod())));
             profilePanel.add(new JLabel("Items In Cart: " + customer.getPersonalCart().getItems().size()));
             profilePanel.add(new JLabel("Total Orders: " + customer.getOrderHistory().size()));
+            profilePanel.add(Box.createVerticalStrut(15)); 
+            
+            JButton editProfile = new JButton("Edit Profile");
+            profilePanel.add(editProfile);
         }
 
         profilePanel.revalidate();
