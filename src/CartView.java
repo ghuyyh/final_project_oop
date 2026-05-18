@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class CartView {
     private JPanel cartPanel = new JPanel();
@@ -20,11 +19,11 @@ public class CartView {
 
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton refreshBtn = new JButton("Refresh Cart");
-        JButton checkoutBtn = new JButton("Buy Now");
+        JButton Buybtn = new JButton("Buy Now");
 
         refreshBtn.addActionListener(e -> refreshCart());
 
-        checkoutBtn.addActionListener(e -> {
+        Buybtn.addActionListener(e -> {
             User user = getCore().getLoggedInUser();
             if (user == null) {
                 JOptionPane.showMessageDialog(cartPanel, "Please login as a Customer to buy.");
@@ -37,7 +36,7 @@ public class CartView {
                     JOptionPane.showMessageDialog(cartPanel, "Your cart is empty");
                 } else {
                     customer.checkout();
-                    JOptionPane.showMessageDialog(cartPanel, "Checkout successful! Thank you for your purchase.");
+                    JOptionPane.showMessageDialog(cartPanel, "Purchase successful! Thank you for your order.");
                     refreshCart();
                     getMainFrame().updateCartButton();
                 }
@@ -45,7 +44,7 @@ public class CartView {
         });
         bottomPanel.add(totalLabel, BorderLayout.WEST);
         bottomPanel.add(refreshBtn, BorderLayout.CENTER);
-        bottomPanel.add(checkoutBtn, BorderLayout.EAST);
+        bottomPanel.add(Buybtn, BorderLayout.EAST);
         cartPanel.add(bottomPanel, BorderLayout.SOUTH);
 
         refreshCart();
