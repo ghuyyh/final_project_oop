@@ -17,6 +17,7 @@ public class HomeView {
         hotProductsPanel.setLayout(new GridLayout(0, 1, 5, 5));
 
         JScrollPane scrollPane = new JScrollPane(hotProductsPanel);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         getHomePanel().add(scrollPane, BorderLayout.CENTER);
         refreshHome();
     }
