@@ -112,7 +112,7 @@ public class Core {
                 return false;
             }
         }
-        usersDatabase.add(new Customer(username, password, "", 18, "", "Cash", ""));
+        usersDatabase.add(new Customer(username, password, "", -1, "", "", ""));
         return true;
     }
 

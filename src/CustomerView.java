@@ -42,45 +42,49 @@ public class CustomerView {
     }
 
     public void refreshProfile() {
-        profilePanel.removeAll();
-        Customer customer = (Customer) core.getLoggedInUser();
+    profilePanel.removeAll();
+    profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.Y_AXIS));
+    profilePanel.setBorder(BorderFactory.createTitledBorder("Customer Profile"));
+    Customer customer = (Customer) core.getLoggedInUser();
 
-        if (customer == null) {
-            profilePanel.add(new JLabel("No customer profile."));
-        } else {
-            profilePanel.add(new JLabel("Username: " + valueOrNA(customer.getUsername())));
-            profilePanel.add(new JLabel("Full Name: " + valueOrNA(customer.getFullName())));
-            profilePanel.add(new JLabel("Age: " + (customer.getAge() > 0 ? customer.getAge() : "N/A")));
-            profilePanel.add(new JLabel("Address: " + valueOrNA(customer.getAddress())));
-            profilePanel.add(new JLabel("Payment: " + valueOrNA(customer.getPaymentMethod())));
-            profilePanel.add(new JLabel("Items In Cart: " + customer.getPersonalCart().getItems().size()));
-            profilePanel.add(new JLabel("Total Orders: " + customer.getOrderHistory().size()));
-            profilePanel.add(Box.createVerticalStrut(15)); 
-            
-            JButton editProfile = new JButton("Edit Profile");
-            editProfile.addActionListener(e -> {
-            ShowEditProfile dialog = new ShowEditProfile(getMainFrame().getFrame(), customer);
-            dialog.setVisible(true);
-            refreshProfile();
-        });
+    if (customer == null) {
+        profilePanel.add(new JLabel("No customer profile found."));
+    } else {
+        JLabel welcomeLbl = new JLabel("👋 Welcome, " + customer.getUsername() + "!");
+        welcomeLbl.setFont(new Font("Segoe UI", Font.BOLD, 16)); 
+        profilePanel.add(welcomeLbl);
+        profilePanel.add(Box.createVerticalStrut(15)); // Cách ra một đoạn
+        profilePanel.add(new JLabel("👤 Full Name: " + (customer.getFullName() == null || customer.getFullName().trim().isEmpty() ? "(Not updated)" : customer.getFullName())));
+        profilePanel.add(Box.createVerticalStrut(5));
+        profilePanel.add(new JLabel("🎂 Age: " + (customer.getAge() > 0 ? customer.getAge() : "(Not updated)")));
+        profilePanel.add(Box.createVerticalStrut(5));
+        profilePanel.add(new JLabel("🏠 Address: " + (customer.getAddress() == null || customer.getAddress().trim().isEmpty() ? "(Not updated)" : customer.getAddress())));
+        profilePanel.add(Box.createVerticalStrut(5));
+
+        String payment = (customer.getPaymentMethod() == null || customer.getPaymentMethod().trim().isEmpty() ? "(Not updated)" : customer.getPaymentMethod());
+        if (customer.getCardNumber() != null && !customer.getCardNumber().trim().isEmpty()) {
+            payment += " [" + customer.getCardNumber() + "]";
+        }
+        profilePanel.add(new JLabel("💳 Payment: " + payment));
+        profilePanel.add(Box.createVerticalStrut(5));
+        
+        profilePanel.add(new JLabel("🛒 Cart: " + customer.getPersonalCart().getItems().size() + " item(s)"));
+        profilePanel.add(Box.createVerticalStrut(5));
+        
+        profilePanel.add(new JLabel("📦 Orders: " + customer.getOrderHistory().size() + " order(s)"));
+        profilePanel.add(Box.createVerticalStrut(15)); 
+
+        JButton editProfile = new JButton("✏️ Edit Profile");
+        editProfile.addActionListener(e -> {
+        ShowEditProfile dialog = new ShowEditProfile(getMainFrame().getFrame(), customer);
+        dialog.setVisible(true);
+        refreshProfile(); 
         profilePanel.add(editProfile);
-    }
-        profilePanel.revalidate();
-        profilePanel.repaint();
-    }
-
-    private String valueOrNA(String value) {
-        return (value == null || value.trim().isEmpty()) ? "N/A" : value;
-    }
-
-    // private Customer getCurrentCustomer() {
-    //     User currentUser = Core.getInstance().getLoggedInUser();
-    //     if (currentUser instanceof Customer) {
-    //         return (Customer) currentUser;
-    //     }
-    //     return null;
-    // }
-
+    });
+}
+    profilePanel.revalidate();
+    profilePanel.repaint();
+}
     public void refreshHistory() {
         historyPanel.removeAll();
         Customer customer = (Customer) core.getLoggedInUser();
