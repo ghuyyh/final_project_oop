@@ -120,7 +120,7 @@ public class CartView {
 
     private JLabel buildThumbnail(Product product) {
         try {
-            java.net.URL imgURL = getClass().getResource("/res/" + product.getImageFileName());
+            java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getImageFileName());
             if (imgURL != null) {
                 ImageIcon icon = new ImageIcon(imgURL);
                 Image scaled = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
@@ -130,25 +130,23 @@ public class CartView {
             }
         } catch (Exception ignored) {}
 
-        BufferedImage img = new BufferedImage(60, 60, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = img.createGraphics();
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        int hash = Math.abs(product.getName().hashCode());
-        Color c1 = Color.getHSBColor((hash % 360) / 360f, 0.55f, 0.45f);
-        Color c2 = Color.getHSBColor(((hash + 120) % 360) / 360f, 0.60f, 0.30f);
-        g.setPaint(new GradientPaint(0, 0, c1, 60, 60, c2));
-        g.fillRoundRect(0, 0, 60, 60, 12, 12);
-        g.setColor(new Color(255, 255, 255, 200));
-        g.setFont(new Font("Segoe UI", Font.BOLD, 10));
-        String abbr = product.getName().length() >= 2
-                ? product.getName().substring(0, 2).toUpperCase()
-                : product.getName().toUpperCase();
-        FontMetrics fm = g.getFontMetrics();
-        g.drawString(abbr, (60 - fm.stringWidth(abbr)) / 2, 35);
-        g.dispose();
+        try {
+            java.net.URL defaultURL = getClass().getResource("/res/product_images/placeholder.png");
+            if (defaultURL != null) {
+                ImageIcon icon = new ImageIcon(defaultURL);
+                Image scaled = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                JLabel lbl = new JLabel(new ImageIcon(scaled));
+                lbl.setPreferredSize(new Dimension(60, 60));
+                return lbl;
+            }
+        } catch (Exception e) {
+            System.out.println("Error loading image for product: " + product.getName());
+        }
 
-        JLabel lbl = new JLabel(new ImageIcon(img));
+        JLabel lbl = new JLabel();
         lbl.setPreferredSize(new Dimension(60, 60));
+        lbl.setBackground(Color.LIGHT_GRAY);
+        lbl.setOpaque(true);
         return lbl;
     }
 
