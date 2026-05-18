@@ -42,9 +42,10 @@ public class CustomerView {
     }
 
     public void refreshProfile() {
-    profilePanel.removeAll();    
+    profilePanel.removeAll();
     profilePanel.setLayout(new GridBagLayout());
     profilePanel.setBorder(BorderFactory.createTitledBorder("Customer Profile"));
+ 
     JPanel contentPanel = new JPanel(new GridBagLayout()) {
         @Override
         protected void paintComponent(Graphics g) {
@@ -52,14 +53,16 @@ public class CustomerView {
             try {
                 ImageIcon icon = new ImageIcon("background.png"); 
                 Image img = icon.getImage();
-                g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+                if (img != null) {
+                    g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
+                }
             } catch (Exception e) {
             }
         }
     };
-
+    contentPanel.setOpaque(false); 
     GridBagConstraints gbc = new GridBagConstraints();
-    gbc.insets = new Insets(10, 10, 10, 10); 
+    gbc.insets = new Insets(10, 10, 10, 10);
     gbc.gridx = 0;
 
     Customer customer = (Customer) core.getLoggedInUser();
@@ -67,38 +70,47 @@ public class CustomerView {
     if (customer == null) {
         contentPanel.add(new JLabel("No customer profile found."));
     } else {
+        Font labelFont = new Font("Segoe UI", Font.BOLD, 14);
+        Color textColor = Color.BLACK; 
+
         JLabel welcomeLbl = new JLabel("*** Welcome, " + customer.getUsername() + " ***", SwingConstants.CENTER);
         welcomeLbl.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        
+        welcomeLbl.setForeground(textColor);
         gbc.gridy = 0;
         gbc.anchor = GridBagConstraints.CENTER;
         contentPanel.add(welcomeLbl, gbc);
 
-        gbc.anchor = GridBagConstraints.WEST;
-    
-        gbc.gridy = 1;
-        contentPanel.add(new JLabel("👤 Full Name: " + (customer.getFullName() == null || customer.getFullName().trim().isEmpty() ? "(Not updated)" : customer.getFullName())), gbc);
+        gbc.anchor = GridBagConstraints.WEST; 
         
-        gbc.gridy = 2;
-        contentPanel.add(new JLabel("🎂 Age: " + (customer.getAge() > 0 ? customer.getAge() : "(Not updated)")), gbc);
+        JLabel nameLbl = new JLabel("👤 Full Name: " + (customer.getFullName() == null || customer.getFullName().trim().isEmpty() ? "(Not updated)" : customer.getFullName()));
+        nameLbl.setFont(labelFont); nameLbl.setForeground(textColor);
+        gbc.gridy = 1; contentPanel.add(nameLbl, gbc);
         
-        gbc.gridy = 3;
-        contentPanel.add(new JLabel("🏠 Address: " + (customer.getAddress() == null || customer.getAddress().trim().isEmpty() ? "(Not updated)" : customer.getAddress())), gbc);
+        JLabel ageLbl = new JLabel("🎂 Age: " + (customer.getAge() > 0 ? customer.getAge() : "(Not updated)"));
+        ageLbl.setFont(labelFont); ageLbl.setForeground(textColor);
+        gbc.gridy = 2; contentPanel.add(ageLbl, gbc);
+        
+        JLabel addrLbl = new JLabel("🏠 Address: " + (customer.getAddress() == null || customer.getAddress().trim().isEmpty() ? "(Not updated)" : customer.getAddress()));
+        addrLbl.setFont(labelFont); addrLbl.setForeground(textColor);
+        gbc.gridy = 3; contentPanel.add(addrLbl, gbc);
         
         String payment = (customer.getPaymentMethod() == null || customer.getPaymentMethod().trim().isEmpty() ? "(Not updated)" : customer.getPaymentMethod());
         if (customer.getCardNumber() != null && !customer.getCardNumber().trim().isEmpty()) {
             payment += " [" + customer.getCardNumber() + "]";
         }
-        gbc.gridy = 4;
-        contentPanel.add(new JLabel("💳 Payment: " + payment), gbc);
+        JLabel payLbl = new JLabel("💳 Payment: " + payment);
+        payLbl.setFont(labelFont); payLbl.setForeground(textColor);
+        gbc.gridy = 4; contentPanel.add(payLbl, gbc);
         
-        gbc.gridy = 5;
-        contentPanel.add(new JLabel("🛒 Cart: " + customer.getPersonalCart().getItems().size() + " item(s)"), gbc);
+        JLabel cartLbl = new JLabel("🛒 Cart: " + customer.getPersonalCart().getItems().size() + " item(s)");
+        cartLbl.setFont(labelFont); cartLbl.setForeground(textColor);
+        gbc.gridy = 5; contentPanel.add(cartLbl, gbc);
         
-        gbc.gridy = 6;
-        contentPanel.add(new JLabel("📦 Orders: " + customer.getOrderHistory().size() + " order(s)"), gbc);
+        JLabel orderLbl = new JLabel("📦 Orders: " + customer.getOrderHistory().size() + " order(s)");
+        orderLbl.setFont(labelFont); orderLbl.setForeground(textColor);
+        gbc.gridy = 6; contentPanel.add(orderLbl, gbc);
 
-        JButton editProfile = new JButton(" Edit Profile");
+        JButton editProfile = new JButton("Edit Profile");
         editProfile.setFont(new Font("Segoe UI", Font.BOLD, 13));
         editProfile.addActionListener(e -> {
             ShowEditProfile dialog = new ShowEditProfile(getMainFrame().getFrame(), customer);
@@ -107,7 +119,7 @@ public class CustomerView {
         });
         
         gbc.gridy = 7;
-        gbc.anchor = GridBagConstraints.CENTER; 
+        gbc.anchor = GridBagConstraints.CENTER;
         contentPanel.add(editProfile, gbc);
     }
 
@@ -116,7 +128,7 @@ public class CustomerView {
     mainGbc.gridy = 0;
     mainGbc.weightx = 1.0;
     mainGbc.weighty = 1.0;
-    mainGbc.fill = GridBagConstraints.BOTH; 
+    mainGbc.fill = GridBagConstraints.BOTH;
     profilePanel.add(contentPanel, mainGbc);
     profilePanel.revalidate();
     profilePanel.repaint();
