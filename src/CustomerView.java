@@ -53,8 +53,8 @@ public class CustomerView {
         JPanel infoPanel = new JPanel();
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.setOpaque(false); 
-        JLabel welcomeLbl = new JLabel("             Welcome, " + customer.getUsername() + "!");
-        welcomeLbl.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        JLabel welcomeLbl = new JLabel("👋 Welcome, " + customer.getUsername() + "!", SwingConstants.CENTER);
+        welcomeLbl.setFont(new Font("Segoe UI", Font.BOLD, 22));
         infoPanel.add(welcomeLbl);
         infoPanel.add(Box.createVerticalStrut(15)); 
         infoPanel.add(new JLabel("👤 Full Name: " + (customer.getFullName() == null || customer.getFullName().trim().isEmpty() ? "(Not updated)" : customer.getFullName())));
