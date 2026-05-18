@@ -9,8 +9,9 @@ public  class Customer extends User {
     private int age;
     private String address;
     private String paymentMethod;
+    private String cardNumber; 
     private List<PurchaseOrder> orderHistory;
-    public Customer(String username, String password, String fullName, int age, String address, String paymentMethod){
+    public Customer(String username, String password, String fullName, int age, String address, String paymentMethod , String cardNumber) {
         super(username, password);
         this.username = username;
         this.personalCart = new Cart();
@@ -18,6 +19,7 @@ public  class Customer extends User {
         this.age = age;
         this.address = address;
         this.paymentMethod = paymentMethod;
+        this.cardNumber = cardNumber;
         this.orderHistory = new ArrayList<>();
     }
     public Customer(String username, String password) {
@@ -25,8 +27,13 @@ public  class Customer extends User {
     this.username = username;
     this.personalCart = new Cart();
     this.orderHistory = new ArrayList<>();
-  
 }
+    public String getCardNumber() {
+        return cardNumber;
+    }
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
     public String getUsername() {
         return username;
     }
