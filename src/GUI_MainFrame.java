@@ -12,7 +12,11 @@ public class GUI_MainFrame {
     private CustomerView customerPanel = new CustomerView(this);
     private SearchView searchPanel = new SearchView(this);
     private JButton cartBtn;
+    private JFrame frame;
 
+    public JFrame getFrame() {
+    return this.frame;
+    }
     public GUI_MainFrame() {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension scrSize = toolkit.getScreenSize();

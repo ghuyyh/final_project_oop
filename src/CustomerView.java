@@ -58,9 +58,12 @@ public class CustomerView {
             profilePanel.add(Box.createVerticalStrut(15)); 
             
             JButton editProfile = new JButton("Edit Profile");
-            profilePanel.add(editProfile);
-        }
-
+            editProfile.addActionListener(e -> {
+            ShowEditProfile dialog = new ShowEditProfile(getMainFrame().getFrame(), customer);
+            dialog.setVisible(true);
+            refreshProfile();
+        });
+    }
         profilePanel.revalidate();
         profilePanel.repaint();
     }
