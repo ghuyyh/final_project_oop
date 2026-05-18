@@ -6,12 +6,26 @@ public class CustomerView {
     private Core core = Core.getInstance();
 
     private GUI_MainFrame mainFrame;
+    private JPanel profilePanel = new JPanel();
     private JPanel historyPanel = new JPanel();
 
     public CustomerView(GUI_MainFrame mainFrame) {
         this.mainFrame = mainFrame;
         getCustomerPanel().setLayout(new BorderLayout());
-        getCustomerPanel().setBorder(BorderFactory.createTitledBorder("Customer Profile"));
+        JPanel centerPanel = new JPanel(new GridLayout(1, 2, 10, 0));
+
+        profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.Y_AXIS));
+        profilePanel.setBorder(BorderFactory.createTitledBorder("Customer Profile"));
+
+        historyPanel.setLayout(new BoxLayout(historyPanel, BoxLayout.Y_AXIS));
+        JPanel historyContainer = new JPanel(new BorderLayout());
+        historyContainer.setBorder(BorderFactory.createTitledBorder("Order History"));
+        historyContainer.add(new JScrollPane(historyPanel), BorderLayout.CENTER);
+
+        centerPanel.add(profilePanel);
+        centerPanel.add(historyContainer);
+        customerPanel.add(centerPanel, BorderLayout.CENTER);
+
         JButton logoutBtn = new JButton("Logout");
         logoutBtn.addActionListener(e -> {
             Core.getInstance().setLoggedInUser(null);
@@ -22,18 +36,47 @@ public class CustomerView {
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.add(logoutBtn);
         customerPanel.add(bottomPanel, BorderLayout.SOUTH);
-        historyPanel.setLayout(new BoxLayout(historyPanel, BoxLayout.Y_AXIS));
 
+        refreshProfile();
         refreshHistory();
-        JScrollPane scrollPane = new JScrollPane(historyPanel);
-        customerPanel.add(scrollPane, BorderLayout.CENTER);
     }
+
+    public void refreshProfile() {
+        profilePanel.removeAll();
+        Customer customer = (Customer) core.getLoggedInUser();
+
+        if (customer == null) {
+            profilePanel.add(new JLabel("No customer profile."));
+        } else {
+            profilePanel.add(new JLabel("Username: " + valueOrNA(customer.getUsername())));
+            profilePanel.add(new JLabel("Full Name: " + valueOrNA(customer.getFullName())));
+            profilePanel.add(new JLabel("Age: " + (customer.getAge() > 0 ? customer.getAge() : "N/A")));
+            profilePanel.add(new JLabel("Address: " + valueOrNA(customer.getAddress())));
+            profilePanel.add(new JLabel("Payment: " + valueOrNA(customer.getPaymentMethod())));
+            profilePanel.add(new JLabel("Items In Cart: " + customer.getPersonalCart().getItems().size()));
+            profilePanel.add(new JLabel("Total Orders: " + customer.getOrderHistory().size()));
+        }
+
+        profilePanel.revalidate();
+        profilePanel.repaint();
+    }
+
+    private String valueOrNA(String value) {
+        return (value == null || value.trim().isEmpty()) ? "N/A" : value;
+    }
+
+    // private Customer getCurrentCustomer() {
+    //     User currentUser = Core.getInstance().getLoggedInUser();
+    //     if (currentUser instanceof Customer) {
+    //         return (Customer) currentUser;
+    //     }
+    //     return null;
+    // }
 
     public void refreshHistory() {
         historyPanel.removeAll();
-        User user = getCore().getLoggedInUser();
-        if (user != null) {
-            Customer customer = (Customer) user;
+        Customer customer = (Customer) core.getLoggedInUser();
+        if (customer != null) {
             if (customer.getOrderHistory().isEmpty()) {
                 historyPanel.add(new JLabel("No order history yet."));
             } else {
@@ -52,6 +95,8 @@ public class CustomerView {
             historyPanel.add(new JLabel());
         }
     }
+} else {
+            historyPanel.add(new JLabel("No order history yet."));
 }
         historyPanel.revalidate();
         historyPanel.repaint();
