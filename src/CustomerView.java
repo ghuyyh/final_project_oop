@@ -50,7 +50,7 @@ public class CustomerView {
     if (customer == null) {
         profilePanel.add(new JLabel("No customer profile found."));
     } else {
-        JLabel welcomeLbl = new JLabel("👋 Welcome, " + customer.getUsername() + "!");
+        JLabel welcomeLbl = new JLabel(" Welcome, " + customer.getUsername() + "!");
         welcomeLbl.setFont(new Font("Segoe UI", Font.BOLD, 16)); 
         profilePanel.add(welcomeLbl);
         profilePanel.add(Box.createVerticalStrut(15)); // Cách ra một đoạn
@@ -73,6 +73,9 @@ public class CustomerView {
         
         profilePanel.add(new JLabel("📦 Orders: " + customer.getOrderHistory().size() + " order(s)"));
         profilePanel.add(Box.createVerticalStrut(15)); 
+
+        JPanel buttonWrapper = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        buttonWrapper.setOpaque(false);
 
         JButton editProfile = new JButton("✏️ Edit Profile");
         editProfile.addActionListener(e -> {
