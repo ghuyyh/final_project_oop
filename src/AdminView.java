@@ -39,8 +39,8 @@ public class AdminView {
 
         JPanel tablePanel = new JPanel(new BorderLayout(5, 5));
         tablePanel.setBorder(BorderFactory.createTitledBorder("Product Inventory & Hot Sale Manager"));
-        
-        String[] columns = {"Product ID", "Product Name", "Price", "Stock", "Is Hot Sale?"};
+
+        String[] columns = { "Product ID", "Product Name", "Price", "Stock", "Is Hot Sale?" };
         tableModel = new DefaultTableModel(columns, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -48,11 +48,11 @@ public class AdminView {
             }
         };
         inventoryTable = new JTable(tableModel);
-        refreshInventoryTable();  
+        refreshInventoryTable();
 
         JButton toggleHotSaleBtn = new JButton(" Change  yes to no/no to yes");
-        toggleHotSaleBtn.setBackground(new Color(255, 102, 0));
-        toggleHotSaleBtn.setForeground(Color.WHITE);
+        toggleHotSaleBtn.setBackground(Color.WHITE);
+        toggleHotSaleBtn.setForeground(Color.BLACK);
         toggleHotSaleBtn.setFont(new Font("Arial", Font.BOLD, 12));
 
         toggleHotSaleBtn.addActionListener(e -> {
@@ -127,10 +127,10 @@ public class AdminView {
             Product newProduct = new Product(id, name, price, stock, imageFileName, new java.util.LinkedHashMap<>());
 
             core.getInventory().add(newProduct);
-            
+
             JOptionPane.showMessageDialog(adminPanel, "Successfully added: " + name);
-            refreshInventoryTable();  
-            
+            refreshInventoryTable();
+
             idField.setText("");
             nameField.setText("");
             priceField.setText("");
