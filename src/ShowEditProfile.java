@@ -75,10 +75,9 @@ public class ShowEditProfile extends JDialog {
                 } else {
                     customer.setAge(0);
                 }
-                javax.swing.JOptionPane.showMessageDialog(this, "Cập nhật thành công!");
+                javax.swing.JOptionPane.showMessageDialog(this, "complete edit profile.");
                 dispose(); 
             } catch (NumberFormatException ex) {
-            // Simple alert if age format is invalid
             javax.swing.JOptionPane.showMessageDialog(this, "Please enter a valid number for Age.", "Input Error", javax.swing.JOptionPane.ERROR_MESSAGE);
             }
         });
