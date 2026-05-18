@@ -70,7 +70,7 @@ public class CustomerView {
     if (customer == null) {
         contentPanel.add(new JLabel("No customer profile found."));
     } else {
-        Font labelFont = new Font("Segoe UI", Font.BOLD, 14);
+        Font labelFont = new Font("Segoe UI Emoji", Font.BOLD, 14);
         Color textColor = Color.BLACK; 
 
         JLabel welcomeLbl = new JLabel("*** Welcome, " + customer.getUsername() + " ***", SwingConstants.CENTER);
