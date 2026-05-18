@@ -27,60 +27,86 @@ public class HomeView {
         allProductPanel.setBorder(BorderFactory.createTitledBorder("All Products"));
         contaninerPanel.add(allProductPanel);
 
- 
         JScrollPane scrollPane = new JScrollPane(contaninerPanel);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-        getHomePanel().add(contaninerPanel, BorderLayout.CENTER);
+
+        getHomePanel().add(scrollPane, BorderLayout.CENTER);
+
         refreshHome();
     }
 
-    public void displayProducts(java.util.List<Product> products) {
-        hotProductsPanel.removeAll();
-        for (Product product : products) {
-            JPanel productPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            try {
-                java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getImageFileName());
-                if (imgURL != null) {
-                    ImageIcon icon = new ImageIcon(imgURL);
-                    Image rounded = makeRoundedImage(icon.getImage(), 100, 100, 16);
-                    JLabel imgLabel = new JLabel(new ImageIcon(rounded));
-                    productPanel.add(imgLabel);
-                }
-            } catch (Exception e) {
-                System.out.println("Error loading image for product: " + product.getName());
+    private JPanel createProductPanel(Product product) {
+        JPanel productPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        try {
+            java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getImageFileName());
+            if (imgURL != null) {
+                ImageIcon icon = new ImageIcon(imgURL);
+                Image rounded = makeRoundedImage(icon.getImage(), 100, 100, 16);
+                JLabel imgLabel = new JLabel(new ImageIcon(rounded));
+                productPanel.add(imgLabel);
             }
-
-            productPanel.add(new JLabel(product.getName() + " - $" + String.format("%.2f", product.getPrice())));
-
-            JButton detailBtn = new JButton("View Details");
-            detailBtn.addActionListener(e -> new ProductView(product, mainFrame).show());
-            productPanel.add(detailBtn);
-
-            JButton addToCartBtn = new JButton("Add to Cart");
-            addToCartBtn.addActionListener(e -> {
-                User loggedInUser = getCore().getLoggedInUser();
-                if (loggedInUser instanceof Admin) {
-                    JOptionPane.showMessageDialog(null,
-                            "Admins cannot add products to cart. Please log in as a customer.");
-                } else {
-                    Cart targetCart;
-                    if (loggedInUser instanceof Customer) {
-                        targetCart = ((Customer) loggedInUser).getPersonalCart();
-                    } else {
-                        targetCart = getCore().getGuestCart();
-                    }
-                    targetCart.addItem(product, 1);
-                    getMainFrame().refreshCart();
-                    getMainFrame().updateCartButton();
-                    JOptionPane.showMessageDialog(null, "Added " + product.getName() + " to cart!");
-                }
-            });
-            productPanel.add(addToCartBtn);
-            hotProductsPanel.add(productPanel);
+        } catch (Exception e) {
+            System.out.println("Error loading image for product: " + product.getName());
         }
+
+        productPanel.add(new JLabel(product.getName() + " - $" + String.format("%.2f", product.getPrice())));
+
+        JButton detailBtn = new JButton("View Details");
+        detailBtn.addActionListener(e -> new ProductView(product, mainFrame).show());
+        productPanel.add(detailBtn);
+
+        JButton addToCartBtn = new JButton("Add to Cart");
+        addToCartBtn.addActionListener(e -> {
+            User loggedInUser = getCore().getLoggedInUser();
+            if (loggedInUser instanceof Admin) {
+                JOptionPane.showMessageDialog(null,
+                        "Admins cannot add products to cart. Please log in as a customer.");
+            } else {
+                Cart targetCart;
+                if (loggedInUser instanceof Customer) {
+                    targetCart = ((Customer) loggedInUser).getPersonalCart();
+                } else {
+                    targetCart = getCore().getGuestCart();
+                }
+                targetCart.addItem(product, 1);
+                getMainFrame().refreshCart();
+                getMainFrame().updateCartButton();
+                JOptionPane.showMessageDialog(null, "Added " + product.getName() + " to cart!");
+            }
+        });
+        productPanel.add(addToCartBtn);
+        return productPanel;
+    }
+
+    public void displayProducts(java.util.List<Product> products) {
+        allProductPanel.removeAll();
+        for (Product product : products) {
+            allProductPanel.add(createProductPanel(product));
+            
+        }
+        allProductPanel.revalidate();
+        allProductPanel.repaint();
+    }
+
+    public void refreshHome() {
+
+        hotProductsPanel.removeAll();
+        for (Product product : getCore().getHotProducts()) {
+            hotProductsPanel.add(createProductPanel(product));
+        }
+
+        allProductPanel.removeAll();
+        for (Product product : getCore().getInventory()) {
+            allProductPanel.add(createProductPanel(product));
+        }
+        
         hotProductsPanel.revalidate();
         hotProductsPanel.repaint();
+        allProductPanel.revalidate();
+        allProductPanel.repaint();
     }
+
+     
 
     private BufferedImage makeRoundedImage(Image src, int w, int h, int arc) {
         BufferedImage result = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
@@ -92,10 +118,6 @@ public class HomeView {
         g2.drawImage(src, 0, 0, w, h, null);
         g2.dispose();
         return result;
-    }
-
-    public void refreshHome() {
-        displayProducts(getCore().getInventory());
     }
 
     public JPanel getHomePanel() {

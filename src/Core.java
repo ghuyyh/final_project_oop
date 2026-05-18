@@ -39,7 +39,8 @@ public class Core {
         inventory.add(new Other( "O04", "Bluetooth Earbuds", 50.0, 25, "bluetoothearbuds.png", "Audio"));
         inventory.add(new Other( "O05", "Power Bank", 40.0, 20, "powerbank.png", "Charger"));
         
-        hotProducts.addAll(inventory);
+        hotProducts.add(inventory.get(0));
+        hotProducts.add(inventory.get(1));
 
     }
 
@@ -88,16 +89,14 @@ public class Core {
         this.guestCart = guestCart;
     }
     
-    // wth is this :))) có cái kia ở bên main frame rồi
-    // public String routeUserView() {
-    // if (loggedInUser instanceof Admin) {
-    // return "admin";
-    // } else if (loggedInUser instanceof Customer) {
-    // return "customer";
-    // } else {
-    // return "guest";
-    // }
-    // }
+    public void toggleHotProduct(Product p) {
+    if (hotProducts.contains(p)) {
+        hotProducts.remove(p);
+    } else {
+        hotProducts.add(p);
+    }
+}
+     
 
     public List<Product> getHotProducts() {
         return hotProducts;
