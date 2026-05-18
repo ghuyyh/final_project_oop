@@ -79,6 +79,8 @@ public class HomeView {
     }
 
     public void displayProducts(java.util.List<Product> products) {
+        hotProductsPanel.setVisible(false);
+        allProductPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         allProductPanel.removeAll();
         for (Product product : products) {
             allProductPanel.add(createProductPanel(product));
@@ -89,6 +91,8 @@ public class HomeView {
     }
 
     public void refreshHome() {
+        hotProductsPanel.setVisible(true);
+        allProductPanel.setBorder(BorderFactory.createTitledBorder("All Products"));
 
         hotProductsPanel.removeAll();
         for (Product product : getCore().getHotProducts()) {
