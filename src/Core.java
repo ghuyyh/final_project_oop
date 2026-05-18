@@ -19,7 +19,7 @@ public class Core {
         hotProducts = new ArrayList<>();
 
         usersDatabase.add(new Admin("admin", "admin123"));
-        usersDatabase.add(new Customer("customer", "customer123", "Elsu", 30, "Athanor", "Visa **** 1234"));
+        usersDatabase.add(new Customer("customer", "customer123", "Elsu", 30, "Athanor", "Credit Card", "1234-5678-9012-3456"));
 
         inventory.add(new Phone("P01", "Xiaomi 13", 1400.0, 10, "xiaomi13.png", "Xiaomi"));
         inventory.add(new Phone("P02", "iPhone 15 Pro Max", 1000.0, 5, "iphone15promax.png", "Apple"));
@@ -112,7 +112,7 @@ public class Core {
                 return false;
             }
         }
-        usersDatabase.add(new Customer(username, password, "New Customer", 18, "Unknown", "None"));
+        usersDatabase.add(new Customer(username, password, "", 18, "", "Cash", ""));
         return true;
     }
 
