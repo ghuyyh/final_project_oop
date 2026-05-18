@@ -43,48 +43,51 @@ public class CustomerView {
 
     public void refreshProfile() {
     profilePanel.removeAll();
-    profilePanel.setLayout(new BoxLayout(profilePanel, BoxLayout.Y_AXIS));
+    profilePanel.setLayout(new BorderLayout());
     profilePanel.setBorder(BorderFactory.createTitledBorder("Customer Profile"));
     Customer customer = (Customer) core.getLoggedInUser();
 
     if (customer == null) {
-        profilePanel.add(new JLabel("No customer profile found."));
+        profilePanel.add(new JLabel("No customer profile found."), BorderLayout.CENTER);
     } else {
-        JLabel welcomeLbl = new JLabel(" Welcome, " + customer.getUsername() + "!");
-        welcomeLbl.setFont(new Font("Segoe UI", Font.BOLD, 16)); 
-        profilePanel.add(welcomeLbl);
-        profilePanel.add(Box.createVerticalStrut(15)); // Cách ra một đoạn
-        profilePanel.add(new JLabel("👤 Full Name: " + (customer.getFullName() == null || customer.getFullName().trim().isEmpty() ? "(Not updated)" : customer.getFullName())));
-        profilePanel.add(Box.createVerticalStrut(5));
-        profilePanel.add(new JLabel("🎂 Age: " + (customer.getAge() > 0 ? customer.getAge() : "(Not updated)")));
-        profilePanel.add(Box.createVerticalStrut(5));
-        profilePanel.add(new JLabel("🏠 Address: " + (customer.getAddress() == null || customer.getAddress().trim().isEmpty() ? "(Not updated)" : customer.getAddress())));
-        profilePanel.add(Box.createVerticalStrut(5));
+        JPanel infoPanel = new JPanel();
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+        infoPanel.setOpaque(false); 
+        JLabel welcomeLbl = new JLabel("             Welcome, " + customer.getUsername() + "!");
+        welcomeLbl.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        infoPanel.add(welcomeLbl);
+        infoPanel.add(Box.createVerticalStrut(15)); 
+        infoPanel.add(new JLabel("👤 Full Name: " + (customer.getFullName() == null || customer.getFullName().trim().isEmpty() ? "(Not updated)" : customer.getFullName())));
+        infoPanel.add(Box.createVerticalStrut(5));
+        infoPanel.add(new JLabel("🎂 Age: " + (customer.getAge() > 0 ? customer.getAge() : "(Not updated)")));
+        infoPanel.add(Box.createVerticalStrut(5));
+        infoPanel.add(new JLabel("🏠 Address: " + (customer.getAddress() == null || customer.getAddress().trim().isEmpty() ? "(Not updated)" : customer.getAddress())));
+        infoPanel.add(Box.createVerticalStrut(5));
 
         String payment = (customer.getPaymentMethod() == null || customer.getPaymentMethod().trim().isEmpty() ? "(Not updated)" : customer.getPaymentMethod());
         if (customer.getCardNumber() != null && !customer.getCardNumber().trim().isEmpty()) {
             payment += " [" + customer.getCardNumber() + "]";
         }
-        profilePanel.add(new JLabel("💳 Payment: " + payment));
-        profilePanel.add(Box.createVerticalStrut(5));
-        
-        profilePanel.add(new JLabel("🛒 Cart: " + customer.getPersonalCart().getItems().size() + " item(s)"));
-        profilePanel.add(Box.createVerticalStrut(5));
-        
-        profilePanel.add(new JLabel("📦 Orders: " + customer.getOrderHistory().size() + " order(s)"));
-        profilePanel.add(Box.createVerticalStrut(15)); 
+        infoPanel.add(new JLabel("💳 Payment: " + payment));
+        infoPanel.add(Box.createVerticalStrut(5));
+        infoPanel.add(new JLabel("🛒 Cart: " + customer.getPersonalCart().getItems().size() + " item(s)"));
+        infoPanel.add(Box.createVerticalStrut(5));
+        infoPanel.add(new JLabel("📦 Orders: " + customer.getOrderHistory().size() + " order(s)"));
 
-        JPanel buttonWrapper = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        buttonWrapper.setOpaque(false);
-
+        profilePanel.add(infoPanel, BorderLayout.NORTH);
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        buttonPanel.setOpaque(false);
         JButton editProfile = new JButton("✏️ Edit Profile");
         editProfile.addActionListener(e -> {
         ShowEditProfile dialog = new ShowEditProfile(getMainFrame().getFrame(), customer);
         dialog.setVisible(true);
         refreshProfile(); 
-        profilePanel.add(editProfile);
-    });
-}
+        });
+        
+        buttonPanel.add(editProfile);
+        profilePanel.add(buttonPanel, BorderLayout.SOUTH);
+    }
+
     profilePanel.revalidate();
     profilePanel.repaint();
 }
