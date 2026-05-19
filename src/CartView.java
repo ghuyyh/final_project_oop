@@ -119,7 +119,7 @@ public class CartView {
 
     private JLabel buildThumbnail(Product product) {
         try {
-            java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getImageFileName());
+            java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getId() + ".png");
             if (imgURL != null) {
                 ImageIcon icon = new ImageIcon(imgURL);
                 Image scaled = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);

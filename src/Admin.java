@@ -1,6 +1,6 @@
-import java.io.Serializable;
 
-public class Admin extends User implements Serializable {
+
+public class Admin extends User  {
     public Admin(String username, String password) {
         super(username, password); 
     }

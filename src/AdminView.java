@@ -124,7 +124,7 @@ public class AdminView {
             }
             double price = Double.parseDouble(priceField.getText().trim());
             int stock = Integer.parseInt(stockField.getText().trim());
-            Product newProduct = new Product(id, name, price, stock, imageFileName, new java.util.LinkedHashMap<>(), false, "");
+            Product newProduct = new Product(id, name, price, stock, new java.util.LinkedHashMap<>(), false, "");
 
             core.getInventory().add(newProduct);
 

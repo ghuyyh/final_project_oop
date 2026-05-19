@@ -1,17 +1,16 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public  class Customer extends User implements Serializable  {
+public  class Customer extends User  {
     private String username;
-    private Cart personalCart;
+    private transient Cart personalCart;
     private String fullName;
     private int age;
     private String address;
     private String paymentMethod;
     private String cardNumber; 
-    private List<PurchaseOrder> orderHistory;
+    private transient List<PurchaseOrder> orderHistory;
     public Customer(String username, String password, String fullName, int age, String address, String paymentMethod , String cardNumber) {
         super(username, password);
         this.username = username;

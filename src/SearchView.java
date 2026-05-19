@@ -90,7 +90,7 @@ public class SearchView {
         row.setBackground(Color.WHITE);
 
         try {
-            java.net.URL imgURL = getClass().getResource("/res/" + product.getImageFileName());
+            java.net.URL imgURL = getClass().getResource("/res/" + product.getId() + ".png");
             if (imgURL != null) {
                 ImageIcon icon = new ImageIcon(imgURL);
                 Image img = icon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);

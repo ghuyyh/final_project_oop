@@ -19,8 +19,7 @@ public class ProductView{
         dialog.setLayout(new BorderLayout(10,10));
         dialog.setMinimumSize(new Dimension(850, 500)); 
 
-        ImageIcon icon = new ImageIcon(getClass().getResource("/res/product_images/" + product.getImageFileName()));
-        System.out.println(icon.getIconWidth());
+        ImageIcon icon = loadProductImageIcon();
 
         Image smallImg = icon.getImage().getScaledInstance(
                 200,
@@ -89,4 +88,18 @@ public class ProductView{
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }   
+
+    private ImageIcon loadProductImageIcon() {
+        java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getId() + ".png");
+        if (imgURL != null) {
+            return new ImageIcon(imgURL);
+        }
+
+        java.net.URL defaultURL = getClass().getResource("/res/product_images/placeholder.png");
+        if (defaultURL != null) {
+            return new ImageIcon(defaultURL);
+        }
+
+        return new ImageIcon();
+    }
 }

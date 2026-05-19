@@ -1,5 +1,5 @@
 
-public abstract class User {
+public abstract class User implements java.io.Serializable {
     private String username;
     private String password;
 

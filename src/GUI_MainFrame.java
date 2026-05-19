@@ -119,18 +119,18 @@ public class GUI_MainFrame {
         showHome();
 
     }
-    private void filterAndShow(Class<?> categoryClass) {
-        java.util.List<Product> filteredList = new java.util.ArrayList<>();
-        for (Product p : getCore().getInventory()) {
-            if (categoryClass.isInstance(p)) {
-                filteredList.add(p);  
-            }
-        }
+    // private void filterAndShow(Class<?> categoryClass) {
+    //     java.util.List<Product> filteredList = new java.util.ArrayList<>();
+    //     for (Product p : getCore().getInventory()) {
+    //         if (categoryClass.isInstance(p)) {
+    //             filteredList.add(p);  
+    //         }
+    //     }
 
-         homePanel.displayProducts(filteredList); 
+    //      homePanel.displayProducts(filteredList); 
          
-        getLayout().show(mainPanel, "home"); 
-    }
+    //     getLayout().show(mainPanel, "home"); 
+    // }
 
     public CardLayout getLayout() {
         return layout;
