@@ -38,7 +38,10 @@ public class HomeView {
     private JPanel createProductPanel(Product product) {
         JPanel productPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         try {
-            java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getId());
+            java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getId() + ".png");
+            if (imgURL == null) {
+                 imgURL = getClass().getResource("/res/product_images/" + "placeholder.png");
+            }
             if (imgURL != null) {
                 ImageIcon icon = new ImageIcon(imgURL);
                 Image rounded = makeRoundedImage(icon.getImage(), 100, 100, 16);
