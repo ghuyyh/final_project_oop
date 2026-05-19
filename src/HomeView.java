@@ -38,26 +38,12 @@ public class HomeView {
     private JPanel createProductPanel(Product product) {
         JPanel productPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         try {
-            java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getId() + ".png");
+            java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getId());
             if (imgURL != null) {
                 ImageIcon icon = new ImageIcon(imgURL);
                 Image rounded = makeRoundedImage(icon.getImage(), 100, 100, 16);
                 JLabel imgLabel = new JLabel(new ImageIcon(rounded));
-                imgLabel.setPreferredSize(new Dimension(100, 100));
                 productPanel.add(imgLabel);
-            } else {
-                try {
-                    java.net.URL defaultURL = getClass().getResource("/res/product_images/placeholder.png");
-                    if (defaultURL != null) {
-                        ImageIcon icon = new ImageIcon(defaultURL);
-                        Image scaled = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-                        JLabel lbl = new JLabel(new ImageIcon(scaled));
-                        lbl.setPreferredSize(new Dimension(60, 60));
-                        productPanel.add(lbl);
-                    }
-                } catch (Exception ex) {
-                    System.out.println("Error loading placeholder image for product: " + product.getName());
-                }
             }
         } catch (Exception e) {
             System.out.println("Error loading image for product: " + product.getName());

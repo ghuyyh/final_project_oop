@@ -66,21 +66,28 @@ public  class Customer extends User  {
         this.paymentMethod = paymentMethod;
     }
     public List<PurchaseOrder> getOrderHistory(){
+        if (orderHistory == null) {
+            orderHistory = new ArrayList<>();
+        }
         return orderHistory;
     }
     public Cart getPersonalCart() {
+        if (personalCart == null) {
+            personalCart = new Cart();
+        }
         return personalCart;
     }
     public boolean checkout() {
-        if (personalCart.getItems().isEmpty()) {
+        Cart cart = getPersonalCart();
+        if (cart.getItems().isEmpty()) {
             System.out.println("Cart is empty. Cannot proceed to checkout.");
             return false;
         }
-    List<CartItem> itemsToPurchase = new ArrayList<>(personalCart.getItems());
+    List<CartItem> itemsToPurchase = new ArrayList<>(cart.getItems());
         PurchaseOrder newOrder = new PurchaseOrder(itemsToPurchase, LocalDateTime.now());
-        this.orderHistory.add(newOrder);
+        getOrderHistory().add(newOrder);
         System.out.println("Successfully checked out for customer: " + getUsername());
-        personalCart.clearCart();
+        cart.clearCart();
         return true;
     }
 }
