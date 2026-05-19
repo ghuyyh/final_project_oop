@@ -97,17 +97,17 @@ public class GUI_MainFrame {
         bar.add(rightSide, BorderLayout.EAST);
         mainScr.add(bar, BorderLayout.NORTH);
 
-        mainPanel.add("home", getHomePanel());
-        mainPanel.add("cart", getCartPanel());
-        mainPanel.add("admin", getAdminPanel());
-        mainPanel.add("customer", getCustomerPanel());
-        mainPanel.add("search", getSearchPanel());
+        mainPanel.add(getHomePanel(), "home");
+        mainPanel.add(getCartPanel(), "cart");
+        mainPanel.add(getAdminPanel(), "admin");
+        mainPanel.add(getCustomerPanel(), "customer");
+        mainPanel.add(getSearchPanel(), "search");
         mainPanel.setBackground(new Color(238, 238, 238));
 
         JPanel loginWrapper = new JPanel();
         loginWrapper.setLayout(new FlowLayout(FlowLayout.CENTER));
         loginWrapper.add(getLoginPanel());
-        mainPanel.add("login", loginWrapper);
+        mainPanel.add(loginWrapper, "login");
 
         mainScr.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         mainScr.setPreferredSize(new Dimension((int) (0.8 * scrSize.width), (int) (0.8 * scrSize.height)));

@@ -29,7 +29,7 @@ public class AdminView {
         JPanel formPanel = new JPanel(new GridLayout(7, 2, 10, 10));
         formPanel.add(new JLabel("Product ID:"));
         formPanel.add(idField);
-        formPanel.add(new JLabel("Product Name:")); 
+        formPanel.add(new JLabel("Product Name:"));
         formPanel.add(nameField);
         formPanel.add(new JLabel("Price:"));
         formPanel.add(priceField);
@@ -62,11 +62,23 @@ public class AdminView {
         inventoryTable = new JTable(tableModel);
         refreshInventoryTable();
 
+        JPanel botTablePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton toggleHotSaleBtn = new JButton(" Enable/Disable Hot Sale for selected product ");
         toggleHotSaleBtn.setBackground(Color.WHITE);
         toggleHotSaleBtn.setForeground(Color.BLACK);
         toggleHotSaleBtn.setFont(new Font("Arial", Font.BOLD, 12));
+        JButton deleteProductBtn = new JButton("Delete selected product");
+        deleteProductBtn.setBackground(Color.RED);
+        deleteProductBtn.setForeground(Color.WHITE);
+        deleteProductBtn.setFont(new Font("Arial", Font.BOLD, 12));
+        JButton editProductBtn = new JButton("Edit product");
 
+
+        botTablePanel.add(editProductBtn);
+        botTablePanel.add(deleteProductBtn);
+        botTablePanel.add(toggleHotSaleBtn);
+
+        //listener for hot sale
         toggleHotSaleBtn.addActionListener(e -> {
             int selectedRow = inventoryTable.getSelectedRow();
             if (selectedRow != -1) {
@@ -94,8 +106,34 @@ public class AdminView {
             }
         });
 
+        //listener for delete product
+        deleteProductBtn.addActionListener(e -> {
+            int selectedRow = inventoryTable.getSelectedRow();
+            if (selectedRow != -1) {
+                String pId = (String) inventoryTable.getValueAt(selectedRow, 0);
+                Product selectedProduct = null;
+                for (Product p : core.getInventory()) {
+                    if (p.getId().equals(pId)) {
+                        selectedProduct = p;
+                        break;
+                    }
+                }
+
+                if (selectedProduct != null) {
+                    core.getInventory().remove(selectedProduct);
+                    core.saveInventory();
+                    JOptionPane.showMessageDialog(adminPanel,
+                            "Product deleted: " + selectedProduct.getName());
+                } else {
+                    JOptionPane.showMessageDialog(adminPanel, "Product not found.");
+                }
+                refreshInventoryTable();
+            } else {
+                JOptionPane.showMessageDialog(adminPanel, "Please select a product from the table first.");}
+        });
+
         tablePanel.add(new JScrollPane(inventoryTable), BorderLayout.CENTER);
-        tablePanel.add(toggleHotSaleBtn, BorderLayout.SOUTH);
+        tablePanel.add(botTablePanel, BorderLayout.SOUTH);
 
         adminPanel.add(formPanel, BorderLayout.NORTH);
         adminPanel.add(tablePanel, BorderLayout.CENTER);
@@ -129,7 +167,7 @@ public class AdminView {
         try {
             String id = idField.getText().trim();
             String name = nameField.getText().trim();
-            if (id.isEmpty() || name.isEmpty() || selectedImageFile == null) {
+            if (id.isEmpty() || name.isEmpty() ) {
                 JOptionPane.showMessageDialog(adminPanel, "All fields cannot be empty.", "Input Error",
                         JOptionPane.ERROR_MESSAGE);
                 return;
@@ -139,7 +177,9 @@ public class AdminView {
             Product newProduct = new Product(id, name, price, stock, new java.util.LinkedHashMap<>(), false, "");
 
             core.getInventory().add(newProduct);
-            saveSelectedImage(id, selectedImageFile);
+            if (selectedImageFile != null) {
+                saveSelectedImage(id, selectedImageFile);
+            }
             core.saveInventory();
 
             JOptionPane.showMessageDialog(adminPanel, "Successfully added: " + name);
@@ -174,6 +214,10 @@ public class AdminView {
     }
 
     private void saveSelectedImage(String productId, File imageFile) throws IOException {
+        if (imageFile == null) {
+            return;
+        }
+
         Path targetDir = Path.of("src", "res", "product_images");
         Files.createDirectories(targetDir);
 
