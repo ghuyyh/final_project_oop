@@ -9,7 +9,7 @@ public class HomeView {
     private JPanel allProductPanel = new JPanel();
     private Core core = Core.getInstance();
     GUI_MainFrame mainFrame;
-
+final Color ITEM_BG = new Color(230, 230, 230);
     public HomeView(GUI_MainFrame mainFrame) {
         this.mainFrame = mainFrame;
 
@@ -23,7 +23,7 @@ public class HomeView {
         hotProductsPanel.setBorder(BorderFactory.createTitledBorder("Today Hot Sales"));
         contaninerPanel.add(hotProductsPanel);
 
-        allProductPanel.setLayout(new GridLayout(0, 1, 5, 5));
+        allProductPanel.setLayout(new GridLayout(0, 2, 10, 10));
         allProductPanel.setBorder(BorderFactory.createTitledBorder("All Products"));
         contaninerPanel.add(allProductPanel);
 
@@ -36,7 +36,11 @@ public class HomeView {
     }
 
     private JPanel createProductPanel(Product product) {
-        JPanel productPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel productPanel = new JPanel(new GridLayout(1, 3, 10, 10));
+        productPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(210, 210, 210), 1),
+                BorderFactory.createEmptyBorder(8, 8, 8, 8)));
+        productPanel.setBackground(ITEM_BG);
         try {
             java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getId() + ".png");
             if (imgURL == null) {
@@ -47,17 +51,26 @@ public class HomeView {
                 Image rounded = makeRoundedImage(icon.getImage(), 100, 100, 16);
                 JLabel imgLabel = new JLabel(new ImageIcon(rounded));
                 productPanel.add(imgLabel);
+            } else {
+                productPanel.add(new JLabel());
             }
         } catch (Exception e) {
             System.out.println("Error loading image for product: " + product.getName());
+            productPanel.add(new JLabel());
         }
 
-        productPanel.add(new JLabel(product.getName() + " - $" + String.format("%.2f", product.getPrice())));
+        JPanel infoPanel = new JPanel(new GridLayout(2, 1, 5, 5));
+        infoPanel.setOpaque(false);
+        infoPanel.add(new JLabel(product.getName()));
+        infoPanel.add(new JLabel("$" + String.format("%.2f", product.getPrice())));
+        productPanel.add(infoPanel);
+
+        JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 5, 5));
 
         JButton detailBtn = new JButton("View Details");
         detailBtn.addActionListener(e -> new ProductView(product, mainFrame).show());
-        productPanel.add(detailBtn);
-
+        buttonPanel.add(detailBtn);
+buttonPanel.setOpaque(false);
         JButton addToCartBtn = new JButton("Add to Cart");
         addToCartBtn.addActionListener(e -> {
             User loggedInUser = getCore().getLoggedInUser();
@@ -77,12 +90,14 @@ public class HomeView {
                 JOptionPane.showMessageDialog(null, "Added " + product.getName() + " to cart!");
             }
         });
-        productPanel.add(addToCartBtn);
+        buttonPanel.add(addToCartBtn);
+        productPanel.add(buttonPanel);
         return productPanel;
     }
 
     public void displayProducts(java.util.List<Product> products) {
         hotProductsPanel.setVisible(false);
+        allProductPanel.setLayout(new GridLayout(0, 2, 10, 10));
         allProductPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         allProductPanel.removeAll();
         for (Product product : products) {
@@ -95,6 +110,8 @@ public class HomeView {
 
     public void refreshHome() {
         hotProductsPanel.setVisible(true);
+        hotProductsPanel.setLayout(new GridLayout(0, 1, 5, 5));
+        allProductPanel.setLayout(new GridLayout(0, 2, 10, 10));
         allProductPanel.setBorder(BorderFactory.createTitledBorder("All Products"));
 
         hotProductsPanel.removeAll();
