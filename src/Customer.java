@@ -1,8 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public  class Customer extends User {
+public  class Customer extends User implements Serializable  {
     private String username;
     private Cart personalCart;
     private String fullName;
@@ -22,6 +23,7 @@ public  class Customer extends User {
         this.cardNumber = cardNumber;
         this.orderHistory = new ArrayList<>();
     }
+    
     public Customer(String username, String password) {
     super(username, password); 
     this.username = username;

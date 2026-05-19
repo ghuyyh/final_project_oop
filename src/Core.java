@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.io.*;
 
 public class Core {
     private List<User> usersDatabase;
@@ -21,26 +22,27 @@ public class Core {
         usersDatabase.add(new Admin("admin", "admin123"));
         usersDatabase.add(new Customer("customer", "customer123", "Elsu", 30, "Athanor", "Credit Card", "1234-5678-9012-3456"));
 
-        inventory.add(new Phone("P01", "Xiaomi 13", 1400.0, 10, "xiaomi13.png", "Xiaomi"));
-        inventory.add(new Phone("P02", "iPhone 15 Pro Max", 1000.0, 5, "iphone15promax.png", "Apple"));
-        inventory.add(new Phone("P03", "Samsung Galaxy S23 Ultra", 800.0, 8, "samsunggalaxys23ultra.png", "Samsung"));
-        inventory.add(new Phone("P04", "OnePlus 11", 230.0, 12, "oneplus11.png", "OnePlus"));
-        inventory.add(new Phone("P05", "Google Pixel 8 Pro", 888.0, 7, "googlepixel8pro.png", "Google"));
 
-        inventory.add(new SmartHome("S01", "Google Nest Hub", 100.0, 15, "googlenesthub.png", "Google"));
-        inventory.add(new SmartHome("S02", "Amazon Echo Show 10", 150.0, 10, "amazonechoshow10.png", "Amazon"));
-        inventory.add(new SmartHome("S03", "Apple HomePod Mini", 99.0, 20, "applehomepodmini.png", "Apple"));
-        inventory.add(new SmartHome("S04", "Samsung SmartThings Hub", 120.0, 5, "samsungsmartthingshub.png", "Samsung"));
-        inventory.add(new SmartHome("S05", "Xiaomi Mi Smart Speaker", 80.0, 18, "xiaomismartspeaker.png", "Xiaomi"));
+        inventory.add(new Product("P01", "Xiaomi 13", 1400.0, 10));
+        inventory.add(new Product("P02", "IPhone 15 Pro Max", 1000.0, 5));
+        inventory.add(new Product("P03", "Samsung Galaxy S23 Ultra", 800.0, 8));
+        inventory.add(new Product("P04", "OnePlus 11", 230.0, 12));
+        inventory.add(new Product("P05", "Google Pixel 8 Pro", 888.0, 7));
 
-        inventory.add(new Other( "O01", "Wireless Charger", 25.0, 30, "wirelesscharger.png", "Charger"));
-        inventory.add(new Other( "O02", "Phone Case", 15.0, 50, "phonecase.png", "Accessory"));
-        inventory.add(new Other( "O03", "Screen Protector", 10.0, 40, "screenprotector.png", "Accessory"));
-        inventory.add(new Other( "O04", "Bluetooth Earbuds", 50.0, 25, "bluetoothearbuds.png", "Audio"));
-        inventory.add(new Other( "O05", "Power Bank", 40.0, 20, "powerbank.png", "Charger"));
+        inventory.add(new Product("S01", "Google Nest Hub", 100.0, 15));
+        inventory.add(new Product("S02", "Amazon Echo Show 10", 150.0, 10));
+        inventory.add(new Product("S03", "Apple HomePod Mini", 99.0, 20));
+        inventory.add(new Product("S04", "Samsung SmartThings Hub", 120.0, 5));
+        inventory.add(new Product("S05", "Xiaomi Mi Smart Speaker", 80.0, 18));
+
+        inventory.add(new Product( "O01", "Wireless Charger", 25.0, 30));
+        inventory.add(new Product( "O02", "Phone Case", 15.0, 50));
+        inventory.add(new Product( "O03", "Screen Protector", 10.0, 40));
+        inventory.add(new Product( "O04", "Bluetooth Earbuds", 50.0, 25));
+        inventory.add(new Product( "O05", "Power Bank", 40.0, 20));
         
-        hotProducts.add(inventory.get(0));
-        hotProducts.add(inventory.get(1));
+        // hotProducts.add(inventory.get(0));
+        // hotProducts.add(inventory.get(1));
 
     }
 
@@ -112,7 +114,7 @@ public class Core {
                 return false;
             }
         }
-        usersDatabase.add(new Customer(username, password, "", -1, "", "", ""));
+       // usersDatabase.add(new Customer(username, password, "", -1, "", "", ""));
         return true;
     }
 

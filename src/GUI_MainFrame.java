@@ -52,11 +52,11 @@ public class GUI_MainFrame {
         categoryMenu.add(smartHomeItem);
         categoryMenu.add(otherItem);
 
-        phonesItem.addActionListener(e ->  filterAndShow(Phone.class));
+        // phonesItem.addActionListener(e ->  filterAndShow(Phone.class));
            
-        smartHomeItem.addActionListener(e -> filterAndShow(SmartHome.class));
+        // smartHomeItem.addActionListener(e -> filterAndShow(SmartHome.class));
 
-        otherItem.addActionListener(e -> filterAndShow(Other.class));
+        // otherItem.addActionListener(e -> filterAndShow(Other.class));
 
         
         categorySelect.addActionListener(e -> {
