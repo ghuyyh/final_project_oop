@@ -98,8 +98,10 @@ public class HomeView {
         allProductPanel.setBorder(BorderFactory.createTitledBorder("All Products"));
 
         hotProductsPanel.removeAll();
-        for (Product product : getCore().getHotProducts()) {
-            hotProductsPanel.add(createProductPanel(product));
+        for (Product product : getCore().getInventory()) {
+            if (product.getHotSale()) {
+                hotProductsPanel.add(createProductPanel(product));
+            }
         }
 
         allProductPanel.removeAll();

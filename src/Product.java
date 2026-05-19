@@ -8,17 +8,17 @@ public class Product implements Serializable {
     private double price;
     private int stockQuantity;
     private Map<String, String> specs;
-    private boolean isHotProduct;
+    private boolean isHotSale;
     private String category;
 
     public Product(String id, String name, double price, int stockQuantity,
-            Map<String, String> specs, boolean isHotProduct, String category) {
+            Map<String, String> specs, boolean isHotSale, String category) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.stockQuantity = stockQuantity;
         this.specs = specs;
-        this.isHotProduct = isHotProduct;
+        this.isHotSale = isHotSale;
         this.category = category;
     }
 
@@ -251,12 +251,12 @@ public class Product implements Serializable {
         getSpecs().put(key, value);
     }
 
-    public boolean isHotProduct() {
-        return isHotProduct;
+    public boolean getHotSale() {
+        return isHotSale;
     }
 
-    public void setHotProduct(boolean isHotProduct) {
-        this.isHotProduct = isHotProduct;
+    public void setHotSale(boolean isHotSale) {
+        this.isHotSale = isHotSale;
     }
 
     public String getCategory() {
