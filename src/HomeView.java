@@ -9,7 +9,8 @@ public class HomeView {
     private JPanel allProductPanel = new JPanel();
     private Core core = Core.getInstance();
     GUI_MainFrame mainFrame;
-final Color ITEM_BG = new Color(230, 230, 230);
+    final Color ITEM_BG = new Color(230, 230, 230);
+
     public HomeView(GUI_MainFrame mainFrame) {
         this.mainFrame = mainFrame;
 
@@ -28,6 +29,7 @@ final Color ITEM_BG = new Color(230, 230, 230);
         contaninerPanel.add(allProductPanel);
 
         JScrollPane scrollPane = new JScrollPane(contaninerPanel);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
         getHomePanel().add(scrollPane, BorderLayout.CENTER);
@@ -44,7 +46,7 @@ final Color ITEM_BG = new Color(230, 230, 230);
         try {
             java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getId() + ".png");
             if (imgURL == null) {
-                 imgURL = getClass().getResource("/res/product_images/" + "placeholder.png");
+                imgURL = getClass().getResource("/res/product_images/" + "placeholder.png");
             }
             if (imgURL != null) {
                 ImageIcon icon = new ImageIcon(imgURL);
@@ -70,7 +72,7 @@ final Color ITEM_BG = new Color(230, 230, 230);
         JButton detailBtn = new JButton("View Details");
         detailBtn.addActionListener(e -> new ProductView(product, mainFrame).show());
         buttonPanel.add(detailBtn);
-buttonPanel.setOpaque(false);
+        buttonPanel.setOpaque(false);
         JButton addToCartBtn = new JButton("Add to Cart");
         addToCartBtn.addActionListener(e -> {
             User loggedInUser = getCore().getLoggedInUser();
@@ -102,7 +104,7 @@ buttonPanel.setOpaque(false);
         allProductPanel.removeAll();
         for (Product product : products) {
             allProductPanel.add(createProductPanel(product));
-            
+
         }
         allProductPanel.revalidate();
         allProductPanel.repaint();
@@ -125,14 +127,12 @@ buttonPanel.setOpaque(false);
         for (Product product : getCore().getInventory()) {
             allProductPanel.add(createProductPanel(product));
         }
-        
+
         hotProductsPanel.revalidate();
         hotProductsPanel.repaint();
         allProductPanel.revalidate();
         allProductPanel.repaint();
     }
-
-     
 
     private BufferedImage makeRoundedImage(Image src, int w, int h, int arc) {
         BufferedImage result = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);

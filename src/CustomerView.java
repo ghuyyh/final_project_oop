@@ -20,7 +20,10 @@ public class CustomerView {
         historyPanel.setLayout(new BoxLayout(historyPanel, BoxLayout.Y_AXIS));
         JPanel historyContainer = new JPanel(new BorderLayout());
         historyContainer.setBorder(BorderFactory.createTitledBorder("Order History"));
-        historyContainer.add(new JScrollPane(historyPanel), BorderLayout.CENTER);
+        historyPanel.setBorder(BorderFactory.createEmptyBorder());
+        JScrollPane historyScrollPane = new JScrollPane(historyPanel);
+        historyScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        historyContainer.add(historyScrollPane, BorderLayout.CENTER);
 
         centerPanel.add(profilePanel);
         centerPanel.add(historyContainer);

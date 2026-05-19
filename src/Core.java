@@ -7,7 +7,6 @@ public class Core {
     private List<Product> inventory;
     private User loggedInUser;
     private Cart guestCart;
-    private List<Product> hotProducts;
 
     // Singleton instance
     private static Core instance;
@@ -18,7 +17,6 @@ public class Core {
         usersDatabase = new ArrayList<>();
         inventory = new ArrayList<>();
         loggedInUser = null;
-        hotProducts = new ArrayList<>();
         loadInventory();
         loadUsers();
 
@@ -43,9 +41,6 @@ public class Core {
         // inventory.add(new Product( "O03", "Screen Protector", 10.0, 40));
         // inventory.add(new Product( "O04", "Bluetooth Earbuds", 50.0, 25));
         // inventory.add(new Product( "O05", "Power Bank", 40.0, 20));
-
-        // hotProducts.add(inventory.get(0));
-        // hotProducts.add(inventory.get(1));
 
     }
 
@@ -79,7 +74,7 @@ public class Core {
     }
 
     public User getLoggedInUser() {
-       
+
         return loggedInUser;
     }
 
@@ -95,37 +90,31 @@ public class Core {
         this.guestCart = guestCart;
     }
 
-    public void toggleHotProduct(Product p) {
-        if (hotProducts.contains(p)) {
-            hotProducts.remove(p);
-        } else {
-            hotProducts.add(p);
-        }
-    }
-
-    public List<Product> getHotProducts() {
-        return hotProducts;
-    }
-
-    public void setHotProducts(List<Product> hotProducts) {
-        this.hotProducts = hotProducts;
-    }
-
     public boolean registerCustomer(String username, String password) {
         for (User user : usersDatabase) {
             if (user.getUsername().equals(username)) {
                 return false;
             }
         }
-        // usersDatabase.add(new Customer(username, password, "", -1, "", "", ""));
+        usersDatabase.add(new Customer(username, password, "", -1, "", "", ""));
+        saveUser();
         return true;
     }
 
     public void loadUsers() {
         DataManager.loadUsers();
     }
-    public void loadInventory(){
+
+    public void loadInventory() {
         DataManager.loadInventory();
+    }
+
+    public void saveInventory() {
+        DataManager.saveInventory();
+    }
+
+    public void saveUser() {
+        DataManager.saveUsers();
     }
 
 }

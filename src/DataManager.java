@@ -71,14 +71,11 @@ public class DataManager {
             return;
         }
         List<Product> inv = Core.getInstance().getInventory();
-        List<Product> hot = Core.getInstance().getHotProducts();
         inv.clear();
-        hot.clear();
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f))) {
             @SuppressWarnings("unchecked")
             List<Product> loadedProducts = (List<Product>) ois.readObject();
             inv.addAll(loadedProducts);
-            hot.addAll(loadedProducts);
             System.out.println("[DataManager] Loaded " + inv.size() + " products from " + INVENTORY_FILE);
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("[DataManager] Error loading inventory: " + e.getMessage());

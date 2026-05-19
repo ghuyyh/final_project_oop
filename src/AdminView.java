@@ -82,7 +82,7 @@ public class AdminView {
 
                 if (selectedProduct != null) {
                     selectedProduct.setHotSale(!selectedProduct.getHotSale());
-                    DataManager.saveInventory();
+                    core.saveInventory();
                     JOptionPane.showMessageDialog(adminPanel,
                             "Hot sale status updated for: " + selectedProduct.getName());
                 } else {
@@ -140,7 +140,7 @@ public class AdminView {
 
             core.getInventory().add(newProduct);
             saveSelectedImage(id, selectedImageFile);
-            DataManager.saveInventory();
+            core.saveInventory();
 
             JOptionPane.showMessageDialog(adminPanel, "Successfully added: " + name);
             refreshInventoryTable();
