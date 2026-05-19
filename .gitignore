@@ -26,3 +26,7 @@ replay_pid*
 #test
 src/test.java
 src/addall.java
+
+#data files
+src/database/inventory.dat
+src/database/users.dat
