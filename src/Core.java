@@ -10,7 +10,13 @@ public class Core {
 
     // Singleton instance
     private static Core instance;
-
+    public CartView cartView;
+    public CartView getCartView() {
+        return cartView;
+    }
+    public void setCartView(CartView cartView) {
+        this.cartView = cartView;
+    }
     private Core() {
         instance = this;
         guestCart = new Cart();
