@@ -62,7 +62,24 @@ public class Core {
     }
 
     public boolean processCheckout() {
-        return true;
+        User user = getLoggedInUser();
+        if (user == null) {
+            System.out.println("Please login as a Customer to buy.");
+            return false;
+        } else if (user instanceof Admin) {
+            System.out.println("Admins cannot buy. Please login as a Customer.");
+        return false;
+    }
+    if (user instanceof Customer) {
+            Customer customer = (Customer) user;
+            Cart cart = customer.getPersonalCart();
+            if (cart == null || cart.getItems().isEmpty()) {
+                System.out.println("Cart is empty. Cannot proceed to checkout.");
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
 
     public List<User> getUsersDatabase() {

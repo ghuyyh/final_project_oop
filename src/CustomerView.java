@@ -214,7 +214,8 @@ public class CustomerView {
                 JButton reButton = new JButton("RE-ORDER");
                 reButton.addActionListener(e -> {
                     for (CartItem item : order.getItems()) {
-                        customer.getPersonalCart().addItem(item.getProduct(), item.getQuantity());
+                        item.getProduct().reduceStock(item.getQuantity());
+                        ((Customer) core.getLoggedInUser()).getPersonalCart().addItem(item.getProduct(), item.getQuantity());
                     }
                     JOptionPane.showMessageDialog(historyPanel, "***Items added to cart. You can proceed to purchase them from your cart.***");
                 });
