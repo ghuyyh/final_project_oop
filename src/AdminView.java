@@ -24,6 +24,13 @@ public class AdminView {
         });
         formPanel.add(addProductButton);
 
+        JButton viewOrdersBtn = new JButton("View Customer Orders");
+        viewOrdersBtn.addActionListener(e -> {
+            AdminOrderHistoryDialog orderDialog = new AdminOrderHistoryDialog(getMainFrame().getFrame());
+            orderDialog.setVisible(true);
+        });
+        formPanel.add(viewOrdersBtn);
+
         JPanel tablePanel = new JPanel(new BorderLayout(5, 5));
         tablePanel.setBorder(BorderFactory.createTitledBorder("Product Inventory & Hot Sale Manager"));
 
