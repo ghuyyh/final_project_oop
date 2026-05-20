@@ -15,7 +15,10 @@ public class OtherView extends JPanel {
         containerPanel.setLayout(new GridLayout(0, 2, 10, 10));
         containerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JScrollPane scrollPane = new JScrollPane(containerPanel);
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
+        wrapperPanel.add(containerPanel, BorderLayout.NORTH);
+
+        JScrollPane scrollPane = new JScrollPane(wrapperPanel);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         add(scrollPane, BorderLayout.CENTER);

@@ -15,7 +15,10 @@ public class PhoneView extends JPanel {
         containerPanel.setLayout(new GridLayout(0, 2, 10, 10));
         containerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JScrollPane scrollPane = new JScrollPane(containerPanel);
+         JPanel wrapperPanel = new JPanel(new BorderLayout());
+        wrapperPanel.add(containerPanel, BorderLayout.NORTH);
+
+        JScrollPane scrollPane = new JScrollPane(wrapperPanel);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         add(scrollPane, BorderLayout.CENTER);
@@ -26,6 +29,7 @@ public class PhoneView extends JPanel {
         Color itemBg = new Color(230, 230, 230);
 
         for (Product product : products) {
+            // Trả lại cấu trúc GridLayout(1, 3, 10, 10) giống y hệt HomeView
             JPanel productPanel = new JPanel(new GridLayout(1, 3, 10, 10));
             productPanel.setBorder(BorderFactory.createCompoundBorder(
                     BorderFactory.createLineBorder(new Color(210, 210, 210), 1),
