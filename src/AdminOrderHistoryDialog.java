@@ -19,12 +19,12 @@ public class AdminOrderHistoryDialog extends JDialog {
         Core core = Core.getInstance();
         boolean hasOrders = false;
 
-         for (User user : core.getUsersDatabase()) {
+        for (User user : core.getUsersDatabase()) {
             if (user instanceof Customer) {
                 Customer customer = (Customer) user;
                 List<PurchaseOrder> orders = customer.getOrderHistory();
                 
-                 if (orders != null && !orders.isEmpty()) {
+                if (orders != null && !orders.isEmpty()) {
                     for (PurchaseOrder order : orders) {
                         hasOrders = true;
                         
@@ -39,11 +39,11 @@ public class AdminOrderHistoryDialog extends JDialog {
                         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
                         infoPanel.setBackground(Color.WHITE);
 
-                         String fullName = (customer.getFullName() == null || customer.getFullName().isEmpty()) 
-                                          ? "N/A" : customer.getFullName();
-                        JLabel customerLabel = new JLabel(" Customer: " + customer.getUsername() + " (" + fullName + ")");
+                        String displayName = (customer.getFullName() == null || customer.getFullName().trim().isEmpty()) 
+                                              ? customer.getUsername() : customer.getFullName();
+                        JLabel customerLabel = new JLabel(" Customer Name: " + displayName);
                         customerLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
-                        customerLabel.setForeground(new Color(25, 118, 210)); 
+                        customerLabel.setForeground(new Color(25, 118, 210));
                         
                         JLabel dateLabel = new JLabel(" Order Date: " + order.getFormattedDate());
                         dateLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
@@ -58,7 +58,7 @@ public class AdminOrderHistoryDialog extends JDialog {
                         itemListPanel.setLayout(new BoxLayout(itemListPanel, BoxLayout.Y_AXIS));
                         itemListPanel.setBackground(Color.WHITE);
 
-                         for (CartItem item : order.getItems()) {
+                        for (CartItem item : order.getItems()) {
                             String productName = item.getProduct().getName();
                             int qty = item.getQuantity();
                             double price = item.getProduct().getPrice();
@@ -78,7 +78,7 @@ public class AdminOrderHistoryDialog extends JDialog {
                         
                         JLabel totalLabel = new JLabel(String.format("Total: $%.2f", order.getTotalAmount()));
                         totalLabel.setFont(new Font("Segoe UI", Font.BOLD, 15));
-                        totalLabel.setForeground(new Color(220, 50, 50));  
+                        totalLabel.setForeground(new Color(220, 50, 50));
                         rightPanel.add(totalLabel);
 
                         orderPanel.add(rightPanel, BorderLayout.EAST);
@@ -89,7 +89,7 @@ public class AdminOrderHistoryDialog extends JDialog {
             }
         }
 
-         if (!hasOrders) {
+        if (!hasOrders) {
             JPanel emptyPanel = new JPanel(new GridBagLayout());
             emptyPanel.setBackground(historyPanel.getBackground());
             JLabel emptyLabel = new JLabel("No customer orders found in the database.");
