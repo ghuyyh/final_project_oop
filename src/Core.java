@@ -66,10 +66,10 @@ public class Core {
         }
         return null;
     }
-
-    public boolean processCheckout() {
-       return true;
-    }
+//dư thừa, có checkout() trong cartview rồi
+    // public boolean processCheckout() {
+    //    return true;
+    // }
 
     public List<User> getUsersDatabase() {
         return usersDatabase;
