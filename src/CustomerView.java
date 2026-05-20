@@ -157,30 +157,79 @@ public class CustomerView {
 
     public void refreshHistory() {
         historyPanel.removeAll();
-        Customer customer = (Customer) core.getLoggedInUser();
-        if (customer != null) {
-            if (customer.getOrderHistory().isEmpty()) {
-                historyPanel.add(new JLabel("No order history yet."));
-            } else {
-                for (PurchaseOrder order : customer.getOrderHistory()) {
-                    String headerText = "--- ORDER DATE: " + order.getFormattedDate() + " | TOTAL MONEY: $"
-                            + order.getTotalAmount() + " ---";
-                    JLabel lblHeader = new JLabel(headerText);
-                    historyPanel.add(lblHeader);
+        historyPanel.setLayout(new BoxLayout(historyPanel, BoxLayout.Y_AXIS));
+        historyPanel.setBackground( new Color(240, 242, 245));
 
-                    for (CartItem item : order.getItems()) {
-                        String productName = item.getProduct().getName();
-                        int qty = item.getQuantity();
-                        double price = item.getProduct().getPrice();
-                        JLabel itemLabel = new JLabel(
-                                "Product: " + productName + " | Quantity: " + qty + " | Price: $" + price);
-                        historyPanel.add(itemLabel);
-                    }
-                    historyPanel.add(new JLabel());
-                }
+        Customer customer = (Customer) core.getLoggedInUser();
+
+        if (customer != null && !customer.getOrderHistory().isEmpty()) {
+            for (PurchaseOrder order : customer.getOrderHistory()) {
+                JPanel oderPanel = new JPanel(new BorderLayout(15, 10));
+                oderPanel.setBackground(Color.WHITE);
+                oderPanel.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                        BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+                        oderPanel.setMaximumSize(new Dimension(Short.MAX_VALUE, 150));
+                        JPanel infoPanel = new JPanel();
+                infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+                infoPanel.setBackground(Color.WHITE);
+                JLabel dateLabel = new JLabel("Order Date: " + order.getFormattedDate());
+                dateLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+                dateLabel.setForeground(new Color(50, 50, 50));
+                infoPanel.add(dateLabel);
+                infoPanel.add(Box.createVerticalStrut(8));
+            JPanel itemListPanel = new JPanel();
+                itemListPanel.setLayout(new BoxLayout(itemListPanel, BoxLayout.Y_AXIS));
+                itemListPanel.setBackground(Color.WHITE);
+
+            for (CartItem item : order.getItems()) {
+                String productName = item.getProduct().getName();
+                int qty = item.getQuantity();
+                double price = item.getProduct().getPrice();
+
+            JLabel itemLabel = new JLabel("Product: " + productName + " | Quantity: " + qty + " | Price: $" + price);
+                itemLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+                itemLabel.setForeground(new Color(80, 80, 80));
+                itemListPanel.add(itemLabel);
+                itemListPanel.add(Box.createVerticalStrut(4));    
             }
-        } else {
-            historyPanel.add(new JLabel("No order history yet."));
+                infoPanel.add(itemListPanel);
+                oderPanel.add(infoPanel, BorderLayout.CENTER);
+
+                JPanel rightPanel = new JPanel(new GridBagLayout());
+                rightPanel.setBackground(Color.WHITE);
+                GridBagConstraints gbc = new GridBagConstraints();
+                gbc.gridx = 0;
+                gbc.gridy = 0;
+                gbc.anchor = GridBagConstraints.EAST;
+                gbc.insets = new Insets(0, 0, 5, 0);
+
+                JLabel totalLabel = new JLabel(String.format("Total: $%.2f", order.getTotalAmount()));
+                totalLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+                totalLabel.setForeground(new Color(50, 50, 50));
+                rightPanel.add(totalLabel, gbc);
+
+                gbc.gridy = 1;
+                gbc.insets = new Insets(5, 0, 0, 0);
+                JButton reButton = new JButton("RE-ORDER");
+                reButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+                reButton.setBackground(new Color(70, 130, 180));
+                reButton.setForeground(Color.BLACK);
+                reButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                rightPanel.add(reButton, gbc);
+                oderPanel.add(rightPanel, BorderLayout.EAST);
+                historyPanel.add(oderPanel);
+                historyPanel.add(Box.createVerticalStrut(10));
+        }
+    } 
+        else {
+            JPanel emptyPanel = new JPanel(new GridBagLayout());
+            emptyPanel.setBackground(historyPanel.getBackground());
+            JLabel emptyLabel = new JLabel("No orders found.");
+            emptyLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
+            emptyLabel.setForeground(new Color(100, 100, 100));
+            emptyPanel.add(emptyLabel);
+            historyPanel.add(emptyPanel);
         }
         historyPanel.revalidate();
         historyPanel.repaint();
