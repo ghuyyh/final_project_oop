@@ -214,7 +214,7 @@ public class CustomerView {
                 JButton reButton = new JButton("RE-ORDER");
                 reButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
                 reButton.setBackground(new Color(70, 130, 180));
-                reButton.setForeground(Color.WHITE);
+                reButton.setForeground(Color.BLACK);
                 reButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 rightPanel.add(reButton, gbc);
                 oderPanel.add(rightPanel, BorderLayout.EAST);
@@ -228,7 +228,6 @@ public class CustomerView {
             JLabel emptyLabel = new JLabel("No orders found.");
             emptyLabel.setFont(new Font("Segoe UI", Font.ITALIC, 14));
             emptyLabel.setForeground(new Color(100, 100, 100));
-
             emptyPanel.add(emptyLabel);
             historyPanel.add(emptyPanel);
         }
