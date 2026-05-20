@@ -1,3 +1,4 @@
+import javax.naming.NameParser;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
@@ -49,16 +50,46 @@ public class ProductView{
         JPanel infoPanel = new JPanel(new GridLayout(0, 1, 5,5));
         infoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        infoPanel.add(new JLabel("Name: " + product.getName()));
+        JPanel namePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+
+        JLabel nameKey = new JLabel("Name: ");
+        JLabel nameVal = new JLabel(product.getName());
+        nameVal.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        nameKey.setFont(new Font("Segor UI", Font.PLAIN, 12));
+        namePanel.add(nameKey);
+        namePanel.add(nameVal);
+        infoPanel.add(namePanel);
+
         infoPanel.add(new JLabel("Price: $" + String.format("%,.2f", product.getPrice())));
-        infoPanel.add(new JLabel("Stock: " + product.getStockQuantity()));
+        int stock = product.getStockQuantity();
+        JLabel stockLabel = new JLabel("Stock: " + stock);
+        stockLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        if (stock == 0){
+            stockLabel.setForeground(new Color(220, 50, 50));
+        } else if (stock <= 3){
+            stockLabel.setForeground(new Color(220, 140, 0));
+        } else {
+            stockLabel.setForeground(new Color(0, 130, 60));
+        }
+        infoPanel.add(stockLabel);
         infoPanel.add(new JLabel("─────────────────────────────"));
         infoPanel.add(new JLabel("Specification: "));
 
-        for(Map.Entry<String, String> entry : product.getSpecs().entrySet()){
-           infoPanel.add(new JLabel("  " + entry.getKey() + ": " + entry.getValue()));
+        JLabel nameSpecs = new JLabel("Specification: ");
+        infoPanel.add(nameSpecs);
+        nameSpecs.setFont(new Font("Segoe UI", Font.BOLD, 12));
+
+        for (Map.Entry<String, String> entry : product.getSpecs().entrySet()) {
+            JPanel specRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            JLabel keyLabel = new JLabel("  " + entry.getKey() + ": ");
+            JLabel valLabel = new JLabel(entry.getValue());
+            keyLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
+            valLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+            specRow.add(keyLabel);
+            specRow.add(valLabel);
+            infoPanel.add(specRow);
         }
- 
+            
         JScrollPane scrollPane = new JScrollPane(infoPanel);
         JPanel centerPanel = new JPanel(new GridLayout(1, 2, 10, 10));
         centerPanel.add(imageLabel);
