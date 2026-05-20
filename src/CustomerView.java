@@ -157,8 +157,38 @@ public class CustomerView {
 
     public void refreshHistory() {
         historyPanel.removeAll();
+        historyPanel.setLayout(new BoxLayout(historyPanel, BoxLayout.Y_AXIS));
+        historyPanel.setBackground( new Color(240, 242, 245));
         Customer customer = (Customer) core.getLoggedInUser();
-        if (customer != null) {
+        if (customer != null && !customer.getOrderHistory().isEmpty()) {
+            for (PurchaseOrder order : customer.getOrderHistory()) {
+                JPanel oderPanel = new JPanel(new BorderLayout(15, 10));
+                oderPanel.setBackground(Color.WHITE);
+                oderPanel.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+                        BorderFactory.createEmptyBorder(10, 10, 10, 10)));
+                        oderPanel.setMaximumSize(new Dimension(Short.MAX_VALUE, 150));
+                        JPanel infoPanel = new JPanel();
+                infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+                infoPanel.setBackground(Color.WHITE);
+                JLabel dateLabel = new JLabel("Order Date: " + order.getFormattedDate());
+                dateLabel.setFont(new Font("Segoe UI", Font.BOLD, 14));
+                dateLabel.setForeground(new Color(50, 50, 50));
+                infoPanel.add(dateLabel);
+                infoPanel.add(Box.createVerticalStrut(8));
+                JPanel itemListPanel = new JPanel();
+                itemListPanel.setLayout(new BoxLayout(itemListPanel, BoxLayout.Y_AXIS));
+                itemListPanel.setBackground(Color.WHITE);
+                for (CartItem item : order.getItems()) {
+                    String productName = item.getProduct().getName();
+                    int qty = item.getQuantity();
+                    double price = item.getProduct().getPrice();
+                    JLabel itemLabel = new JLabel(
+                            "Product: " + productName + " | Quantity: " + qty + " | Price: $" + price);
+                    historyPanel.add(itemLabel);
+                }
+                historyPanel.add(new JLabel());
+            }
             if (customer.getOrderHistory().isEmpty()) {
                 historyPanel.add(new JLabel("No order history yet."));
             } else {
