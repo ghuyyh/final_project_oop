@@ -213,12 +213,14 @@ public class CustomerView {
                 gbc.insets = new Insets(5, 0, 0, 0);
                 JButton reButton = new JButton("RE-ORDER");
                 reButton.addActionListener(e -> {
-                    for (CartItem item : order.getItems()) {
-                        item.getProduct().reduceStock(item.getQuantity());
-                        ((Customer) core.getLoggedInUser()).getPersonalCart().addItem(item.getProduct(), item.getQuantity());
+                    if (customer != null && order.getItems() != null && !order.getItems().isEmpty()) {
+                         for (CartItem item : order.getItems()) {
+                        customer.getPersonalCart().addItem(item.getProduct(), item.getQuantity());
                     }
-                    JOptionPane.showMessageDialog(historyPanel, "***Items added to cart. You can proceed to purchase them from your cart.***");
+                    JOptionPane.showMessageDialog(null, "***Items added to cart. You can proceed to purchase them from your cart.***","Re-Order Successful",JOptionPane.INFORMATION_MESSAGE);
+    
                         getMainFrame().updateCartButton();
+                    }
                 });
                 reButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
                 reButton.setBackground(new Color(70, 130, 180));
