@@ -3,21 +3,21 @@ import java.awt.event.*;
 import java.awt.*;
 import java.util.Map;
 
-public class ProductView{
+public class ProductView {
     private Product product;
     private GUI_MainFrame mainFrame;
 
-    public ProductView(Product product, GUI_MainFrame mainFrame){
+    public ProductView(Product product, GUI_MainFrame mainFrame) {
         this.product = product;
         this.mainFrame = mainFrame;
     }
 
-    public void show(){
+    public void show() {
         JDialog dialog = new JDialog();
         dialog.setTitle("Product Details");
         dialog.setModal(true);
-        dialog.setLayout(new BorderLayout(10,10));
-        dialog.setMinimumSize(new Dimension(850, 500)); 
+        dialog.setLayout(new BorderLayout(10, 10));
+        dialog.setMinimumSize(new Dimension(850, 500));
 
         ImageIcon icon = new ImageIcon(getClass().getResource("/res/product_images/" + product.getImageFileName()));
         System.out.println(icon.getIconWidth());
@@ -25,41 +25,67 @@ public class ProductView{
         Image smallImg = icon.getImage().getScaledInstance(
                 200,
                 200,
-                Image.SCALE_SMOOTH
-        );
+                Image.SCALE_SMOOTH);
 
         JLabel imageLabel = new JLabel(new ImageIcon(smallImg));
         imageLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         imageLabel.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseClicked(MouseEvent e) {
+            @Override
+            public void mouseClicked(MouseEvent e) {
 
-            JDialog zoomDialog = new JDialog(dialog);
-            zoomDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            zoomDialog.setSize(800, 800);
-            Image bigImg = icon.getImage().getScaledInstance(750, 750,Image.SCALE_SMOOTH);
-            JLabel bigLabel = new JLabel(new ImageIcon(bigImg));
-            bigLabel.setHorizontalAlignment((SwingConstants.CENTER));
-            zoomDialog.add(bigLabel);
-            zoomDialog.setLocationRelativeTo(null);
-            zoomDialog.setVisible(true);
-        }
-    });
+                JDialog zoomDialog = new JDialog(dialog);
+                zoomDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+                zoomDialog.setSize(800, 800);
+                Image bigImg = icon.getImage().getScaledInstance(750, 750, Image.SCALE_SMOOTH);
+                JLabel bigLabel = new JLabel(new ImageIcon(bigImg));
+                bigLabel.setHorizontalAlignment((SwingConstants.CENTER));
+                zoomDialog.add(bigLabel);
+                zoomDialog.setLocationRelativeTo(null);
+                zoomDialog.setVisible(true);
+            }
+        });
 
-        JPanel infoPanel = new JPanel(new GridLayout(0, 1, 5,5));
+        JPanel namePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        JLabel nameKey = new JLabel("Name: ");
+        JLabel nameVal = new JLabel(product.getName());
+        nameVal.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        nameKey.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        namePanel.add(nameKey);
+        namePanel.add(nameVal);
+
+        JPanel infoPanel = new JPanel(new GridLayout(0, 1, 5, 5));
+        infoPanel.add(namePanel);
         infoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        infoPanel.add(new JLabel("Name: " + product.getName()));
         infoPanel.add(new JLabel("Price: $" + String.format("%,.2f", product.getPrice())));
-        infoPanel.add(new JLabel("Stock: " + product.getStockQuantity()));
-        infoPanel.add(new JLabel("─────────────────────────────"));
-        infoPanel.add(new JLabel("Specification: "));
-
-        for(Map.Entry<String, String> entry : product.getSpecs().entrySet()){
-           infoPanel.add(new JLabel("  " + entry.getKey() + ": " + entry.getValue()));
+        int stock = product.getStockQuantity();
+        JLabel stockLabel = new JLabel("Stock: " + stock);
+        stockLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        if (stock == 0){
+            stockLabel.setForeground(new Color(220, 50, 50));
+        } else if (stock <= 3){
+            stockLabel.setForeground(new Color(220, 140, 0));
+        } else {
+            stockLabel.setForeground(new Color(0, 130, 60));
         }
- 
+        infoPanel.add(stockLabel);
+        infoPanel.add(new JLabel("─────────────────────────────"));
+
+        JLabel nameSpecs = new JLabel("Specification: ");
+        infoPanel.add(nameSpecs);
+        nameSpecs.setFont(new Font("Segoe UI", Font.BOLD, 12));
+
+        for (Map.Entry<String, String> entry : product.getSpecs().entrySet()) {
+            JPanel specRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+            JLabel keyLabel = new JLabel("  " + entry.getKey() + ": ");
+            JLabel valLabel = new JLabel(entry.getValue());
+            keyLabel.setFont(new Font("Segoe UI", Font.BOLD, 12));
+            valLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+            specRow.add(keyLabel);
+            specRow.add(valLabel);
+            infoPanel.add(specRow);
+        }
+
         JScrollPane scrollPane = new JScrollPane(infoPanel);
         JPanel centerPanel = new JPanel(new GridLayout(1, 2, 10, 10));
         centerPanel.add(imageLabel);
@@ -74,8 +100,8 @@ public class ProductView{
                 return;
             }
             Cart cart = (user instanceof Customer)
-                ? ((Customer) user).getPersonalCart()
-                : Core.getInstance().getGuestCart();
+                    ? ((Customer) user).getPersonalCart()
+                    : Core.getInstance().getGuestCart();
             cart.addItem(product, 1);
             mainFrame.updateCartButton();
             mainFrame.refreshCart();
@@ -88,5 +114,5 @@ public class ProductView{
         dialog.pack();
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
-    }   
+    }
 }
