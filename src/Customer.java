@@ -84,8 +84,12 @@ public  class Customer extends User  {
             return false;
         }
     List<CartItem> itemsToPurchase = new ArrayList<>(cart.getItems());
+        for (CartItem item : itemsToPurchase) {
+            item.getProduct().reduceStock(item.getQuantity());
+        }
         PurchaseOrder newOrder = new PurchaseOrder(itemsToPurchase, LocalDateTime.now());
         getOrderHistory().add(newOrder);
+        Core.getInstance().saveInventory();
         System.out.println("Successfully checked out for customer: " + getUsername());
         cart.clearCart();
         return true;
