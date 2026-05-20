@@ -74,6 +74,8 @@ public class GUI_MainFrame {
         JButton accountBtn = new JButton("Account");
         cartBtn = new JButton("Cart (0)");
         cartBtn.addActionListener(e -> {
+            layout.show(mainPanel, "cartPanel");
+            cartPanel.refreshCart();
             showCart();
         });
         searchBtn.addActionListener(e -> {
@@ -130,8 +132,7 @@ public class GUI_MainFrame {
     //      homePanel.displayProducts(filteredList); 
          
     //     getLayout().show(mainPanel, "home"); 
-    // }
-
+    
     public CardLayout getLayout() {
         return layout;
     }
