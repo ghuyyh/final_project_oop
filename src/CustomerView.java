@@ -217,7 +217,6 @@ public class CustomerView {
                         customer.getPersonalCart().addItem(item.getProduct(), item.getQuantity());
                     }
                     JOptionPane.showMessageDialog(historyPanel, "***Items added to cart. You can proceed to purchase them from your cart.***");
-                    getMainFrame().updateCartButton();
                 });
                 reButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
                 reButton.setBackground(new Color(70, 130, 180));
