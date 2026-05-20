@@ -219,6 +219,7 @@ public class CustomerView {
                     }
                     JOptionPane.showMessageDialog(null, "***Items added to cart. You can proceed to purchase them from your cart.***","Re-Order Successful",JOptionPane.INFORMATION_MESSAGE);
                     getMainFrame().updateCartButton();
+                    getMainFrame().refreshCart();
                     }
                 });
                 reButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
