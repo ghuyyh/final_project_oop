@@ -18,23 +18,23 @@ class addall {
         users.add(admin);
         users.add(customer);
 
-        products.add(buildProduct("P01", "Xiaomi 13", 1400.0, 10));
-        products.add(buildProduct("P02", "IPhone 15 Pro Max", 1000.0, 5));
-        products.add(buildProduct("P03", "Samsung Galaxy S23 Ultra", 800.0, 8));
-        products.add(buildProduct("P04", "OnePlus 11", 230.0, 12));
-        products.add(buildProduct("P05", "Google Pixel 8 Pro", 888.0, 7));
+        products.add(buildProduct("P01", "Xiaomi 13", 1400.0, 10, "Phone"));
+        products.add(buildProduct("P02", "IPhone 15 Pro Max", 1000.0, 5, "Phone"));
+        products.add(buildProduct("P03", "Samsung Galaxy S23 Ultra", 800.0, 8, "Phone"));
+        products.add(buildProduct("P04", "OnePlus 11", 230.0, 12, "Phone"));
+        products.add(buildProduct("P05", "Google Pixel 8 Pro", 888.0, 7, "Phone"));
 
-        products.add(buildProduct("S01", "Google Nest Hub", 100.0, 15));
-        products.add(buildProduct("S02", "Amazon Echo Show 10", 150.0, 10));
-        products.add(buildProduct("S03", "Apple HomePod Mini", 99.0, 20));
-        products.add(buildProduct("S04", "Samsung SmartThings Hub", 120.0, 5));
-        products.add(buildProduct("S05", "Xiaomi Mi Smart Speaker", 80.0, 18));
+        products.add(buildProduct("S01", "Google Nest Hub", 100.0, 15, "Smart Home"));
+        products.add(buildProduct("S02", "Amazon Echo Show 10", 150.0, 10, "Smart Home"));
+        products.add(buildProduct("S03", "Apple HomePod Mini", 99.0, 20, "Smart Home"));
+        products.add(buildProduct("S04", "Samsung SmartThings Hub", 120.0, 5, "Smart Home"));
+        products.add(buildProduct("S05", "Xiaomi Mi Smart Speaker", 80.0, 18, "Smart Home"));
 
-        products.add(buildProduct("O01", "Wireless Charger", 25.0, 30));
-        products.add(buildProduct("O02", "Phone Case", 15.0, 50));
-        products.add(buildProduct("O03", "Screen Protector", 10.0, 40));
-        products.add(buildProduct("O04", "Bluetooth Earbuds", 50.0, 25));
-        products.add(buildProduct("O05", "Power Bank", 40.0, 20));
+        products.add(buildProduct("O01", "Wireless Charger", 25.0, 30, "Other"));
+        products.add(buildProduct("O02", "Phone Case", 15.0, 50, "Other"));
+        products.add(buildProduct("O03", "Screen Protector", 10.0, 40, "Other"));
+        products.add(buildProduct("O04", "Bluetooth Earbuds", 50.0, 25, "Other"));
+        products.add(buildProduct("O05", "Power Bank", 40.0, 20, "Other"));
 
         File dbDir = resolveDatabaseDir();
         writeObject(new File(dbDir, "users.dat"), users);
@@ -61,8 +61,8 @@ class addall {
         return dbDir;
     }
 
-    private static Product buildProduct(String id, String name, double price, int stock) {
-        return new Product(id, name, price, stock, generateDefaultSpecs(name), false, "");
+    private static Product buildProduct(String id, String name, double price, int stock, String category) {
+        return new Product(id, name, price, stock, generateDefaultSpecs(name), false, category);
     }
 
     private static Map<String, String> generateDefaultSpecs(String name) {
@@ -107,7 +107,7 @@ class addall {
             specs.put("Connectivity", "5G, Wi-Fi 6E, Bluetooth 5.3, NFC");
             specs.put("Water Resistance", "IP68");
             specs.put("Dimensions", "163.4 x 78.1 x 8.9 mm - 233 g");
-        } else if (nameLower.contains("oneplus 11")) {
+            } else if (nameLower.contains("oneplus 11")) {
             specs.put("CPU", "Snapdragon 8 Gen 2");
             specs.put("RAM", "8 / 16 GB");
             specs.put("Storage", "128 / 256 GB UFS 3.1");

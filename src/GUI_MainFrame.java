@@ -11,6 +11,9 @@ public class GUI_MainFrame {
     private LoginView loginPanel = new LoginView(this);
     private CustomerView customerPanel = new CustomerView(this);
     private SearchView searchPanel = new SearchView(this);
+    private PhoneView phonePanel = new PhoneView(this);
+    private SmartHomeView smartHomePanel = new SmartHomeView(this);
+    private OtherView otherPanel = new OtherView(this);
     private JButton cartBtn;
     private JFrame frame;
 
@@ -48,9 +51,9 @@ public class GUI_MainFrame {
         JMenuItem smartHomeItem = new JMenuItem("Smart Home");
         JMenuItem otherItem = new JMenuItem("Other");
         
-        categoryMenu.add(phonesItem);
-        categoryMenu.add(smartHomeItem);
-        categoryMenu.add(otherItem);
+            categoryMenu.add(phonesItem);
+            categoryMenu.add(smartHomeItem);
+            categoryMenu.add(otherItem);
 
         // phonesItem.addActionListener(e ->  filterAndShow(Phone.class));
            
@@ -58,6 +61,9 @@ public class GUI_MainFrame {
 
         // otherItem.addActionListener(e -> filterAndShow(Other.class));
 
+        phonesItem.addActionListener(e -> showCategoryView("Phone", "phonePanel", phonePanel));
+        smartHomeItem.addActionListener(e -> showCategoryView("Smart Home", "smartHomePanel", smartHomePanel));
+        otherItem.addActionListener(e -> showCategoryView("Other", "otherPanel", otherPanel));
         
         categorySelect.addActionListener(e -> {
             categoryMenu.show(categorySelect, 0, 35);
@@ -104,6 +110,9 @@ public class GUI_MainFrame {
         mainPanel.add(getAdminPanel(), "admin");
         mainPanel.add(getCustomerPanel(), "customer");
         mainPanel.add(getSearchPanel(), "search");
+        mainPanel.add(phonePanel, "phonePanel");
+        mainPanel.add(smartHomePanel, "smartHomePanel");
+        mainPanel.add(otherPanel, "otherPanel");
         mainPanel.setBackground(new Color(238, 238, 238));
 
         JPanel loginWrapper = new JPanel();
@@ -133,6 +142,23 @@ public class GUI_MainFrame {
          
     //     getLayout().show(mainPanel, "home"); 
     
+    private void showCategoryView(String categoryName, String panelKey, JPanel targetPanel) {
+        java.util.List<Product> filteredList = new java.util.ArrayList<>();
+        for (Product p : core.getInventory()) {
+            if (p.getCategory() != null && p.getCategory().equalsIgnoreCase(categoryName)) {
+                filteredList.add(p);
+            }
+        }
+        if (targetPanel instanceof PhoneView) {
+            ((PhoneView) targetPanel).displayProducts(filteredList);
+        } else if (targetPanel instanceof SmartHomeView) {
+            ((SmartHomeView) targetPanel).displayProducts(filteredList);
+        } else if (targetPanel instanceof OtherView) {
+            ((OtherView) targetPanel).displayProducts(filteredList);
+        }
+        layout.show(mainPanel, panelKey);
+    }
+
     public CardLayout getLayout() {
         return layout;
     }
