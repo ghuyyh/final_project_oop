@@ -73,7 +73,7 @@ public class ProductView{
         }
         infoPanel.add(stockLabel);
         infoPanel.add(new JLabel("─────────────────────────────"));
-        infoPanel.add(new JLabel("Specification: "));
+        // infoPanel.add(new JLabel("Specification: "));
 
         JLabel nameSpecs = new JLabel("Specification: ");
         infoPanel.add(nameSpecs);
@@ -103,6 +103,10 @@ public class ProductView{
                 JOptionPane.showMessageDialog(dialog, "Admins cannot add products to cart.");
                 return;
             }
+            if (product.getStockQuantity() <= 0) {
+                    JOptionPane.showMessageDialog(null, "Sorry, this product is out of stock!");
+                    return;
+                }
             Cart cart = (user instanceof Customer)
                 ? ((Customer) user).getPersonalCart()
                 : Core.getInstance().getGuestCart();

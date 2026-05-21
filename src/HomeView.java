@@ -128,6 +128,10 @@ public class HomeView {
                 JOptionPane.showMessageDialog(null,
                         "Admins cannot add products to cart. Please log in as a customer.");
             } else {
+                if (product.getStockQuantity() <= 0) {
+                    JOptionPane.showMessageDialog(null, "Sorry, this product is out of stock!");
+                    return;
+                }
                 Cart targetCart;
                 if (loggedInUser instanceof Customer) {
                     targetCart = ((Customer) loggedInUser).getPersonalCart();
