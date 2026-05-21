@@ -1,0 +1,91 @@
+{Xiaomi Robot Vacuum 5 Pro
+
+Suction Power: 20000 Pa
+
+Navigation: LiDAR and dToF Smart Retractable Radar
+
+Obstacle Avoidance: AI Recognition with RGB camera and 3D dot projector
+
+Battery: 5200 mAh (up to 140 minutes runtime)
+
+Base Station Features: Automatic dust emptying, 80°C hot water mop washing, hot air drying
+
+Mop System: Rotating pads with extendable arms
+
+Dust Bag Capacity: 2.5 L (Base Station)
+
+Water Tank Capacity: 4L Clean / 4L Waste (Base Station)
+
+Smart Connectivity: Wi-Fi, Xiaomi Home app, voice control
+
+Robot Dimensions: 350 x 350 x 88 mm
+
+Base Dimensions: 470 x 360 x 572 mm
+
+Robot Weight: 3.97 kg}
+
+{Xiaomi Toaster
+
+Capacity: 2 slices
+
+Rated Power: 780 - 930W
+
+Rated Voltage: 220-240V, 50-60Hz
+
+Toasting Levels: 1 to 6 settings
+
+Functions: Toast, Reheat, Defrost, Cancel
+
+Features: Built-in foldable toast rack, slide-out crumb tray, automatic centering
+
+Material: ABS + PP (Food contact safe)
+
+Color: Black
+
+Dimensions: 280 x 160 x 186 mm
+
+Weight: 1.2 kg}
+
+{Xiaomi Smart Camera C701
+
+Resolution: 3840 x 2160 (4K)
+
+Video Codec: H.265
+
+Wireless Connectivity: Wi-Fi 6 (2.4 GHz/5 GHz), Bluetooth 5.4
+
+Storage: microSD card (8 GB to 256 GB)
+
+Power Input: 5V ⎓ 2A
+
+Compatibility: Android 8.0 & iOS 12.0 or above
+
+Operating Temperature: -10°C to 40°C
+
+Dimensions: 79 x 79 x 119 mm}
+
+{Mijia Refrigerator Cross Door 510L
+
+Total Capacity: 510 L
+
+Fridge Capacity: 303 L
+
+Freezer Capacity: 178 L
+
+Variable Zone Capacity: 29 L
+
+Compressor Type: Inverter
+
+Cooling System: Frost-free (No Frost)
+
+Noise Level: 38 dB
+
+Energy Efficiency: 3-Star Rating
+
+Smart Connectivity: Xiaomi Home app supported
+
+Color: Dark Gray / Slate Gray
+
+Dimensions: 852 x 600 x 1912 mm
+
+Net Weight: 85 kg}

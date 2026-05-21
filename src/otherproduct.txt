@@ -1,0 +1,99 @@
+{Xiaomi UltraThin Magnetic Power Bank 5000 15W
+
+Capacity: 5000mAh (Typical) / 3000mAh (Rated)
+
+Wireless Output: 15W Max (Xiaomi) / 7.5W Max (iPhone)
+
+Wired Output: 22.5W Max (USB-C)
+
+Output (USB-C + Wireless): 7.5W + 5W Max
+
+Battery Type: Lithium-ion (High-density silicon-carbon)
+
+Charging Mechanism: Magnetic induction
+
+Dimensions: 98.5 x 71.5 x 6 mm
+
+Weight: 98 g}
+
+{Xiaomi Wireless Mouse 3
+
+Connection Method: 2.4GHz wireless, Bluetooth
+
+Compatibility: Windows 10, macOS 10.13 and newer
+
+Rated Input: 1.5V ⎓ 50mA
+
+Product Materials: Plastic, metal
+
+Operating Temperature: 0°C to 40°C
+
+Dimensions: 119 x 64 x 41 mm
+
+Weight: 57 g (without battery)}
+
+{Xiaomi Water Ionic Hair Dryer H500
+
+Airflow Speed: 20m/s Ultra-high Airflow
+
+Motor Speed: 20,000 rpm High-speed Motor
+
+Temperature Control: Smart Hot/Cold Air Alternating Mode, NTC Temperature Detection
+
+Protection: Overheat Protection, Thermal Fuse Protection
+
+Features: Double Water Ion Therapy, Removable Air Intake Filter
+
+Body Design: Metal Body, Anodized aluminum alloy finish
+
+Power Cord Length: 1.7 m
+
+Dimensions: 101 mm (cylinder length without nozzle)
+
+Weight: 550 g (excluding nozzle)}
+
+{Xiaomi Smart Scale S200
+
+Weighing Range: 0.1kg - 150kg
+
+Minimum Scale Increments: 0.05kg
+
+Metrics Provided: Weight, BMI, Standard weight, Weight control
+
+Connectivity: Bluetooth 5.4
+
+App Compatibility: Xiaomi Home app (Android 8.0 / iOS 12.0 and above)
+
+User Profiles: Up to 36 users
+
+Special Features: Smart switching between people/objects, Balance testing
+
+Battery: 3 x AAA (Up to 180 days lifespan)
+
+Material: Tempered glass, engineering plastic
+
+Dimensions: 280 x 280 x 24.5 mm
+
+Weight: 1.2 kg}
+
+{Xiaomi 120W HyperCharge Combo (Type-A)
+
+Maximum Output: 120W
+
+Input: 100-240V~, 50/60Hz, 3A
+
+Output Ports: USB Type-A
+
+Charging Outputs: 5V⎓3A (15W), 9V⎓3A (27W), 11V⎓6A (66W Max), 20V⎓6A (120W Max)
+
+Protection: 10 layers of smart protection (over-current, over-voltage, short-circuit, etc.)
+
+Material: Flame-retardant PC
+
+Operating Temperature: -10°C to 40°C
+
+Dimensions: 56.1 x 77.2 x 28.8 mm (excluding prongs)
+
+Weight: 170 g
+
+Package Contents: Charger, USB-A to USB-C cable, User manual, Warranty notice}

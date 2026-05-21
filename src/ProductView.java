@@ -23,8 +23,8 @@ public class ProductView{
         ImageIcon icon = loadProductImageIcon();
 
         Image smallImg = icon.getImage().getScaledInstance(
-                200,
-                200,
+                360,
+                360,
                 Image.SCALE_SMOOTH
         );
 

@@ -1,0 +1,167 @@
+{Xiaomi 17 Ultra
+
+CPU: Snapdragon 8 Elite Gen 5
+
+RAM: 16GB
+
+Storage: 512GB UFS 4.1
+
+Display: 6.9" AMOLED, 120Hz, 2608x1200
+
+Rear Camera: 50 MP main + 50 MP UW + 200 MP telephoto
+
+Front Camera: 50 MP
+
+Battery: 6000 mAh, 90W wired, 50W wireless
+
+OS: Xiaomi HyperOS 3
+
+Connectivity: 5G, Wi-Fi 7, Bluetooth 6.0, NFC
+
+Dimensions: 162.9 x 77.6 x 8.29 mm - 218.4 g
+
+Water Resistance: IP68}
+
+{Xiaomi 17 Pro
+
+CPU: Snapdragon 8 Elite Gen 5
+
+RAM: 12GB
+
+Storage: 256GB UFS 4.1
+
+Display: 6.3" LTPO OLED, 120Hz, 2656x1220
+
+Rear Camera: 50 MP main + 50 MP UW + 50 MP telephoto
+
+Front Camera: 50 MP
+
+Battery: 6300 mAh, 100W wired, 50W wireless
+
+OS: HyperOS 3 (Android 16)
+
+Connectivity: 5G, Wi-Fi 7, Bluetooth 5.4, NFC
+
+Dimensions: 151.1 x 71.8 x 8.1 mm - 191 g
+
+Water Resistance: IP68}
+
+{Leica Leitzphone powered by Xiaomi
+
+CPU: Snapdragon 8 Elite Gen 5
+
+RAM: Not specified
+
+Storage: Not specified
+
+Display: 6.9" LTPO OLED
+
+Rear Camera: 1-inch main + 200 MP telephoto 75-100mm + UW
+
+Front Camera: Not specified
+
+Battery: 6000 mAh, 90W wired, 50W wireless
+
+OS: Xiaomi HyperAI (Leica UX UI)
+
+Connectivity: 5G, Wi-Fi, Bluetooth, NFC
+
+Dimensions: Not specified
+
+Water Resistance: Not specified}
+
+{Xiaomi 15T Pro
+
+CPU: MediaTek Dimensity 9400+
+
+RAM: 12GB
+
+Storage: 256GB UFS 4.1
+
+Display: 6.83" AMOLED, 144Hz, 2772x1280
+
+Rear Camera: 50 MP main + 12 MP UW + 50 MP telephoto 5x
+
+Front Camera: 32 MP
+
+Battery: 5500 mAh, 90W wired, 50W wireless
+
+OS: HyperOS 3 (Android 15)
+
+Connectivity: 5G, Wi-Fi 7, Bluetooth 6.0, NFC
+
+Dimensions: 162.7 x 77.9 x 8.0 mm - 210 g
+
+Water Resistance: IP68}
+
+{Xiaomi 15
+
+CPU: Snapdragon 8 Elite
+
+RAM: 12GB
+
+Storage: 256GB UFS 4.0
+
+Display: 6.36" LTPO OLED, 120Hz, 2670x1200
+
+Rear Camera: 50 MP main + 50 MP UW + 50 MP telephoto
+
+Front Camera: 32 MP
+
+Battery: 5240 mAh, 90W wired, 50W wireless
+
+OS: HyperOS 2 (Android 15)
+
+Connectivity: 5G, Wi-Fi 7, Bluetooth 6.0, NFC
+
+Dimensions: 152.3 x 71.2 x 8.08 mm - 191 g
+
+Water Resistance: IP68}
+
+{Xiaomi 14
+
+CPU: Snapdragon 8 Gen 3
+
+RAM: 12GB
+
+Storage: 256GB UFS 4.0
+
+Display: 6.36" LTPO OLED, 120Hz, 2670x1200
+
+Rear Camera: 50 MP main + 50 MP UW + 50 MP telephoto
+
+Front Camera: 32 MP
+
+Battery: 4610 mAh, 90W wired, 50W wireless
+
+OS: Xiaomi HyperOS
+
+Connectivity: 5G, Wi-Fi 7, Bluetooth 5.4, NFC
+
+Dimensions: 152.8 x 71.5 x 8.2 mm - 193 g
+
+Water Resistance: IP68}
+
+{Xiaomi 13
+
+CPU: Snapdragon 8 Gen 2
+
+RAM: 12GB
+
+Storage: 256GB UFS 4.0
+
+Display: 6.36" AMOLED, 120Hz, 2400x1080
+
+Rear Camera: 50 MP main + 12 MP UW + 10 MP telephoto 3.2x
+
+Front Camera: 32 MP
+
+Battery: 4500 mAh, 67W wired, 50W wireless
+
+OS: MIUI 14 (Android 13)
+
+Connectivity: 5G, Wi-Fi 6E, Bluetooth 5.3, NFC
+
+Dimensions: 152.8 x 71.5 x 7.98 mm - 189 g
+
+Water Resistance: IP68}
