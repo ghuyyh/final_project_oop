@@ -77,7 +77,7 @@ public class CustomerView {
             Font labelFont = new Font("Segoe UI Emoji", Font.BOLD, 14);
             Color textColor = Color.BLACK;
 
-            JLabel welcomeLbl = new JLabel("*** Welcome, " + customer.getUsername() + " ***", SwingConstants.CENTER);
+            JLabel welcomeLbl = new JLabel(" Welcome, " + customer.getUsername() + "", SwingConstants.CENTER);
             welcomeLbl.setFont(new Font("Segoe UI", Font.BOLD, 24));
             welcomeLbl.setForeground(textColor);
             gbc.gridy = 0;
@@ -220,7 +220,7 @@ public class CustomerView {
                             customer.getPersonalCart().addItem(item.getProduct(), item.getQuantity());
                         }
                         JOptionPane.showMessageDialog(null,
-                                "***Items added to cart. You can proceed to purchase them from your cart.***",
+                                "Items added to cart. You can proceed to purchase them from your cart.",
                                 "Re-Order Successful", JOptionPane.INFORMATION_MESSAGE);
                         getMainFrame().updateCartButton();
                         getMainFrame().refreshCart();
