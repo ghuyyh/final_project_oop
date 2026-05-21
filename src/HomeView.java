@@ -9,7 +9,7 @@ public class HomeView {
     private JPanel allProductPanel = new JPanel();
     private Core core = Core.getInstance();
     GUI_MainFrame mainFrame;
-    final Color ITEM_BG = new Color(230, 230, 230);
+    final Color ITEM_BG = new Color(255, 255, 255);
 
     public HomeView(GUI_MainFrame mainFrame) {
         this.mainFrame = mainFrame;
@@ -38,11 +38,15 @@ public class HomeView {
     }
 
     private JPanel createProductPanel(Product product) {
-        JPanel productPanel = new JPanel(new GridLayout(1, 3, 10, 10));
+        JPanel productPanel = new JPanel(new BorderLayout(12, 10));
         productPanel.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createLineBorder(new Color(210, 210, 210), 1),
                 BorderFactory.createEmptyBorder(8, 8, 8, 8)));
         productPanel.setBackground(ITEM_BG);
+        productPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 130));
+
+        JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        leftPanel.setOpaque(false);
         try {
             java.net.URL imgURL = getClass().getResource("/res/product_images/" + product.getId() + ".png");
             if (imgURL == null) {
@@ -52,28 +56,72 @@ public class HomeView {
                 ImageIcon icon = new ImageIcon(imgURL);
                 Image rounded = makeRoundedImage(icon.getImage(), 100, 100, 16);
                 JLabel imgLabel = new JLabel(new ImageIcon(rounded));
-                productPanel.add(imgLabel);
+                leftPanel.add(imgLabel);
             } else {
-                productPanel.add(new JLabel());
+                leftPanel.add(new JLabel());
             }
         } catch (Exception e) {
             System.out.println("Error loading image for product: " + product.getName());
-            productPanel.add(new JLabel());
+            leftPanel.add(new JLabel());
+        }
+        productPanel.add(leftPanel, BorderLayout.WEST);
+
+        JPanel centerPanel = new JPanel();
+        centerPanel.setOpaque(false);
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
+
+        JPanel infoPanel = new JPanel();
+        infoPanel.setOpaque(false);
+        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
+        infoPanel.add(new JLabel("<html><b>Name:</b> " + product.getName() + "</html>"));
+
+        int stock = product.getStockQuantity();
+        String stockColor = stock == 0 ? "#d9534f" : (stock <= 3 ? "#d18a00" : "#0a803f");
+        infoPanel.add(new JLabel("<html><b>Stock quantity:</b> <span style='color:" + stockColor + ";'>" + stock + "</span></html>"));
+
+        infoPanel.add(new JLabel("<html><b>Price:</b> $" + String.format("%.2f", product.getPrice()) + "</html>"));
+        centerPanel.add(infoPanel);
+
+        centerPanel.add(Box.createVerticalStrut(8));
+
+        JPanel specsPanel = new JPanel();
+        specsPanel.setOpaque(false);
+        specsPanel.setLayout(new BoxLayout(specsPanel, BoxLayout.Y_AXIS));
+        specsPanel.add(new JLabel("<html><b>Specs</b></html>"));
+
+        int specCount = 0;
+        for (java.util.Map.Entry<String, String> entry : product.getSpecs().entrySet()) {
+            if (specCount >= 3) {
+                break;
+            }
+            specsPanel.add(new JLabel("<html><b>" + entry.getKey() + ":</b> " + entry.getValue() + "</html>"));
+            specCount++;
         }
 
-        JPanel infoPanel = new JPanel(new GridLayout(2, 1, 5, 5));
-        infoPanel.setOpaque(false);
-        infoPanel.add(new JLabel(product.getName()));
-        infoPanel.add(new JLabel("$" + String.format("%.2f", product.getPrice())));
-        productPanel.add(infoPanel);
+        if (specCount == 0) {
+            JLabel noSpecsLabel = new JLabel("No specs available");
+            noSpecsLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+            specsPanel.add(noSpecsLabel);
+        }
 
-        JPanel buttonPanel = new JPanel(new GridLayout(2, 1, 5, 5));
+        centerPanel.add(specsPanel);
+        productPanel.add(centerPanel, BorderLayout.CENTER);
+
+        JPanel buttonPanel = new JPanel(new GridBagLayout());
+        buttonPanel.setOpaque(false);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(2, 2, 2, 2); // Adds a small gap between buttons
 
         JButton detailBtn = new JButton("View Details");
+        // detailBtn.setPreferredSize(new Dimension(120, 30)); // You can now set individual sizes!
         detailBtn.addActionListener(e -> new ProductView(product, mainFrame).show());
-        buttonPanel.add(detailBtn);
-        buttonPanel.setOpaque(false);
+        buttonPanel.add(detailBtn, gbc);
+        
         JButton addToCartBtn = new JButton("Add to Cart");
+        // addToCartBtn.setPreferredSize(new Dimension(120, 30)); // You can now set individual sizes!
         addToCartBtn.addActionListener(e -> {
             User loggedInUser = getCore().getLoggedInUser();
             if (loggedInUser instanceof Admin) {
@@ -92,8 +140,10 @@ public class HomeView {
                 JOptionPane.showMessageDialog(null, "Added " + product.getName() + " to cart!");
             }
         });
-        buttonPanel.add(addToCartBtn);
-        productPanel.add(buttonPanel);
+
+        gbc.gridy = 1; // Move to the next row for the second button
+        buttonPanel.add(addToCartBtn, gbc);
+        productPanel.add(buttonPanel, BorderLayout.EAST);
         return productPanel;
     }
 
