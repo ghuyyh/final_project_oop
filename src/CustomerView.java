@@ -54,7 +54,8 @@ public class CustomerView {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 try {
-                    ImageIcon icon = new ImageIcon("background.png");
+                    java.net.URL bgUrl = getClass().getResource("/res/customerbg.png");
+                    ImageIcon icon = new ImageIcon(bgUrl);
                     Image img = icon.getImage();
                     if (img != null) {
                         g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
@@ -158,7 +159,7 @@ public class CustomerView {
     public void refreshHistory() {
         historyPanel.removeAll();
         historyPanel.setLayout(new BoxLayout(historyPanel, BoxLayout.Y_AXIS));
-        historyPanel.setBackground( new Color(240, 242, 245));
+        historyPanel.setBackground(new Color(240, 242, 245));
 
         Customer customer = (Customer) core.getLoggedInUser();
 
@@ -169,8 +170,8 @@ public class CustomerView {
                 oderPanel.setBorder(BorderFactory.createCompoundBorder(
                         BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
                         BorderFactory.createEmptyBorder(10, 10, 10, 10)));
-                        oderPanel.setMaximumSize(new Dimension(Short.MAX_VALUE, 150));
-                        JPanel infoPanel = new JPanel();
+                oderPanel.setMaximumSize(new Dimension(Short.MAX_VALUE, 150));
+                JPanel infoPanel = new JPanel();
                 infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
                 infoPanel.setBackground(Color.WHITE);
                 JLabel dateLabel = new JLabel("Order Date: " + order.getFormattedDate());
@@ -178,21 +179,22 @@ public class CustomerView {
                 dateLabel.setForeground(new Color(50, 50, 50));
                 infoPanel.add(dateLabel);
                 infoPanel.add(Box.createVerticalStrut(8));
-            JPanel itemListPanel = new JPanel();
+                JPanel itemListPanel = new JPanel();
                 itemListPanel.setLayout(new BoxLayout(itemListPanel, BoxLayout.Y_AXIS));
                 itemListPanel.setBackground(Color.WHITE);
 
-            for (CartItem item : order.getItems()) {
-                String productName = item.getProduct().getName();
-                int qty = item.getQuantity();
-                double price = item.getProduct().getPrice();
+                for (CartItem item : order.getItems()) {
+                    String productName = item.getProduct().getName();
+                    int qty = item.getQuantity();
+                    double price = item.getProduct().getPrice();
 
-            JLabel itemLabel = new JLabel("Product: " + productName + " | Quantity: " + qty + " | Price: $" + price);
-                itemLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-                itemLabel.setForeground(new Color(80, 80, 80));
-                itemListPanel.add(itemLabel);
-                itemListPanel.add(Box.createVerticalStrut(4));    
-            }
+                    JLabel itemLabel = new JLabel(
+                            "Product: " + productName + " | Quantity: " + qty + " | Price: $" + price);
+                    itemLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+                    itemLabel.setForeground(new Color(80, 80, 80));
+                    itemListPanel.add(itemLabel);
+                    itemListPanel.add(Box.createVerticalStrut(4));
+                }
                 infoPanel.add(itemListPanel);
                 oderPanel.add(infoPanel, BorderLayout.CENTER);
 
@@ -214,26 +216,27 @@ public class CustomerView {
                 JButton reButton = new JButton("RE-ORDER");
                 reButton.addActionListener(e -> {
                     if (customer != null && order.getItems() != null && !order.getItems().isEmpty()) {
-                         for (CartItem item : order.getItems()) {
-                        customer.getPersonalCart().addItem(item.getProduct(), item.getQuantity());
-                    }
-                    JOptionPane.showMessageDialog(null, "***Items added to cart. You can proceed to purchase them from your cart.***","Re-Order Successful",JOptionPane.INFORMATION_MESSAGE);
-                    getMainFrame().updateCartButton();
-                    getMainFrame().refreshCart();
+                        for (CartItem item : order.getItems()) {
+                            customer.getPersonalCart().addItem(item.getProduct(), item.getQuantity());
+                        }
+                        JOptionPane.showMessageDialog(null,
+                                "***Items added to cart. You can proceed to purchase them from your cart.***",
+                                "Re-Order Successful", JOptionPane.INFORMATION_MESSAGE);
+                        getMainFrame().updateCartButton();
+                        getMainFrame().refreshCart();
                     }
                 });
                 reButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
                 reButton.setBackground(new Color(70, 130, 180));
                 reButton.setForeground(Color.BLACK);
                 reButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                
+
                 rightPanel.add(reButton, gbc);
                 oderPanel.add(rightPanel, BorderLayout.EAST);
                 historyPanel.add(oderPanel);
                 historyPanel.add(Box.createVerticalStrut(10));
-        }
-    } 
-        else {
+            }
+        } else {
             JPanel emptyPanel = new JPanel(new GridBagLayout());
             emptyPanel.setBackground(historyPanel.getBackground());
             JLabel emptyLabel = new JLabel("No orders found.");

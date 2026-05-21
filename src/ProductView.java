@@ -15,7 +15,7 @@ public class ProductView{
 
     public void show(){
         JDialog dialog = new JDialog();
-        dialog.setTitle("Product Details");
+        dialog.setTitle("Product Details - Click the photo to zoom");
         dialog.setModal(true);
         dialog.setLayout(new BorderLayout(10,10));
         dialog.setMinimumSize(new Dimension(850, 500)); 
