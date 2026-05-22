@@ -23,8 +23,8 @@ class addall {
         products.add(buildProduct("P03", "Leica Leitzphone powered by Xiaomi", 2200.0, 4, "Phone"));
         products.add(buildProduct("P04", "Xiaomi 15T Pro", 850.0, 12, "Phone"));
         products.add(buildProduct("P05", "Xiaomi 15", 700.0, 12, "Phone"));
-        products.add(buildProduct("P06", "Xiaomi 14", 650.0, 15, "Phone"));
-        products.add(buildProduct("P07", "Xiaomi 13", 550.0, 8, "Phone"));
+        products.add(buildProduct("P07", "Xiaomi 14", 650.0, 15, "Phone"));
+        products.add(buildProduct("P09", "Xiaomi 13", 550.0, 8, "Phone"));
 
         products.add(buildProduct("S01", "Xiaomi Robot Vacuum 5 Pro", 499.0, 10, "Smart Home"));
         products.add(buildProduct("S02", "Xiaomi Toaster", 39.0, 25, "Smart Home"));

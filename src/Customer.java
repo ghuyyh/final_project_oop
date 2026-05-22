@@ -10,7 +10,7 @@ public  class Customer extends User  {
     private String address;
     private String paymentMethod;
     private String cardNumber; 
-    private transient List<PurchaseOrder> orderHistory;
+    private List<PurchaseOrder> orderHistory;
     public Customer(String username, String password, String fullName, int age, String address, String paymentMethod , String cardNumber) {
         super(username, password);
         this.username = username;
@@ -93,5 +93,15 @@ public  class Customer extends User  {
         System.out.println("Successfully checked out for customer: " + getUsername());
         cart.clearCart();
         return true;
+        
     }
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+    in.defaultReadObject(); 
+    
+    this.personalCart = new Cart(); 
+    
+    if (this.orderHistory == null) {
+        this.orderHistory = new ArrayList<>();
+    }
+}
 }
