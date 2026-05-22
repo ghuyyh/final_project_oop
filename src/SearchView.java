@@ -19,13 +19,12 @@ public class SearchView {
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
         JButton searchBtn = new JButton("Search");
         JButton clearBtn = new JButton("Clear");
-        JButton backBtn = new JButton("← Back to Home");
+       
 
         topPanel.add(new JLabel("Keyword:"));
         topPanel.add(searchField);
         topPanel.add(searchBtn);
         topPanel.add(clearBtn);
-        topPanel.add(backBtn);
         topPanel.add(statusLabel);
 
         searchPanel.add(topPanel, BorderLayout.NORTH);
@@ -45,7 +44,7 @@ public class SearchView {
             resultsPanel.repaint();
         });
 
-        backBtn.addActionListener(e -> mainFrame.showHome());
+        // backBtn.addActionListener(e -> mainFrame.showHome());
     }
 
     public void performSearch() {
