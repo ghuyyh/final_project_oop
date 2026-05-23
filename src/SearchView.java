@@ -106,24 +106,31 @@ public class SearchView {
                 product.getName(), product.getId(), product.getPrice(), stockColor, stockText);
         row.add(new JLabel(info), BorderLayout.CENTER);
 
-        JButton addBtn = new JButton(stock > 0 ? "Add to Cart" : "Out of Stock");
-        addBtn.setEnabled(stock > 0);
-        addBtn.addActionListener(e -> {
-            User user = core.getLoggedInUser();
-            if (user instanceof Admin) {
-                JOptionPane.showMessageDialog(searchPanel,
-                        "Admins cannot add to cart.");
-                return;
-            }
-            Cart cart = (user instanceof Customer)
-                    ? ((Customer) user).getPersonalCart()
-                    : core.getGuestCart();
-            cart.addItem(product, 1);
-            mainFrame.refreshCart();
-            mainFrame.updateCartButton();
-            JOptionPane.showMessageDialog(searchPanel, "Added \"" + product.getName() + "\" to cart!");
-        });
-        row.add(addBtn, BorderLayout.EAST);
+       JPanel btnPanel = new JPanel(new GridLayout(1, 2, 5, 0));
+
+JButton detailBtn = new JButton("View Details");
+detailBtn.addActionListener(e -> new ProductView(product, mainFrame).show());
+
+JButton addBtn = new JButton(stock > 0 ? "Add to Cart" : "Out of Stock");
+addBtn.setEnabled(stock > 0);
+addBtn.addActionListener(e -> {
+    User user = core.getLoggedInUser();
+    if (user instanceof Admin) {
+        JOptionPane.showMessageDialog(searchPanel, "Admins cannot add to cart.");
+        return;
+    }
+    Cart cart = (user instanceof Customer)
+            ? ((Customer) user).getPersonalCart()
+            : core.getGuestCart();
+    cart.addItem(product, 1);
+    mainFrame.refreshCart();
+    mainFrame.updateCartButton();
+    JOptionPane.showMessageDialog(searchPanel, "Added \"" + product.getName() + "\" to cart!");
+   });
+
+   btnPanel.add(detailBtn);
+   btnPanel.add(addBtn);
+   row.add(btnPanel, BorderLayout.EAST);
 
         return row;
     }
