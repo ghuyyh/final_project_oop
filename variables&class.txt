@@ -1,80 +1,127 @@
-Here is a detailed breakdown of every class, variable, and method from the UML diagram. This acts as the Data Dictionary for your project, which is perfect to include directly in your written report for those 10 points.
+Variables & Classes - summaries
 
-1. User Class (The Abstract Base)
-This class holds the core data that is shared by anyone who logs into the system. Since it is abstract, you never create just a User; you create either a Customer or an Admin.
-Variables:
-String username: The unique login name.
-String password: The password used for authentication. Note: the minus sign means private, enforcing encapsulation.
-Methods:
-getUsername() String: A getter method that returns the username.
-verifyPassword(String pass) boolean: Takes a typed password, compares it to the stored password, and returns true if they match.
+This file describes the main classes in the project and their key variables/methods.
 
-2. Customer Class (Inherits from User)
-Represents a standard shopper. It inherits the username and password from User.
-Variables:
-Cart personalCart: If a user is logged in, their selected items are stored in this dedicated cart object.
-Methods:
-getCart() Cart: Returns the customer's cart so the GUI can display it.
-checkout() boolean: Triggers the final purchase process, communicating with the StoreSystem to deduct stock.
+1) User
+- Purpose: Base account type. Stores username/password and common login behavior.
+- Key fields: username, password
+- Key methods: getUsername(), verifyPassword(password)
+- Notes: Abstract base for `Customer` and `Admin`.
 
-3. Admin Class (Inherits from User)
-Represents a staff member managing the store. It has special privileges to alter the system's data.
-Methods:
-updateStock(Product p, int newStock) void: Allows the admin to manually change how many items are left in the warehouse.
-updatePrice(Product p, double newPrice) void: Allows the admin to change a product's price.
-addNewProduct(Product p) void: Takes a brand new Product object and injects it into the main store inventory.
+2) Customer
+- Purpose: Represents a regular user who buys products.
+- Key fields: personalCart (the customer's `Cart`), fullName, age, address, paymentMethod, cardNumber, orderHistory
+- Key methods: getPersonalCart(), checkout()
+- Notes: Inherits from `User` and holds its own `Cart` and order history.
 
-4. Product Class
-Represents a single item for sale in the store, for example a Xiaomi 14 or a Poco Pad.
-Variables:
-String id: A unique database code like P-101 to prevent mixing up similar items.
-String name: The display name shown to the user.
-double price: The cost per unit.
-int stockQuantity: How many of this item exist in the store right now.
-Methods:
-reduceStock(int amount) boolean: Called when an item is bought. If someone buys 2, it subtracts 2 from stockQuantity. Returns false if there isn't enough stock to fulfill the order.
-getPrice() double: A getter to retrieve the current price.
-getDetails() String: Returns a cleanly formatted string, for example Xiaomi 14 - $800, for the GUI lists.
+3) Admin
+- Purpose: Represents an admin user who manages products.
+- Key fields: (none unique besides inherited ones)
+- Key methods: updateStock(product, newStock), updatePrice(product, newPrice), addNewProduct(product)
+- Notes: Inherits from `User` and can modify inventory.
 
-5. CartItem Class
-Represents a single row in the shopping cart. It does not store the product details directly; it just points to a product and tracks how many the user wants.
-Variables:
-Product product: A reference to the actual Product object being purchased.
-int quantity: How many of this specific product the user selected.
-Methods:
-getSubtotal() double: Multiplies the Product's price by the quantity, for example 2 phones x $800 = $1600.
-increaseQty(int amount) void: If a user clicks Add to Cart on an item they already have, this method just updates the number instead of creating a duplicate row.
+4) Product
+- Purpose: A product sold by the shop.
+- Key fields: id, name, price, stockQuantity, specs (key/value map), isHotSale, category
+- Key methods: reduceStock(amount)
+- Notes: Serialized/storable product model used across views and cart.
 
-6. Cart Class
-Acts as a container that holds multiple CartItem objects.
-Variables:
-List<CartItem> items: An ArrayList storing all the different products the user intends to buy.
-Methods:
-addItem(Product p, int qty) void: Creates a new CartItem and adds it to the list.
-removeItem(Product p) void: Finds a specific product in the list and deletes it entirely.
-calculateTotal() double: Loops through every CartItem in the list, adds up all their subtotals, and returns the final bill.
-clearCart() void: Empties the list. This is called right after a successful checkout.
+5) Cart
+- Purpose: Holds items a user wants to purchase.
+- Key fields: items (list of `CartItem`)
+- Key methods: addItem(product, qty), removeItem(product), calculateTotal(), clearCart(), getItems()
+- Notes: Used by both `Customer.personalCart` and `Core.guestCart`.
 
-7. Core Class (The Controller)
-This is the brain of the application. It manages the data and processes the heavy logic. It uses the Singleton pattern so only one brain exists at a time.
-Variables:
-List<User> usersDatabase: A master list of every registered Customer and Admin.
-List<Product> inventory: The master list of every product currently for sale.
-User loggedInUser: Tracks who is currently using the app. If no one has logged in yet, this variable is null.
-Cart guestCart: A temporary cart that holds items for users who are just browsing the home page without logging in.
-Methods:
-getInstance() StoreSystem: The method the GUI calls to get access to the brain.
-authenticate(String user, String pass) User: Scans the usersDatabase. If it finds a match, it sets loggedInUser and returns that user object.
-processCheckout() boolean: Looks at the active cart, calls reduceStock() on all the relevant products, and processes the payment.
-routeUserView() String: Checks if loggedInUser is an Admin or Customer and tells the GUI which screen to show next.
+6) CartItem
+- Purpose: One line in a cart (product + quantity).
+- Key fields: product, quantity
+- Key methods: getTotalPrice(), increaseQuantity(amount)
 
-8. GUI_MainFrame Class
-This represents the visual window the user interacts with. It only handles button clicks and displaying data; it passes all the real work to the StoreSystem.
-Variables:
-CardLayout layout: The Java tool that allows you to swap the center panels Home, Cart, and Admin without reloading the whole window.
-StoreSystem system: A reference variable so the GUI can talk to the brain.
-Methods:
-showHomeView() void: Tells the CardLayout to flip to the Home Page panel.
-showCartView() void: Tells the CardLayout to flip to the Cart panel.
-showAdminView() void: Tells the CardLayout to flip to the Admin dashboard.
-showLoginPopup() void: Opens the small dialog box asking for a username and password.
+7) PurchaseOrder
+- Purpose: A completed order record.
+- Key fields: orderId, customer, items (list of `CartItem`), totalAmount, orderDate
+- Key methods: getTotal()
+- Notes: Represents purchases saved to order history.
+
+8) Core
+- Purpose: Main controller / application state (singleton-like).
+- Key fields: instance, usersDatabase (list of `User`), inventory (list of `Product`), loggedInUser, guestCart, hotProducts
+- Key methods: getInstance(), authenticate(username,password), registerCustomer(...), processCheckout(), findProductById(id)
+- Notes: Central place where views ask for data or perform actions.
+
+9) DataManager
+- Purpose: Handle loading/saving data from files.
+- Key fields: dataFile (or files)
+- Key methods: loadUsers(), saveUsers(list), loadProducts(), saveProducts(list)
+- Notes: Used by `Core` to persist users and products.
+
+10) GUI_MainFrame
+- Purpose: Main application window and navigation container.
+- Key fields: layout (CardLayout), core, mainPanel, homePanel, cartPanel, adminPanel, loginPanel, customerPanel, productPanel
+- Key methods: GUI_MainFrame(), showHome(), showCart(), showAdmin(), showLogin(), showCustomer()
+- Notes: Switches between view panels (Home, Cart, Admin, etc.).
+
+11) HomeView
+- Purpose: The landing/home screen showing hot products and categories.
+- Key fields: homePanel, hotProductsPanel, core, mainFrame
+- Key methods: HomeView(mainFrame), refreshHome()
+
+12) ProductView
+- Purpose: Displays details of a single product.
+- Key fields: productPanel, core, mainFrame
+- Key methods: ProductView(mainFrame), displayProduct(product)
+
+13) PhoneView, SmartHomeView, OtherView
+- Purpose: Category-specific product listing pages.
+- Key fields: their panel(s)
+- Key methods: constructors that receive `GUI_MainFrame`
+
+14) SearchView
+- Purpose: Lets users search products.
+- Key fields: searchPanel, core
+- Key methods: SearchView(mainFrame), search(query) -> list of products
+
+15) CartView
+- Purpose: UI that shows the contents of a cart and the total.
+- Key fields: cartPanel, core, itemPanel, totalLabel, mainFrame
+- Key methods: CartView(mainFrame), refreshCart()
+
+16) AdminView
+- Purpose: UI for admin actions (add/edit products, view orders).
+- Key fields: adminPanel, core, mainFrame
+- Key methods: AdminView(mainFrame)
+
+17) AdminOrderHistoryDialog
+- Purpose: Dialog that shows a customer's order history to an admin.
+- Key fields: core, targetCustomer
+- Key methods: AdminOrderHistoryDialog(parentFrame)
+
+18) AddProduct, EditProduct
+- Purpose: Dialogs/forms for creating or editing products.
+- Key fields: related product (for edit), admin view reference
+- Key methods: constructors to open dialogs, form handlers to save changes
+
+19) ShowEditProfile
+- Purpose: Dialog for customers to view/edit their profile.
+- Key fields: customer
+- Key methods: constructor that loads customer data and saves edits
+
+20) LoginView
+- Purpose: Login / register UI.
+- Key fields: loginPanel, usernameField, passwordField, mainFrame
+- Key methods: LoginView(mainFrame), login handling that calls `Core.authenticate()`
+
+21) CustomerView
+- Purpose: Main view for logged-in customer (profile, history, etc.).
+- Key fields: customerPanel, core, mainFrame
+- Key methods: CustomerView(mainFrame)
+
+22) Main
+- Purpose: Application entry point.
+- Key methods: main(String[] args) — creates `GUI_MainFrame` and starts the app.
+
+Common relationships (quick summary):
+- `Customer` and `Admin` extend `User`.
+- `Customer` has a `Cart` (composition). `Cart` contains `CartItem` objects, and each `CartItem` links to a `Product`.
+- `Core` holds application data: lists of users and products, current user, guest cart, and order records.
+- Most UI classes hold a reference to `Core` and to `GUI_MainFrame` so they can request data and switch views.
