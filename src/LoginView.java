@@ -22,14 +22,12 @@ public class LoginView {
 
             JPanel userPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
             JLabel userLabel = new JLabel("Username: ");
-            userLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
             userPanel.add(userLabel);
             userPanel.add(getUsernameField());
             getLoginPanel().add(userPanel);
 
             JPanel passwordPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
             JLabel passwordLabel = new JLabel("Password:  ");
-            passwordLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
             passwordPanel.add(passwordLabel);
             passwordPanel.add(getPasswordField());
             char showPasswordChar = getPasswordField().getEchoChar();
