@@ -8,6 +8,7 @@ public class LoginView {
     private JPasswordField passwordField = new JPasswordField(25);
     private JButton loginBtn = new JButton("Login");
     private JButton regBtn = new JButton("Register");
+    private JCheckBox showPasswordBox = new JCheckBox("Show");
     private GUI_MainFrame mainFrame;
 
     public LoginView(GUI_MainFrame mainFrame) {
@@ -16,19 +17,33 @@ public class LoginView {
         if (Core.getInstance().getLoggedInUser() == null) {
 
             getLoginPanel().setBorder(BorderFactory.createTitledBorder("Account"));
-            getLoginPanel().setPreferredSize(new Dimension(400, 150));
+            getLoginPanel().setPreferredSize(new Dimension(550,150));
             getLoginPanel().setLayout(new GridLayout(3, 1, 10, 10));
 
-            JPanel userPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-            userPanel.add(new JLabel("Username:"));
+            JPanel userPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+            JLabel userLabel = new JLabel("Username: ");
+            userLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
+            userPanel.add(userLabel);
             userPanel.add(getUsernameField());
             getLoginPanel().add(userPanel);
 
-            JPanel passwordPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
-            passwordPanel.add(new JLabel("Password:"));
+            JPanel passwordPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
+            JLabel passwordLabel = new JLabel("Password: ");
+            passwordLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
+            passwordPanel.add(passwordLabel);
             passwordPanel.add(getPasswordField());
-            getLoginPanel().add(passwordPanel);
+            char defaultEchoChar = getPasswordField().getEchoChar();
+            showPasswordBox.addItemListener(e -> {
+        if (showPasswordBox.isSelected()) {
+        getPasswordField().setEchoChar((char) 0); 
+        } else {
+        getPasswordField().setEchoChar(defaultEchoChar); 
+    }
+});
+passwordPanel.add(showPasswordBox); 
+getLoginPanel().add(passwordPanel);
 
+loginPanel.add(passwordPanel);
             JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));
             btnPanel.add(getLoginBtn());
             btnPanel.add(getRegBtn());
