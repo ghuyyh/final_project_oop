@@ -28,16 +28,16 @@ public class LoginView {
             getLoginPanel().add(userPanel);
 
             JPanel passwordPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-            JLabel passwordLabel = new JLabel("Password: ");
+            JLabel passwordLabel = new JLabel("Password:  ");
             passwordLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
             passwordPanel.add(passwordLabel);
             passwordPanel.add(getPasswordField());
-            char defaultEchoChar = getPasswordField().getEchoChar();
+            char showPasswordChar = getPasswordField().getEchoChar();
             showPasswordBox.addItemListener(e -> {
         if (showPasswordBox.isSelected()) {
         getPasswordField().setEchoChar((char) 0); 
         } else {
-        getPasswordField().setEchoChar(defaultEchoChar); 
+        getPasswordField().setEchoChar(showPasswordChar); 
     }
 });
 passwordPanel.add(showPasswordBox); 
